@@ -16,15 +16,15 @@ public class NonoBoard implements Board {
         board = new String[width + 1][height + 1];
         board[0][0] = " ";
         
-        for (int i = 1; i < board.length; i++) {
-            board[i][0] = "1";
+        for (int i = 1; i < board[0].length; i++) {
+            board[0][i] = "1";
         }
     
-        for (int i = 2; i < board.length; i++) {
-            board[0][i] = "0";
+        for (int i = 1; i < board.length; i++) {
+            board[i][0] = "0";
         }
         
-        board[0][1] = Integer.toString(width);
+        board[1][0] = Integer.toString(height);
         
         for (int x = 1; x < board.length; x++) {
             for (int y = 1; y < board[x].length; y++) {
