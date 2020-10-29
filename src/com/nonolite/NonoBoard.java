@@ -14,7 +14,8 @@ public class NonoBoard implements Board {
     @Override
     public void generateBoard(int height, int width) {
         board = new String[width + 1][height + 1];
-    
+        board[0][0] = " ";
+        
         for (int i = 1; i < board.length; i++) {
             board[i][0] = "1";
         }
