@@ -24,7 +24,7 @@ public class NonoBoard implements Board {
             board[0][i] = "0";
         }
         
-        board[0][1] = Integer.toString(width - 1);
+        board[0][1] = Integer.toString(width);
         
         for (int x = 1; x < board.length; x++) {
             for (int y = 1; y < board[x].length; y++) {
