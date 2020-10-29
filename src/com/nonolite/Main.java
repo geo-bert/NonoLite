@@ -8,7 +8,7 @@ public class Main extends PApplet {
         //PApplet.main("com.nonolite.Main");
         
         Board nonoBoard = new NonoBoard();
-        nonoBoard.generateBoard(2, 2);
+        nonoBoard.generateBoard(4, 2);
         
         Scanner inputStream = new Scanner(System.in);
         String input = "c 0 0";
@@ -24,7 +24,7 @@ public class Main extends PApplet {
             }
             else {
                 String[] inputs = input.split(" ");
-                String inputSymbol = " ";
+                String inputSymbol;
                 int inputX = Integer.parseInt(inputs[1]);
                 int inputY = Integer.parseInt(inputs[2]);
                 switch (inputs[0]) {
@@ -36,6 +36,7 @@ public class Main extends PApplet {
                         inputSymbol = "x";
                         break;
                     default:
+                        inputSymbol = inputs[0];
                         break;
                 }
                 
@@ -49,9 +50,9 @@ public class Main extends PApplet {
     }
     
     private static void printBoard(String[][] board) {
-        for (String[] column : board) {
-            for (int row = 0; row < board[0].length; row++) {
-                System.out.print(column[row]);
+        for (int column = 0; column < board[0].length; column++) {
+            for (String[] strings : board) {
+                System.out.print(strings[column]);
             }
             System.out.println();
         }
