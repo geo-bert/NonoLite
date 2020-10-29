@@ -13,7 +13,7 @@ public class NonoBoard implements Board {
     
     @Override
     public void generateBoard(int height, int width) {
-        board = new String[width][height];
+        board = new String[width + 1][height + 1];
     
         for (int i = 1; i < board.length; i++) {
             board[i][0] = "1";
@@ -41,10 +41,10 @@ public class NonoBoard implements Board {
     public String put(String symbol, int x, int y) {
         if (symbol.equals("■") || symbol.equals("x") || symbol.equals(" ")) {
             if (x < 1 || y < 1 || x >= board.length || y >= board[1].length) {
-                board[x][y] = symbol;
-                return " ";
+                return "out of bounds";
             }
-            return "out of bounds";
+            board[x][y] = symbol;
+            return "";
         }
         return "invalid character";
     }
