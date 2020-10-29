@@ -44,7 +44,7 @@ public class NonoBoard implements Board {
             if (x < 1 || y < 1 || x >= board.length || y >= board[1].length) {
                 return "out of bounds";
             }
-            board[x][y] = symbol;
+            board[x + 1][y + 1] = symbol;
             return "";
         }
         return "invalid character";
