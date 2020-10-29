@@ -40,11 +40,14 @@ public class NonoBoard implements Board {
     
     @Override
     public String put(String symbol, int x, int y) {
-        if (symbol.equals("■") || symbol.equals("x") || symbol.equals(" ")) {
+        if (symbol.equals("■") || symbol.equals("x")) {
             if (x < 0 || y < 0 || x >= board.length - 1 || y >= board[1].length - 1) {
                 return "out of bounds";
             }
-            board[x + 1][y + 1] = symbol;
+            if(board[x + 1][y + 1].equals(symbol))
+                board[x + 1][y + 1] = " ";
+            else
+                board[x + 1][y + 1] = symbol;
             return "";
         }
         return "invalid character";
