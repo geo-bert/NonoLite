@@ -1,5 +1,10 @@
 package com.nonolite;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import processing.core.PApplet;
 
@@ -48,19 +53,34 @@ public class Main extends PApplet {
                     System.out.println(msg);
                     break;
             }
-            printBoard(nonoBoard.getBoard());
+            System.out.print(printBoard(nonoBoard.getBoard()));
             System.out.println("Input (stop, check, reset, b/x x y):");
             input = inputStream.nextLine();
         } while (!input.equals("stop"));
+        
+        try {
+            BufferedWriter outputStream = new BufferedWriter(new FileWriter("out/save.txt"));
+            
+            outputStream.write(printBoard(nonoBoard.getBoard()));
+            
+            outputStream.flush();
+            outputStream.close();
+        }
+        catch (IOException exception) {
+            exception.printStackTrace();
+            System.out.println("file not found");
+        }
     }
     
-    private static void printBoard(String[][] board) {
+    private static String printBoard(String[][] board) {
+        StringBuilder str = new StringBuilder();
         for (int column = 0; column < board[0].length; column++) {
             for (String[] strings : board) {
-                System.out.print(strings[column]);
+                str.append(strings[column]);
             }
-            System.out.println();
+            str.append("\r\n");
         }
+        return str.toString();
     }
     
     public void settings() {
