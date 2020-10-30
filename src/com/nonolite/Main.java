@@ -13,38 +13,43 @@ public class Main extends PApplet {
         Scanner inputStream = new Scanner(System.in);
         String input = "c 0 0";
         do {
-            if (input.equals("check")) {
-                if (nonoBoard.checkBoard()) {
-                    System.out.println("Board correct, well done!");
+            switch (input) {
+                case "check":
+                    if (nonoBoard.checkBoard()) {
+                        System.out.println("Board correct, well done!");
+                        break;
+                    }
+                    else {
+                        System.out.println("Board incorrect, keep trying.");
+                    }
                     break;
-                }
-                else {
-                    System.out.println("Board incorrect, keep trying.");
-                }
+                case "reset":
+                    nonoBoard.resetBoard();
+                    break;
+                default:
+                    String[] inputs = input.split(" ");
+                    String inputSymbol;
+                    int inputX = Integer.parseInt(inputs[1]);
+                    int inputY = Integer.parseInt(inputs[2]);
+                    switch (inputs[0]) {
+                        case "b":
+                            inputSymbol = "■";
+                            break;
+                        case "x":
+                        case "X":
+                            inputSymbol = "x";
+                            break;
+                        default:
+                            inputSymbol = inputs[0];
+                            break;
+                    }
+                    
+                    String msg = nonoBoard.put(inputSymbol, inputX, inputY);
+                    System.out.println(msg);
+                    break;
             }
-            else {
-                String[] inputs = input.split(" ");
-                String inputSymbol;
-                int inputX = Integer.parseInt(inputs[1]);
-                int inputY = Integer.parseInt(inputs[2]);
-                switch (inputs[0]) {
-                    case "b":
-                        inputSymbol = "■";
-                        break;
-                    case "x":
-                    case "X":
-                        inputSymbol = "x";
-                        break;
-                    default:
-                        inputSymbol = inputs[0];
-                        break;
-                }
-                
-                String msg = nonoBoard.put(inputSymbol, inputX, inputY);
-                System.out.println(msg);
-                printBoard(nonoBoard.getBoard());
-            }
-            System.out.println("Input (stop, check, b/x x y):");
+            printBoard(nonoBoard.getBoard());
+            System.out.println("Input (stop, check, reset, b/x x y):");
             input = inputStream.nextLine();
         } while (!input.equals("stop"));
     }
