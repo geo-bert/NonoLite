@@ -13,7 +13,20 @@ public class Main extends PApplet {
         //PApplet.main("com.nonolite.Main");
         
         Board nonoBoard = new NonoBoard();
-        nonoBoard.generateBoard(4, 2);
+        try (BufferedReader inputStream = new BufferedReader(new FileReader("out/save.txt"))) {
+            
+            StringBuilder boardString = new StringBuilder();
+            String line;
+            while ((line = inputStream.readLine()) != null) {
+                boardString.append(line.concat("\r\n"));
+            }
+            nonoBoard.generateBoard(readBoard(boardString.toString()));
+        }
+        catch (IOException exception) {
+            exception.printStackTrace();
+            System.out.println("file not found");
+            nonoBoard.generateBoard(2, 2);
+        }
         
         Scanner inputStream = new Scanner(System.in);
         String input = "c 0 0";
@@ -58,13 +71,8 @@ public class Main extends PApplet {
             input = inputStream.nextLine();
         } while (!input.equals("stop"));
         
-        try {
-            BufferedWriter outputStream = new BufferedWriter(new FileWriter("out/save.txt"));
-            
+        try (BufferedWriter outputStream = new BufferedWriter(new FileWriter("out/save.txt"))) {
             outputStream.write(printBoard(nonoBoard.getBoard()));
-            
-            outputStream.flush();
-            outputStream.close();
         }
         catch (IOException exception) {
             exception.printStackTrace();
@@ -72,15 +80,29 @@ public class Main extends PApplet {
         }
     }
     
+    private static String[][] readBoard(String boardString) {
+        String[] strings = boardString.split("\r\n");
+        int rows = strings.length;
+        int columns = strings[0].length();
+        
+        String[][] board = new String[columns][rows];
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                board[column][row] = String.valueOf(strings[row].charAt(column));
+            }
+        }
+        return board;
+    }
+    
     private static String printBoard(String[][] board) {
-        StringBuilder str = new StringBuilder();
+        StringBuilder boardString = new StringBuilder();
         for (int column = 0; column < board[0].length; column++) {
             for (String[] strings : board) {
-                str.append(strings[column]);
+                boardString.append(strings[column]);
             }
-            str.append("\r\n");
+            boardString.append("\r\n");
         }
-        return str.toString();
+        return boardString.toString();
     }
     
     public void settings() {
