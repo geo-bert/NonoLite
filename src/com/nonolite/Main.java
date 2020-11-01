@@ -9,8 +9,12 @@ import java.util.Scanner;
 import processing.core.PApplet;
 
 public class Main extends PApplet {
+    private static String[][] _board;
+    private int _screenWidth = 1000;
+    private int _screenHeight = 1000;
+    
     public static void main(String[] args) {
-        //PApplet.main("com.nonolite.Main");
+        PApplet.main("com.nonolite.Main");
         
         Board nonoBoard = new NonoBoard();
         try (BufferedReader inputStream = new BufferedReader(new FileReader("out/save.txt"))) {
@@ -26,6 +30,7 @@ public class Main extends PApplet {
             System.out.println("file not found");
             nonoBoard.generateBoard(2, 2);
         }
+        _board = nonoBoard.getBoard();
         
         Scanner inputStream = new Scanner(System.in);
         String input = "c 0 0";
@@ -102,11 +107,57 @@ public class Main extends PApplet {
     }
     
     public void settings() {
-        size(200, 200);
+        size(_screenWidth, _screenHeight);
+        smooth();
     }
     
     public void draw() {
-        background(100);
-        ellipse(mouseX, mouseY, 20, 20);
+        background(50);
+        
+        int columns = _board.length;
+        int rows = _board[0].length;
+        int cellWidth = _screenWidth / columns;
+        int cellHeight = _screenHeight / rows;
+        
+        for (int column = 0; column < columns; column++) {
+            for (int row = 0; row < rows; row++) {
+                String cellText = _board[column][row];
+                int posX = column * cellWidth;
+                int posY = row * cellHeight;
+                
+                if (!cellText.equals(" ")) {
+                    fill(50);
+                    rect(posX, posY, cellWidth, cellHeight);
+                }
+                
+                fill(200);
+                textSize(32);
+                textAlign(CENTER, CENTER);
+                if (cellText.equals("x")) {
+                    push();
+                    fill(200, 0, 0);
+                    noStroke();
+                    
+                    int width = (int) Math.hypot(cellWidth, cellHeight) / 2;
+                    int height = width / 5;
+                    
+                    rectMode(CENTER);
+                    
+                    translate(posX + (float) cellWidth / 2, posY + (float) cellWidth / 2);
+                    rotate(radians(45));
+                    
+                    rect(0, 0, height, width);
+                    rotate(radians(90));
+                    rect(0, 0, height, width);
+                    pop();
+                }
+                else if (cellText.equals("■")) {
+                
+                }
+                else {
+                    text(cellText, posX + (float) cellWidth / 2, posY + (float) cellHeight / 2);
+                }
+            }
+        }
     }
 }
