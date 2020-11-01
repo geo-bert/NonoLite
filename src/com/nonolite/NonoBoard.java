@@ -60,8 +60,31 @@ public class NonoBoard implements Board {
     
     @Override
     public String[] getSaveBoard() {
-        // nyi
-        return new String[0];
+        String[] saveData = new String[3 + height];
+        saveData[0] = width + " " + height;
+        
+        StringBuilder h = new StringBuilder();
+        for(String s: hHints)
+            h.append(s).append(",");
+        h.deleteCharAt(h.length() - 1);
+        saveData[1] = h.toString();
+    
+        StringBuilder v = new StringBuilder();
+        for(String s: vHints)
+            v.append(s).append(",");
+        v.deleteCharAt(v.length() - 1);
+        saveData[2] = v.toString();
+        
+        StringBuilder f = new StringBuilder();
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+                f.append(board[x][y]);
+            }
+            saveData[y + 3] = f.toString();
+            f.setLength(0);
+        }
+        
+        return saveData;
     }
     
     @Override
