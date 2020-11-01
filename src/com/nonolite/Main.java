@@ -20,10 +20,9 @@ public class Main extends PApplet {
             while ((line = inputStream.readLine()) != null) {
                 boardString.append(line.concat("\r\n"));
             }
-            nonoBoard.generateBoard(readBoard(boardString.toString()));
+            nonoBoard.loadBoard(readBoard(boardString.toString()));
         }
         catch (IOException exception) {
-            exception.printStackTrace();
             System.out.println("file not found");
             nonoBoard.generateBoard(2, 2);
         }
@@ -72,26 +71,23 @@ public class Main extends PApplet {
         } while (!input.equals("stop"));
         
         try (BufferedWriter outputStream = new BufferedWriter(new FileWriter("out/save.txt"))) {
-            outputStream.write(printBoard(nonoBoard.getBoard()));
+            outputStream.write(writeBoard(nonoBoard.getSaveBoard()));
         }
         catch (IOException exception) {
-            exception.printStackTrace();
             System.out.println("file not found");
         }
     }
     
-    private static String[][] readBoard(String boardString) {
-        String[] strings = boardString.split("\r\n");
-        int rows = strings.length;
-        int columns = strings[0].length();
-        
-        String[][] board = new String[columns][rows];
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
-                board[column][row] = String.valueOf(strings[row].charAt(column));
-            }
+    private static String[] readBoard(String boardString) {
+        return boardString.split("\r\n");
+    }
+    
+    private static String writeBoard(String[] board) {
+        StringBuilder boardString = new StringBuilder();
+        for (String line : board) {
+            boardString.append(line).append("\r\n");
         }
-        return board;
+        return boardString.toString();
     }
     
     private static String printBoard(String[][] board) {
