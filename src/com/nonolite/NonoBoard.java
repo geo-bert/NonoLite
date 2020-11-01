@@ -121,7 +121,7 @@ public class NonoBoard implements Board {
                 y++;
             }
             
-            if(!(y < height))
+            if(!(y < height) && !(hints[0].equals("0")))
                 return false;
             
             int k = y + Integer.parseInt(hints[j]);
@@ -145,7 +145,7 @@ public class NonoBoard implements Board {
             }
             
             
-            if(!(x < width))
+            if(!(x < width) && !(hints[0].equals("0")))
                 return false;
     
             int k = x + Integer.parseInt(hints[j]);
