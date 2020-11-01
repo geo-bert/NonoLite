@@ -59,6 +59,12 @@ public class NonoBoard implements Board {
     }
     
     @Override
+    public String[] getSaveBoard() {
+        // nyi
+        return new String[0];
+    }
+    
+    @Override
     public void generateBoard(int height, int width) {
         board = new String[width][height];
         hHints = new String[width];
@@ -82,8 +88,34 @@ public class NonoBoard implements Board {
     }
     
     @Override
-    public void generateBoard(String[][] board) {
-        // nyi
+    public void loadBoard(String[] board) {
+        String[] dim = board[0].split(" ");
+        this.board = new String[Integer.parseInt(dim[0])][Integer.parseInt(dim[1])];
+        hHints = board[1].split(",");
+        vHints = board[2].split(",");
+        width = Integer.parseInt(dim[0]);
+        height = Integer.parseInt(dim[1]);
+        
+        // fill board
+        for(int x = 0; x < width; x++){
+            for(int y = 0; y < height; y++){
+                this.board[x][y] = "" + board[x + 3].charAt(y);
+            }
+        }
+        
+        // get maxHHints
+        for (String hHint : hHints) {
+            String[] tmp = hHint.split(" ");
+            if (tmp.length > maxHHints)
+                maxHHints = tmp.length;
+        }
+    
+        // get maxVHints
+        for (String vHint : vHints) {
+            String[] tmp = vHint.split(" ");
+            if (tmp.length > maxVHints)
+                maxVHints = tmp.length;
+        }
     }
     
     @Override
@@ -159,14 +191,6 @@ public class NonoBoard implements Board {
         }
         
         return true;
-    }
-    
-    public String HHints(){
-        return Arrays.toString(hHints);
-    }
-    
-    public String VHints(){
-        return Arrays.toString(vHints);
     }
     
     private void generateHorizHints(){
