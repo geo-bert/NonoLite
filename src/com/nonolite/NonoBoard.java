@@ -36,7 +36,7 @@ public class NonoBoard implements Board {
             int k = maxHHints - hints.length;
             
             for(int i = 0; i < k; i++)
-                abc[x][i] = " ";
+                abc[x][i] = " ";
     
             if (maxHHints - k >= 0)
                 System.arraycopy(hints, 0, abc[x], k, maxHHints - k);
@@ -48,7 +48,7 @@ public class NonoBoard implements Board {
             int k = maxVHints - hints.length;
     
             for(int i = 0; i < k; i++)
-                abc[i][y] = " ";
+                abc[i][y] = " ";
     
             for(int x = 0; x < maxVHints - k; x++){
                 abc[x + k][y] = hints[x];
@@ -143,7 +143,8 @@ public class NonoBoard implements Board {
             while(x < width && !board[x][i].equals("■")){
                 x++;
             }
-    
+            
+            
             if(!(x < width))
                 return false;
     
