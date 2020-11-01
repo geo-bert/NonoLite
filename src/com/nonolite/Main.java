@@ -10,8 +10,8 @@ import processing.core.PApplet;
 
 public class Main extends PApplet {
     private static String[][] _board;
-    private int _screenWidth = 1000;
-    private int _screenHeight = 1000;
+    private int _screenWidth = 1500;
+    private int _screenHeight = 800;
     
     public static void main(String[] args) {
         PApplet.main("com.nonolite.Main");
@@ -70,6 +70,7 @@ public class Main extends PApplet {
                     System.out.println(msg);
                     break;
             }
+            _board = nonoBoard.getBoard();
             System.out.print(printBoard(nonoBoard.getBoard()));
             System.out.println("Input (stop, check, reset, b/x x y):");
             input = inputStream.nextLine();
@@ -106,9 +107,12 @@ public class Main extends PApplet {
         return boardString.toString();
     }
     
+    public void setup() {
+        surface.setResizable(true);
+    }
+    
     public void settings() {
         size(_screenWidth, _screenHeight);
-        smooth();
     }
     
     public void draw() {
@@ -116,46 +120,54 @@ public class Main extends PApplet {
         
         int columns = _board.length;
         int rows = _board[0].length;
-        int cellWidth = _screenWidth / columns;
-        int cellHeight = _screenHeight / rows;
+        int cellSize = min(width / columns, height / rows);
         
+        translate((float) width / 2 - (float) cellSize * columns / 2, (float) height / 2 - (float) cellSize * rows / 2);
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
                 String cellText = _board[column][row];
-                int posX = column * cellWidth;
-                int posY = row * cellHeight;
+                int posX = column * cellSize;
+                int posY = row * cellSize;
                 
                 if (!cellText.equals(" ")) {
                     fill(50);
-                    rect(posX, posY, cellWidth, cellHeight);
+                    rect(posX, posY, cellSize, cellSize);
                 }
                 
-                fill(200);
-                textSize(32);
-                textAlign(CENTER, CENTER);
                 if (cellText.equals("x")) {
+                    int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
+                    int rectHeight = rectWidth / 5;
+                    
                     push();
                     fill(200, 0, 0);
                     noStroke();
-                    
-                    int width = (int) Math.hypot(cellWidth, cellHeight) / 2;
-                    int height = width / 5;
-                    
+                    translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
+                    rotate(radians(45));
                     rectMode(CENTER);
                     
-                    translate(posX + (float) cellWidth / 2, posY + (float) cellWidth / 2);
-                    rotate(radians(45));
-                    
-                    rect(0, 0, height, width);
+                    rect(0, 0, rectWidth, rectHeight);
                     rotate(radians(90));
-                    rect(0, 0, height, width);
+                    rect(0, 0, rectWidth, rectHeight);
                     pop();
                 }
                 else if (cellText.equals("■")) {
-                
+                    int widthMargin = cellSize / 20;
+                    int heightMargin = cellSize / 20;
+                    
+                    push();
+                    fill(150);
+                    noStroke();
+                    
+                    rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
+                    pop();
                 }
                 else {
-                    text(cellText, posX + (float) cellWidth / 2, posY + (float) cellHeight / 2);
+                    push();
+                    fill(200);
+                    textSize((float) min(width, height) / 12);
+                    textAlign(CENTER, CENTER);
+                    text(cellText, posX + (float) cellSize / 2, posY + (float) cellSize / 2);
+                    pop();
                 }
             }
         }
