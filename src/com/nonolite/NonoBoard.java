@@ -1,8 +1,10 @@
 package com.nonolite;
 
+import processing.core.PApplet;
+import processing.core.PGraphics;
 import java.util.Arrays;
 
-public class NonoBoard implements Board {
+public class NonoBoard extends PApplet implements Board{
     private String[][] board;
     private String[] hHints;
     private String[] vHints;
@@ -214,6 +216,78 @@ public class NonoBoard implements Board {
         }
         
         return true;
+    }
+    
+    @Override
+    public void drawBoard(PGraphics pg, int width, int height) {
+        String[][] board = getBoard();
+        int columns = board.length;
+        int rows = board[0].length;
+        int cellSize = min(width / columns, height / rows);
+        
+        for (int column = 0; column < columns; column++) {
+            for (int row = 0; row < rows; row++) {
+                String cellText = board[column][row];
+                int posX = column * cellSize;
+                int posY = row * cellSize;
+                
+                
+                
+                switch (cellText) {
+                    case " ":
+                        break;
+                    case "x":
+                        pg.push();
+                        pg.fill(50);
+                        pg.rect(posX, posY, cellSize, cellSize);
+                        pg.pop();
+                        
+                        int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
+                        int rectHeight = rectWidth / 5;
+    
+                        pg.push();
+                        pg.fill(200, 0, 0);
+                        pg.noStroke();
+                        pg.translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
+                        pg.rotate(radians(45));
+                        pg.rectMode(CENTER);
+    
+                        pg.rect(0, 0, rectWidth, rectHeight);
+                        pg.rotate(radians(90));
+                        pg.rect(0, 0, rectWidth, rectHeight);
+                        pg.pop();
+                        break;
+                    case "■":
+                        pg.push();
+                        pg.fill(50);
+                        pg.rect(posX, posY, cellSize, cellSize);
+                        pg.pop();
+                        
+                        int widthMargin = cellSize / 20;
+                        int heightMargin = cellSize / 20;
+    
+                        pg.push();
+                        pg.fill(150);
+                        pg.noStroke();
+    
+                        pg.rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
+                        pg.pop();
+                        break;
+                    default:
+                        pg.push();
+                        pg.fill(50);
+                        pg.rect(posX, posY, cellSize, cellSize);
+                        pg.pop();
+                        pg.push();
+                        pg.fill(200);
+                        pg.textSize((float) min(width, height) / 12);
+                        pg.textAlign(CENTER, CENTER);
+                        pg.text(cellText, posX + (float) cellSize / 2, posY + (float) cellSize / 2);
+                        pg.pop();
+                        break;
+                }
+            }
+        }
     }
     
     private void generateHorizHints(){
