@@ -8,4 +8,5 @@ public interface Board {
     String put(String symbol, int x, int y);
     void resetBoard();
     boolean checkBoard();
+    void drawBoard(int width, int height);
 }
