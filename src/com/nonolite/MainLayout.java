@@ -3,15 +3,17 @@ package com.nonolite;
 import processing.core.PGraphics;
 
 public class MainLayout extends Layout {
-    BoardLayout _boardLayout;
+    private SideBarLayout _sideBarLayout;
+    private BoardLayout _boardLayout;
+    
     public MainLayout(PGraphics pg) {
         super(pg);
-        /*
+        
         SideBarLayout sideBarLayout = new SideBarLayout(_pg);
         this.addChild(sideBarLayout);
-        */
-        _boardLayout = new BoardLayout(_pg);
-        this.addChild(_boardLayout);
+        
+        BoardLayout boardLayout = new BoardLayout(_pg);
+        this.addChild(boardLayout);
     }
     
     @Override
@@ -26,9 +28,5 @@ public class MainLayout extends Layout {
             getChildAt(i).drawLayout(childX, childY, childWidth, childHeight);
         }
         _pg.pop();
-    }
-    
-    public BoardLayout getBoardLayout(){
-        return _boardLayout;
     }
 }
