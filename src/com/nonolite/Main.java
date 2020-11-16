@@ -109,6 +109,7 @@ public class Main extends PApplet {
     
     public void setup() {
         surface.setResizable(true);
+        background(50);
     }
     
     public void settings() {
@@ -116,8 +117,6 @@ public class Main extends PApplet {
     }
     
     public void draw() {
-        background(50);
-        
         int widgetWidth = width;
         int widgetHeight = height;
         
