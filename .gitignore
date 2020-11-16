@@ -1,4 +1,7 @@
-# JetBrains IDE: IntelliJ
+# JetBrains IDE: IntelliJ IDEA
+
+# IntelliJ IDEA
+out/
 
 # User-specific files
 .idea/**/workspace.xml
@@ -19,14 +22,11 @@
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
-# CMake
-cmake-build-*/
-
 # File-based project format
 *.iws
 
-# IntelliJ
-out/
+# CMake
+cmake-build-*/
 
 # Editor-based Rest Client
 .idea/httpRequests
