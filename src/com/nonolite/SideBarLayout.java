@@ -20,4 +20,20 @@ public class SideBarLayout extends Layout {
         _settingsLayout = new SettingsLayout(_pg);
         this.addChild(_settingsLayout);*/
     }
+    
+    @Override
+    public void drawLayout(int x, int y, int width, int height) {
+        _pg.push();
+        _pg.fill(60);
+        _pg.rect(x, y, width, height);
+        for (int i = 0; i < getChildCount(); i++) {
+            int childX = x;
+            int childY = y ;
+            int childWidth = width;
+            int childHeight = height;
+            
+            getChildAt(i).drawLayout(childX, childY, childWidth, childHeight);
+        }
+        _pg.pop();
+    }
 }
