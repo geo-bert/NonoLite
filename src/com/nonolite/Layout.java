@@ -1,15 +1,13 @@
 package com.nonolite;
 
+import java.util.ArrayList;
 import java.util.List;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public abstract class Layout extends PApplet {
     protected PGraphics _pg;
-    private List<Layout> _children;
-    
-    public Layout() {
-    }
+    private List<Layout> _children = new ArrayList<>();
     
     public Layout(PGraphics pg) {
         _pg = pg;
