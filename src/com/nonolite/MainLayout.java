@@ -29,4 +29,8 @@ public class MainLayout extends Layout {
         }
         _pg.pop();
     }
+    
+    public BoardLayout getBoardLayout(){
+        return _boardLayout;
+    }
 }
