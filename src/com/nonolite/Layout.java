@@ -4,7 +4,7 @@ import java.util.List;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
-public class Layout extends PApplet {
+public abstract class Layout extends PApplet {
     private PGraphics _pg;
     private List<Layout> _children;
     
@@ -15,27 +15,27 @@ public class Layout extends PApplet {
         _pg = pg;
     }
     
-    public void drawLayout() {
+    public void drawLayout(int x, int y, int width, int height) {
         _pg.push();
         for (Layout child : _children) {
-            child.drawLayout();
+            child.drawLayout(x, y, width, height);
         }
         _pg.pop();
     }
     
-    public void addChild(Layout child) {
+    public final void addChild(Layout child) {
         _children.add(child);
     }
     
-    public void removeAllChildren() {
+    public final void removeAllChildren() {
         _children.clear();
     }
     
-    public void removeChild(int index) {
+    public final void removeChild(int index) {
         _children.remove(index);
     }
     
-    public void removeChild(Layout child) {
+    public final void removeChild(Layout child) {
         _children.remove(child);
     }
 }
