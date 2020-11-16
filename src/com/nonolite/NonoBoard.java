@@ -4,7 +4,7 @@ import java.util.Arrays;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
-public class NonoBoard extends PApplet implements Board{
+public class NonoBoard extends PApplet implements Board {
     private String[][] board;
     private String[] hHints;
     private String[] vHints;
@@ -20,39 +20,43 @@ public class NonoBoard extends PApplet implements Board{
     public String[][] getBoard() {
         String[][] abc = new String[width + maxVHints][height + maxHHints];
         // space left corner
-        for(int i = 0; i < maxVHints; i++){
-            for(int j = 0; j < maxHHints; j++){
+        for (int i = 0; i < maxVHints; i++) {
+            for (int j = 0; j < maxHHints; j++) {
                 abc[i][j] = " ";
             }
         }
-        
+    
         // board
-        for(int x = maxVHints; x < abc.length; x++){
-            if (abc[0].length - maxHHints >= 0)
+        for (int x = maxVHints; x < abc.length; x++) {
+            if (abc[0].length - maxHHints >= 0) {
                 System.arraycopy(board[x - maxVHints], 0, abc[x], maxHHints, abc[0].length - maxHHints);
+            }
         }
-        
+    
         // hint horiz
-        for(int x = maxVHints; x < abc.length; x++){
+        for (int x = maxVHints; x < abc.length; x++) {
             String[] hints = hHints[x - maxVHints].split(" ");
             int k = maxHHints - hints.length;
-            
-            for(int i = 0; i < k; i++)
+        
+            for (int i = 0; i < k; i++) {
                 abc[x][i] = " ";
-    
-            if (maxHHints - k >= 0)
+            }
+        
+            if (maxHHints - k >= 0) {
                 System.arraycopy(hints, 0, abc[x], k, maxHHints - k);
+            }
         }
         
         // hint vert
-        for(int y = maxHHints; y < abc[0].length; y++){
+        for (int y = maxHHints; y < abc[0].length; y++) {
             String[] hints = vHints[y - maxHHints].split(" ");
             int k = maxVHints - hints.length;
-    
-            for(int i = 0; i < k; i++)
+        
+            for (int i = 0; i < k; i++) {
                 abc[i][y] = " ";
-    
-            for(int x = 0; x < maxVHints - k; x++){
+            }
+        
+            for (int x = 0; x < maxVHints - k; x++) {
                 abc[x + k][y] = hints[x];
             }
         }
@@ -66,26 +70,28 @@ public class NonoBoard extends PApplet implements Board{
         saveData[0] = width + " " + height;
         
         StringBuilder h = new StringBuilder();
-        for(String s: hHints)
+        for (String s : hHints) {
             h.append(s).append(",");
+        }
         h.deleteCharAt(h.length() - 1);
         saveData[1] = h.toString();
     
         StringBuilder v = new StringBuilder();
-        for(String s: vHints)
+        for (String s : vHints) {
             v.append(s).append(",");
+        }
         v.deleteCharAt(v.length() - 1);
         saveData[2] = v.toString();
-        
+    
         StringBuilder f = new StringBuilder();
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 f.append(board[x][y]);
             }
             saveData[y + 3] = f.toString();
             f.setLength(0);
         }
-        
+    
         return saveData;
     }
     
@@ -96,19 +102,19 @@ public class NonoBoard extends PApplet implements Board{
         vHints = new String[height];
         this.height = height;
         this.width = width;
-        
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if(Math.random() < 0.6)
+    
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (Math.random() < 0.6) {
                     board[x][y] = "1";
-                else
+                }
+                else {
                     board[x][y] = "0";
+                }
             }
         }
-        
-        generateHorizHints();
-        generateVertHints();
-        
+    
+        generateHints();
         resetBoard();
     }
     
@@ -120,19 +126,20 @@ public class NonoBoard extends PApplet implements Board{
         vHints = board[2].split(",");
         width = Integer.parseInt(dim[0]);
         height = Integer.parseInt(dim[1]);
-        
+    
         // fill board
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 this.board[x][y] = "" + board[x + 3].charAt(y);
             }
         }
-        
+    
         // get maxHHints
         for (String hHint : hHints) {
             String[] tmp = hHint.split(" ");
-            if (tmp.length > maxHHints)
+            if (tmp.length > maxHHints) {
                 maxHHints = tmp.length;
+            }
         }
     
         // get maxVHints
@@ -145,17 +152,21 @@ public class NonoBoard extends PApplet implements Board{
     
     @Override
     public String put(String symbol, int x, int y) {
-        if(!symbol.equals("x") && !symbol.equals("■"))
+        if (!symbol.equals("x") && !symbol.equals("■")) {
             return "invalid symbol";
-        
-        if(x < 0 || y < 0 || x > hHints.length - 1 || y > vHints.length - 1)
+        }
+    
+        if (x < 0 || y < 0 || x > hHints.length - 1 || y > vHints.length - 1) {
             return "out of bounds";
-        
-        if(!board[x][y].equals(symbol))
+        }
+    
+        if (!board[x][y].equals(symbol)) {
             board[x][y] = symbol;
-        else
+        }
+        else {
             board[x][y] = " ";
-        
+        }
+    
         return "";
     }
     
@@ -168,49 +179,53 @@ public class NonoBoard extends PApplet implements Board{
     
     @Override
     public boolean checkBoard() {
-        for(int i = 0; i < width; i++){
+        for (int i = 0; i < width; i++) {
             String[] hints = hHints[i].split(" ");
             int j = 0;
             int y = 0;
-            
+        
             // goto first element
-            while(y < height && !board[i][y].equals("■")){
+            while (y < height && !board[i][y].equals("■")) {
                 y++;
             }
-            
-            if(!(y < height) && !(hints[0].equals("0")))
+        
+            if (!(y < height) && !(hints[0].equals("0"))) {
                 return false;
-            
+            }
+        
             int k = y + Integer.parseInt(hints[j]);
-            
-            while(y < k){
-                if(!board[i][y].equals("■"))
+        
+            while (y < k) {
+                if (!board[i][y].equals("■")) {
                     return false;
-                
+                }
+            
                 y++;
             }
         }
     
-        for(int i = 0; i < height; i++){
+        for (int i = 0; i < height; i++) {
             String[] hints = vHints[i].split(" ");
             int j = 0;
             int x = 0;
-    
+        
             // goto first element
-            while(x < width && !board[x][i].equals("■")){
+            while (x < width && !board[x][i].equals("■")) {
                 x++;
             }
-            
-            
-            if(!(x < width) && !(hints[0].equals("0")))
-                return false;
-    
-            int k = x + Integer.parseInt(hints[j]);
-    
-            while(x < k){
-                if(!board[x][i].equals("■"))
-                    return false;
         
+        
+            if (!(x < width) && !(hints[0].equals("0"))) {
+                return false;
+            }
+        
+            int k = x + Integer.parseInt(hints[j]);
+        
+            while (x < k) {
+                if (!board[x][i].equals("■")) {
+                    return false;
+                }
+            
                 x++;
             }
         }
@@ -293,75 +308,60 @@ public class NonoBoard extends PApplet implements Board{
         pg.pop();
     }
     
-    private void generateHorizHints(){
-        StringBuilder sb = new StringBuilder();
-        int c = 0;
-        int hNr = 0;
-        
-        for(int i = 0; i < width; i++){
-            for(int y = 0; y < height; y++){
-                if(board[i][y].equals("1")){
-                    c++;
-                }
-                else if(c != 0){
-                    sb.append(c).append(" ");
-                    c = 0;
-                    hNr++;
-                }
-            }
-            if(c != 0) {
-                sb.append(c).append(" ");
-                hNr++;
-            }
-            
-            c = 0;
-        
-            if(sb.length() > 0)
-                sb.deleteCharAt(sb.length() - 1);
-            else
-                sb.append(0);
-        
-            if(hNr > maxHHints)
-                maxHHints = hNr;
-            
-            hNr = 0;
-            hHints[i] = sb.toString();
-            sb.setLength(0);
-        }
+    private void generateHints() {
+        generateHints(true);
+        generateHints(false);
     }
     
-    private void generateVertHints(){
+    private void generateHints(boolean h) {
         StringBuilder sb = new StringBuilder();
-        int c = 0;
-        int vNr = 0;
+        int count = 0;
+        int amountOfHints = 0;
         
-        for(int i = 0; i < height; i++){
-            for(int x = 0; x < width; x++){
-                if(board[x][i].equals("1")){
-                    c++;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (board[h ? i : j][h ? j : i].equals("1")) {
+                    count++;
                 }
-                else if(c != 0){
-                    sb.append(c).append(" ");
-                    c = 0;
-                    vNr++;
+                else if (count != 0) {
+                    sb.append(count).append(" ");
+                    count = 0;
+                    amountOfHints++;
                 }
             }
-            if(c != 0) {
-                sb.append(c).append(" ");
-                vNr++;
+            
+            if (count != 0) {
+                sb.append(count).append(" ");
+                amountOfHints++;
             }
-            c = 0;
-        
-            if(sb.length() > 0)
+            
+            count = 0;
+            
+            if (sb.length() > 0) {
                 sb.deleteCharAt(sb.length() - 1);
-            else
+            }
+            else {
                 sb.append(0);
+            }
+            
+            if (h) {
+                if (amountOfHints > maxHHints) {
+                    maxHHints = amountOfHints;
+                }
+                else if (amountOfHints > maxVHints) {
+                    maxVHints = amountOfHints;
+                }
+            }
+            
+            amountOfHints = 0;
     
-            if(vNr > maxVHints)
-                maxVHints = vNr;
-        
-            vNr = 0;
-            vHints[i] = sb.toString();
+            if (h) {
+                hHints[i] = sb.toString();
+            }
+            else {
+                vHints[i] = sb.toString();
+            }
+            
             sb.setLength(0);
         }
     }
