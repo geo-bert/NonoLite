@@ -20,7 +20,7 @@ public class MainLayout extends Layout {
     public void drawLayout(int x, int y, int width, int height) {
         _pg.push();
         for (int i = 0; i < getChildCount(); i++) {
-            int childX = x + i * height / 4;
+            int childX = x + i * width / 4;
             int childY = y;
             int childWidth = (1 + 2 * i) * width / 4;
             int childHeight = height;
