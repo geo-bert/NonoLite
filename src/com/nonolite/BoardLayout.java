@@ -52,7 +52,7 @@ public class BoardLayout extends Layout {
     
     @Override
     public void drawLayout(int x, int y, int width, int height) {
-        _board.drawBoard(getGraphics(), x, y, width, height);
+        _board.drawBoard(_pg, x, y, width, height);
     }
     
     public void keyReleased() {

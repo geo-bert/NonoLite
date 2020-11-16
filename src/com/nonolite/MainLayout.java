@@ -18,9 +18,9 @@ public class MainLayout extends Layout {
         _pg.push();
         for (int i = 0; i < getChildCount(); i++) {
             int childX = x;
-            int childY = y + i * width / 4;
+            int childY = y;// + i * width / 4;
             int childWidth = width;
-            int childHeight = (1 + 2 * i) * height / 4;
+            int childHeight = height;//(1 + 2 * i) * height / 4;
             
             getChildAt(i).drawLayout(childX, childY, childWidth, childHeight);
         }
