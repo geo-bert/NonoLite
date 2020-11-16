@@ -1,8 +1,8 @@
 package com.nonolite;
 
+import java.util.Arrays;
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import java.util.Arrays;
 
 public class NonoBoard extends PApplet implements Board{
     private String[][] board;
@@ -219,20 +219,20 @@ public class NonoBoard extends PApplet implements Board{
     }
     
     @Override
-    public void drawBoard(PGraphics pg, int width, int height) {
+    public void drawBoard(PGraphics pg, int x, int y, int width, int height) {
         String[][] board = getBoard();
         int columns = board.length;
         int rows = board[0].length;
         int cellSize = min(width / columns, height / rows);
         pg.push();
-        pg.translate((float) width / 2 - (float) cellSize * columns / 2, (float) height / 2 - (float) cellSize * rows / 2);
+        pg.translate(x + (float) width / 2 - (float) cellSize * columns / 2,
+            y + (float) height / 2 - (float) cellSize * rows / 2);
         
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
                 String cellText = board[column][row];
                 int posX = column * cellSize;
                 int posY = row * cellSize;
-                
                 
                 
                 switch (cellText) {

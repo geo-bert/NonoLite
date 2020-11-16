@@ -120,12 +120,7 @@ public class Main extends PApplet {
         
         int widgetWidth = width;
         int widgetHeight = height;
-        int widgetX = 0;
-        int widgetY = 0;
         
-        push();
-        translate(widgetX + (float) width / 2 - (float) widgetWidth / 2, widgetY + (float) height / 2 - (float) widgetHeight / 2);
-        _board.drawBoard(getGraphics(), widgetWidth, widgetHeight);
-        pop();
+        _board.drawBoard(getGraphics(), 0, 0, widgetWidth, widgetHeight);
     }
 }

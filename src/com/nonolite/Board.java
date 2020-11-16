@@ -1,7 +1,6 @@
 package com.nonolite;
 
 import processing.core.PGraphics;
-import processing.core.PSurface;
 
 public interface Board {
     String[][] getBoard();
@@ -11,5 +10,5 @@ public interface Board {
     String put(String symbol, int x, int y);
     void resetBoard();
     boolean checkBoard();
-    void drawBoard(PGraphics pg, int width, int height);
+    void drawBoard(PGraphics pg, int x, int y, int width, int height);
 }
