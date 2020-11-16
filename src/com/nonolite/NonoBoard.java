@@ -224,6 +224,8 @@ public class NonoBoard extends PApplet implements Board{
         int columns = board.length;
         int rows = board[0].length;
         int cellSize = min(width / columns, height / rows);
+        pg.push();
+        pg.translate((float) width / 2 - (float) cellSize * columns / 2, (float) height / 2 - (float) cellSize * rows / 2);
         
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
@@ -288,6 +290,7 @@ public class NonoBoard extends PApplet implements Board{
                 }
             }
         }
+        pg.pop();
     }
     
     private void generateHorizHints(){
