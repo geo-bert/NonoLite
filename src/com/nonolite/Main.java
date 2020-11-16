@@ -50,23 +50,22 @@ public class Main extends PApplet {
                     break;
                 default:
                     String[] inputs = input.split(" ");
-                    String inputSymbol;
                     int inputX = Integer.parseInt(inputs[1]);
                     int inputY = Integer.parseInt(inputs[2]);
+                    String msg;
                     switch (inputs[0]) {
                         case "b":
-                            inputSymbol = "■";
+                            msg = nonoBoard.mouseInput(LEFT, inputX, inputY);
                             break;
                         case "x":
                         case "X":
-                            inputSymbol = "x";
+                            msg = nonoBoard.mouseInput(RIGHT, inputX, inputY);
                             break;
                         default:
-                            inputSymbol = inputs[0];
+                            msg = nonoBoard.keyInput(inputs[0].toCharArray()[0]);
                             break;
                     }
                     
-                    String msg = nonoBoard.put(inputSymbol, inputX, inputY);
                     System.out.println(msg);
                     break;
             }
@@ -121,5 +120,13 @@ public class Main extends PApplet {
         int widgetHeight = height;
         
         _board.drawBoard(getGraphics(), 0, 0, widgetWidth, widgetHeight);
+    }
+    
+    public void keyReleased() {
+        _board.keyInput(keyCode);
+    }
+    
+    public void mouseReleased() {
+        _board.mouseInput(mouseButton, mouseX, mouseY);
     }
 }
