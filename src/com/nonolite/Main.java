@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 import processing.core.PApplet;
 
 public class Main extends PApplet {
@@ -32,48 +31,6 @@ public class Main extends PApplet {
         }
         _board = nonoBoard;
         
-        Scanner inputStream = new Scanner(System.in);
-        String input = "c 0 0";
-        do {
-            switch (input) {
-                case "check":
-                    if (nonoBoard.checkBoard()) {
-                        System.out.println("Board correct, well done!");
-                        break;
-                    }
-                    else {
-                        System.out.println("Board incorrect, keep trying.");
-                    }
-                    break;
-                case "reset":
-                    nonoBoard.resetBoard();
-                    break;
-                default:
-                    String[] inputs = input.split(" ");
-                    int inputX = Integer.parseInt(inputs[1]);
-                    int inputY = Integer.parseInt(inputs[2]);
-                    String msg;
-                    switch (inputs[0]) {
-                        case "b":
-                            msg = nonoBoard.mouseInput(LEFT, inputX, inputY);
-                            break;
-                        case "x":
-                        case "X":
-                            msg = nonoBoard.mouseInput(RIGHT, inputX, inputY);
-                            break;
-                        default:
-                            msg = nonoBoard.keyInput(inputs[0].toCharArray()[0]);
-                            break;
-                    }
-                    
-                    System.out.println(msg);
-                    break;
-            }
-            _board = nonoBoard;
-            System.out.print(printBoard(nonoBoard.getBoard()));
-            System.out.println("Input (stop, check, reset, b/x x y):");
-            input = inputStream.nextLine();
-        } while (!input.equals("stop"));
         
         try (BufferedWriter outputStream = new BufferedWriter(new FileWriter("out/save.txt"))) {
             outputStream.write(writeBoard(nonoBoard.getSaveBoard()));
@@ -91,17 +48,6 @@ public class Main extends PApplet {
         StringBuilder boardString = new StringBuilder();
         for (String line : board) {
             boardString.append(line).append("\r\n");
-        }
-        return boardString.toString();
-    }
-    
-    private static String printBoard(String[][] board) {
-        StringBuilder boardString = new StringBuilder();
-        for (int column = 0; column < board[0].length; column++) {
-            for (String[] strings : board) {
-                boardString.append(strings[column]);
-            }
-            boardString.append("\r\n");
         }
         return boardString.toString();
     }
