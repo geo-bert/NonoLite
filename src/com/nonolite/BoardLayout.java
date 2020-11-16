@@ -55,11 +55,11 @@ public class BoardLayout extends Layout {
         _board.drawBoard(_pg, x, y, width, height);
     }
     
-    public void keyReleased() {
+    public void keyInput(int keyCode) {
         _board.keyInput(keyCode);
     }
     
-    public void mouseReleased() {
-        _board.mouseInput(mouseButton, mouseX, mouseY);
+    public void mouseInput(int keyCode, int mouseX, int mouseY) {
+        _board.mouseInput(keyCode, mouseX, mouseY);
     }
 }

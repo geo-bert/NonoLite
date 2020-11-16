@@ -24,4 +24,12 @@ public class Main extends PApplet {
     public void draw() {
         _mainLayout.drawLayout(0, 0, width, height);
     }
+    
+    public void keyReleased() {
+        _mainLayout.getBoardLayout().keyInput(keyCode);
+    }
+    
+    public void mouseReleased() {
+        _mainLayout.getBoardLayout().mouseInput(mouseButton, mouseX, mouseY);
+    }
 }
