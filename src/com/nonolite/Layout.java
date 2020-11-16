@@ -5,7 +5,7 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public abstract class Layout extends PApplet {
-    private PGraphics _pg;
+    protected PGraphics _pg;
     private List<Layout> _children;
     
     public Layout() {
@@ -31,11 +31,19 @@ public abstract class Layout extends PApplet {
         _children.clear();
     }
     
-    public final void removeChild(int index) {
-        _children.remove(index);
+    public final void removeChild(int i) {
+        _children.remove(i);
     }
     
     public final void removeChild(Layout child) {
         _children.remove(child);
+    }
+    
+    public final int getChildCount() {
+        return _children.size();
+    }
+    
+    public final Layout getChildAt(int i) {
+        return _children.get(i);
     }
 }
