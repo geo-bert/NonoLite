@@ -151,8 +151,8 @@ public class NonoBoard extends PApplet implements Board {
     }
     
     @Override
-    public String put(String symbol, int x, int y) {
-        if (!symbol.equals("x") && !symbol.equals("■")) {
+    public String mouseInput(int keyCode, int x, int y) {
+        if (keyCode != LEFT && keyCode != RIGHT) {
             return "invalid symbol";
         }
     
@@ -160,14 +160,20 @@ public class NonoBoard extends PApplet implements Board {
             return "out of bounds";
         }
     
-        if (!board[x][y].equals(symbol)) {
-            board[x][y] = symbol;
+        if (keyCode == LEFT) {
+            board[x][y] = (board[x][y].equals("■")) ? " " : "■";
         }
-        else {
-            board[x][y] = " ";
+    
+        if (keyCode == RIGHT) {
+            board[x][y] = (board[x][y].equals("x")) ? " " : "x";
         }
     
         return "";
+    }
+    
+    @Override
+    public String keyInput(int keyCode) {
+        return "no key input defined";
     }
     
     @Override
