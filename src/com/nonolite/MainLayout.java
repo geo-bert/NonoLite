@@ -8,12 +8,12 @@ public class MainLayout extends Layout {
     
     public MainLayout(PGraphics pg) {
         super(pg);
+    
+        _sideBarLayout = new SideBarLayout(_pg);
+        this.addChild(_sideBarLayout);
         
-        SideBarLayout sideBarLayout = new SideBarLayout(_pg);
-        this.addChild(sideBarLayout);
-        
-        BoardLayout boardLayout = new BoardLayout(_pg);
-        this.addChild(boardLayout);
+        _boardLayout = new BoardLayout(_pg);
+        this.addChild(_boardLayout);
     }
     
     @Override
