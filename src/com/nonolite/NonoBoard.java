@@ -5,58 +5,64 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class NonoBoard extends PApplet implements Board {
+    // Board
     private String[][] board;
-    private String[] hHints;
-    private String[] vHints;
-    private int maxVHints;
-    private int maxHHints;
     private int width;
     private int height;
+    // Hints
+    private String[] horizontal;
+    private String[] vertical;
+    private int maxHorizontal;
+    private int maxVertical;
+    // GUI
+    private int cellSize;
+    float xTranslation;
+    float yTranslation;
     
     public NonoBoard() {
     }
     
     @Override
     public String[][] getBoard() {
-        String[][] abc = new String[width + maxVHints][height + maxHHints];
+        String[][] abc = new String[width + maxVertical][height + maxHorizontal];
         // space left corner
-        for (int i = 0; i < maxVHints; i++) {
-            for (int j = 0; j < maxHHints; j++) {
+        for (int i = 0; i < maxVertical; i++) {
+            for (int j = 0; j < maxHorizontal; j++) {
                 abc[i][j] = " ";
             }
         }
-    
+        
         // board
-        for (int x = maxVHints; x < abc.length; x++) {
-            if (abc[0].length - maxHHints >= 0) {
-                System.arraycopy(board[x - maxVHints], 0, abc[x], maxHHints, abc[0].length - maxHHints);
+        for (int x = maxVertical; x < abc.length; x++) {
+            if (abc[0].length - maxHorizontal >= 0) {
+                System.arraycopy(board[x - maxVertical], 0, abc[x], maxHorizontal, abc[0].length - maxHorizontal);
             }
         }
-    
-        // hint horiz
-        for (int x = maxVHints; x < abc.length; x++) {
-            String[] hints = hHints[x - maxVHints].split(" ");
-            int k = maxHHints - hints.length;
         
+        // hint horiz
+        for (int x = maxVertical; x < abc.length; x++) {
+            String[] hints = horizontal[x - maxVertical].split(" ");
+            int k = maxHorizontal - hints.length;
+            
             for (int i = 0; i < k; i++) {
                 abc[x][i] = " ";
             }
-        
-            if (maxHHints - k >= 0) {
-                System.arraycopy(hints, 0, abc[x], k, maxHHints - k);
+            
+            if (maxHorizontal - k >= 0) {
+                System.arraycopy(hints, 0, abc[x], k, maxHorizontal - k);
             }
         }
         
         // hint vert
-        for (int y = maxHHints; y < abc[0].length; y++) {
-            String[] hints = vHints[y - maxHHints].split(" ");
-            int k = maxVHints - hints.length;
-        
+        for (int y = maxHorizontal; y < abc[0].length; y++) {
+            String[] hints = vertical[y - maxHorizontal].split(" ");
+            int k = maxVertical - hints.length;
+            
             for (int i = 0; i < k; i++) {
                 abc[i][y] = " ";
             }
-        
-            for (int x = 0; x < maxVHints - k; x++) {
+            
+            for (int x = 0; x < maxVertical - k; x++) {
                 abc[x + k][y] = hints[x];
             }
         }
@@ -70,14 +76,14 @@ public class NonoBoard extends PApplet implements Board {
         saveData[0] = width + " " + height;
         
         StringBuilder h = new StringBuilder();
-        for (String s : hHints) {
+        for (String s : horizontal) {
             h.append(s).append(",");
         }
         h.deleteCharAt(h.length() - 1);
         saveData[1] = h.toString();
     
         StringBuilder v = new StringBuilder();
-        for (String s : vHints) {
+        for (String s : vertical) {
             v.append(s).append(",");
         }
         v.deleteCharAt(v.length() - 1);
@@ -98,8 +104,8 @@ public class NonoBoard extends PApplet implements Board {
     @Override
     public void generateBoard(int height, int width) {
         board = new String[width][height];
-        hHints = new String[width];
-        vHints = new String[height];
+        horizontal = new String[width];
+        vertical = new String[height];
         this.height = height;
         this.width = width;
     
@@ -122,8 +128,8 @@ public class NonoBoard extends PApplet implements Board {
     public void loadBoard(String[] board) {
         String[] dim = board[0].split(" ");
         this.board = new String[Integer.parseInt(dim[0])][Integer.parseInt(dim[1])];
-        hHints = board[1].split(",");
-        vHints = board[2].split(",");
+        horizontal = board[1].split(",");
+        vertical = board[2].split(",");
         width = Integer.parseInt(dim[0]);
         height = Integer.parseInt(dim[1]);
     
@@ -135,31 +141,35 @@ public class NonoBoard extends PApplet implements Board {
         }
     
         // get maxHHints
-        for (String hHint : hHints) {
+        for (String hHint : horizontal) {
             String[] tmp = hHint.split(" ");
-            if (tmp.length > maxHHints) {
-                maxHHints = tmp.length;
+            if (tmp.length > maxHorizontal) {
+                maxHorizontal = tmp.length;
             }
         }
     
         // get maxVHints
-        for (String vHint : vHints) {
+        for (String vHint : vertical) {
             String[] tmp = vHint.split(" ");
-            if (tmp.length > maxVHints)
-                maxVHints = tmp.length;
+            if (tmp.length > maxVertical) {
+                maxVertical = tmp.length;
+            }
         }
     }
     
     @Override
-    public String mouseInput(int keyCode, int x, int y) {
+    public String mouseInput(int keyCode, int xPos, int yPos) {
+        int x = (int) Math.floor((xPos - (maxVertical * cellSize) - xTranslation) / cellSize);
+        int y = (int) Math.floor((yPos - (maxHorizontal * cellSize) - yTranslation) / cellSize);
+        
         if (keyCode != LEFT && keyCode != RIGHT) {
             return "invalid symbol";
         }
-    
-        if (x < 0 || y < 0 || x > hHints.length - 1 || y > vHints.length - 1) {
+        
+        if (x < 0 || y < 0 || x > horizontal.length - 1 || y > vertical.length - 1) {
             return "out of bounds";
         }
-    
+        
         if (keyCode == LEFT) {
             board[x][y] = (board[x][y].equals("■")) ? " " : "■";
         }
@@ -186,7 +196,7 @@ public class NonoBoard extends PApplet implements Board {
     @Override
     public boolean checkBoard() {
         for (int i = 0; i < width; i++) {
-            String[] hints = hHints[i].split(" ");
+            String[] hints = horizontal[i].split(" ");
             int j = 0;
             int y = 0;
         
@@ -211,7 +221,7 @@ public class NonoBoard extends PApplet implements Board {
         }
     
         for (int i = 0; i < height; i++) {
-            String[] hints = vHints[i].split(" ");
+            String[] hints = vertical[i].split(" ");
             int j = 0;
             int x = 0;
         
@@ -246,16 +256,19 @@ public class NonoBoard extends PApplet implements Board {
         int rows = board[0].length;
         int cellSize = min(width / columns, height / rows);
         pg.push();
-        pg.translate(x + (float) width / 2 - (float) cellSize * columns / 2,
-            y + (float) height / 2 - (float) cellSize * rows / 2);
-        
+        xTranslation = x + (float) width / 2 - (float) cellSize * columns / 2;
+        yTranslation = y + (float) height / 2 - (float) cellSize * rows / 2;
+        pg.translate(xTranslation, yTranslation);
+    
+        this.cellSize = cellSize;
+    
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
                 String cellText = board[column][row];
                 int posX = column * cellSize;
                 int posY = row * cellSize;
-                
-                
+            
+            
                 switch (cellText) {
                     case " ":
                         break;
@@ -351,21 +364,21 @@ public class NonoBoard extends PApplet implements Board {
             }
             
             if (h) {
-                if (amountOfHints > maxHHints) {
-                    maxHHints = amountOfHints;
+                if (amountOfHints > maxHorizontal) {
+                    maxHorizontal = amountOfHints;
                 }
-                else if (amountOfHints > maxVHints) {
-                    maxVHints = amountOfHints;
+                else if (amountOfHints > maxVertical) {
+                    maxVertical = amountOfHints;
                 }
             }
             
             amountOfHints = 0;
     
             if (h) {
-                hHints[i] = sb.toString();
+                horizontal[i] = sb.toString();
             }
             else {
-                vHints[i] = sb.toString();
+                vertical[i] = sb.toString();
             }
             
             sb.setLength(0);
