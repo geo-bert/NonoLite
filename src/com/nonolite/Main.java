@@ -50,23 +50,22 @@ public class Main extends PApplet {
                     break;
                 default:
                     String[] inputs = input.split(" ");
-                    String inputSymbol;
                     int inputX = Integer.parseInt(inputs[1]);
                     int inputY = Integer.parseInt(inputs[2]);
+                    String msg;
                     switch (inputs[0]) {
                         case "b":
-                            inputSymbol = "■";
+                            msg = nonoBoard.mouseInput(LEFT, inputX, inputY);
                             break;
                         case "x":
                         case "X":
-                            inputSymbol = "x";
+                            msg = nonoBoard.mouseInput(RIGHT, inputX, inputY);
                             break;
                         default:
-                            inputSymbol = inputs[0];
+                            msg = nonoBoard.keyInput(inputs[0].toCharArray()[0]);
                             break;
                     }
                     
-                    String msg = nonoBoard.put(inputSymbol, inputX, inputY);
                     System.out.println(msg);
                     break;
             }
@@ -109,6 +108,7 @@ public class Main extends PApplet {
     
     public void setup() {
         surface.setResizable(true);
+        background(50);
     }
     
     public void settings() {
@@ -116,82 +116,17 @@ public class Main extends PApplet {
     }
     
     public void draw() {
-        background(50);
-        
-        String[][] board = _board.getBoard();
-        int columns = board.length;
-        int rows = board[0].length;
         int widgetWidth = width;
         int widgetHeight = height;
-        //int cellSize = min(width / columns, height / rows);
         
-        push();
-        translate((float) width / 2 - (float) cellSize * columns / 2, (float) height / 2 - (float) cellSize * rows / 2);
-        _board.drawBoard(widgetWidth, widgetHeight);
-        pop();
-        /*
-        for (int column = 0; column < columns; column++) {
-            for (int row = 0; row < rows; row++) {
-                String cellText = board[column][row];
-                int posX = column * cellSize;
-                int posY = row * cellSize;
-                
-                
-                
-                switch (cellText) {
-                    case " ":
-                        break;
-                    case "x":
-                        push();
-                        fill(50);
-                        rect(posX, posY, cellSize, cellSize);
-                        pop();
-                        
-                        int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
-                        int rectHeight = rectWidth / 5;
-                        
-                        push();
-                        fill(200, 0, 0);
-                        noStroke();
-                        translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
-                        rotate(radians(45));
-                        rectMode(CENTER);
-                        
-                        rect(0, 0, rectWidth, rectHeight);
-                        rotate(radians(90));
-                        rect(0, 0, rectWidth, rectHeight);
-                        pop();
-                        break;
-                    case "■":
-                        push();
-                        fill(50);
-                        rect(posX, posY, cellSize, cellSize);
-                        pop();
-                        
-                        int widthMargin = cellSize / 20;
-                        int heightMargin = cellSize / 20;
-                        
-                        push();
-                        fill(150);
-                        noStroke();
-                        
-                        rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
-                        pop();
-                        break;
-                    default:
-                        push();
-                        fill(50);
-                        rect(posX, posY, cellSize, cellSize);
-                        pop();
-                        push();
-                        fill(200);
-                        textSize((float) min(width, height) / 12);
-                        textAlign(CENTER, CENTER);
-                        text(cellText, posX + (float) cellSize / 2, posY + (float) cellSize / 2);
-                        pop();
-                        break;
-                }
-            }
-        }*/
+        _board.drawBoard(getGraphics(), 0, 0, widgetWidth, widgetHeight);
+    }
+    
+    public void keyReleased() {
+        _board.keyInput(keyCode);
+    }
+    
+    public void mouseReleased() {
+        _board.mouseInput(mouseButton, mouseX, mouseY);
     }
 }
