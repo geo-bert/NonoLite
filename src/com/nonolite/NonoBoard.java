@@ -196,30 +196,11 @@ public class NonoBoard extends PApplet implements Board {
         int x = (int) Math.floor((xPos - (maxVertical * cellSize) - xTranslation) / cellSize);
         int y = (int) Math.floor((yPos - (maxHorizontal * cellSize) - yTranslation) / cellSize);
         
-        if (keyCode != LEFT && keyCode != RIGHT) {
-            return "invalid symbol";
-        }
-        
-        if (x < 0 || y < 0 || x > horizontal.length - 1 || y > vertical.length - 1) {
-            return "out of bounds";
-        }
-        
         if (x == lastX && y == lastY) {
             return "";
         }
         
-        if (keyCode == LEFT) {
-            board[x][y] = (board[x][y].equals("■")) ? " " : "■";
-        }
-        
-        if (keyCode == RIGHT) {
-            board[x][y] = (board[x][y].equals("x")) ? " " : "x";
-        }
-        
-        lastX = x;
-        lastY = y;
-        
-        return "";
+        return mouseInput(keyCode, xPos, yPos);
     }
     
     @Override
