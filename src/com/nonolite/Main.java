@@ -31,6 +31,7 @@ public class Main extends PApplet {
     
     public void mousePressed() {
         _mainLayout.getBoardLayout().mouseInput(mouseButton, mouseX, mouseY);
+        System.out.println(_mainLayout.getBoardLayout().check());
     }
     
     public void mouseDragged() {

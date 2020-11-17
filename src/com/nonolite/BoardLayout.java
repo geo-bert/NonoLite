@@ -66,4 +66,8 @@ public class BoardLayout extends Layout {
     public void mouseDragInput(int keyCode, int mouseX, int mouseY) {
         _board.mouseDragInput(keyCode, mouseX, mouseY);
     }
+    
+    public boolean check(){
+        return _board.checkBoard();
+    }
 }
