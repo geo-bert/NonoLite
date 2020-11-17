@@ -160,7 +160,39 @@ public class NonoBoard extends PApplet implements Board {
     }
     
     @Override
+    public String keyInput(int keyCode) {
+        return "no key input defined";
+    }
+    
+    @Override
     public String mouseInput(int keyCode, int xPos, int yPos) {
+        int x = (int) Math.floor((xPos - (maxVertical * cellSize) - xTranslation) / cellSize);
+        int y = (int) Math.floor((yPos - (maxHorizontal * cellSize) - yTranslation) / cellSize);
+        
+        if (keyCode != LEFT && keyCode != RIGHT) {
+            return "invalid symbol";
+        }
+        
+        if (x < 0 || y < 0 || x > horizontal.length - 1 || y > vertical.length - 1) {
+            return "out of bounds";
+        }
+        
+        if (keyCode == LEFT) {
+            board[x][y] = (board[x][y].equals("■")) ? " " : "■";
+        }
+        
+        if (keyCode == RIGHT) {
+            board[x][y] = (board[x][y].equals("x")) ? " " : "x";
+        }
+        
+        lastX = x;
+        lastY = y;
+        
+        return "";
+    }
+    
+    @Override
+    public String mouseDragInput(int keyCode, int xPos, int yPos) {
         int x = (int) Math.floor((xPos - (maxVertical * cellSize) - xTranslation) / cellSize);
         int y = (int) Math.floor((yPos - (maxHorizontal * cellSize) - yTranslation) / cellSize);
         
@@ -188,11 +220,6 @@ public class NonoBoard extends PApplet implements Board {
         lastY = y;
         
         return "";
-    }
-    
-    @Override
-    public String keyInput(int keyCode) {
-        return "no key input defined";
     }
     
     @Override

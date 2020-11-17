@@ -29,7 +29,11 @@ public class Main extends PApplet {
         _mainLayout.getBoardLayout().keyInput(keyCode);
     }
     
-    public void mouseDragged() {
+    public void mousePressed() {
         _mainLayout.getBoardLayout().mouseInput(mouseButton, mouseX, mouseY);
+    }
+    
+    public void mouseDragged() {
+        _mainLayout.getBoardLayout().mouseDragInput(mouseButton, mouseX, mouseY);
     }
 }

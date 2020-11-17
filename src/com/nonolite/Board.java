@@ -15,6 +15,8 @@ public interface Board {
     
     String mouseInput(int keyCode, int x, int y);
     
+    String mouseDragInput(int keyCode, int x, int y);
+    
     void resetBoard();
     
     boolean checkBoard();
