@@ -231,58 +231,42 @@ public class NonoBoard extends PApplet implements Board {
     
     @Override
     public boolean checkBoard() {
-        for (int i = 0; i < width; i++) {
-            String[] hints = horizontal[i].split(" ");
-            int j = 0;
-            int y = 0;
-            
-            // goto first element
-            while (y < height && !board[i][y].equals("■")) {
-                y++;
-            }
-            
-            if (!(y < height) && !(hints[0].equals("0"))) {
-                return false;
-            }
-            
-            int k = y + Integer.parseInt(hints[j]);
-            
-            while (y < k) {
-                if (!board[i][y].equals("■")) {
-                    return false;
+        return check(true) && check(false);
+    }
+    
+    private boolean check(boolean h) {
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        String[] hints = new String[h ? width : height];
+        
+        for (int out = 0; out < (h ? width : height); out++) {
+            for (int in = 0; in < (h ? height : width); in++) {
+                if (board[h ? out : in][h ? in : out].equals("■")) {
+                    count++;
                 }
-                
-                y++;
+                else if (count > 0) {
+                    sb.append(count).append(" ");
+                    count = 0;
+                }
             }
+            
+            if (count > 0) {
+                sb.append(count).append(" ");
+                count = 0;
+            }
+            
+            if (sb.length() > 0) {
+                sb.deleteCharAt(sb.length() - 1);
+            }
+            else {
+                sb.append("0");
+            }
+            
+            hints[out] = sb.toString();
+            sb.setLength(0);
         }
         
-        for (int i = 0; i < height; i++) {
-            String[] hints = vertical[i].split(" ");
-            int j = 0;
-            int x = 0;
-            
-            // goto first element
-            while (x < width && !board[x][i].equals("■")) {
-                x++;
-            }
-            
-            
-            if (!(x < width) && !(hints[0].equals("0"))) {
-                return false;
-            }
-            
-            int k = x + Integer.parseInt(hints[j]);
-            
-            while (x < k) {
-                if (!board[x][i].equals("■")) {
-                    return false;
-                }
-                
-                x++;
-            }
-        }
-        
-        return true;
+        return Arrays.equals(hints, h ? horizontal : vertical);
     }
     
     @Override
