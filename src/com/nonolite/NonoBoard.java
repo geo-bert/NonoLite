@@ -16,6 +16,8 @@ public class NonoBoard extends PApplet implements Board {
     private int maxVertical;
     // GUI
     private int cellSize;
+    private int lastX = -1;
+    private int lastY = -1;
     float xTranslation;
     float yTranslation;
     
@@ -81,14 +83,14 @@ public class NonoBoard extends PApplet implements Board {
         }
         h.deleteCharAt(h.length() - 1);
         saveData[1] = h.toString();
-    
+        
         StringBuilder v = new StringBuilder();
         for (String s : vertical) {
             v.append(s).append(",");
         }
         v.deleteCharAt(v.length() - 1);
         saveData[2] = v.toString();
-    
+        
         StringBuilder f = new StringBuilder();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -97,7 +99,7 @@ public class NonoBoard extends PApplet implements Board {
             saveData[y + 3] = f.toString();
             f.setLength(0);
         }
-    
+        
         return saveData;
     }
     
@@ -108,7 +110,7 @@ public class NonoBoard extends PApplet implements Board {
         vertical = new String[height];
         this.height = height;
         this.width = width;
-    
+        
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (Math.random() < 0.6) {
@@ -119,7 +121,7 @@ public class NonoBoard extends PApplet implements Board {
                 }
             }
         }
-    
+        
         generateHints();
         resetBoard();
     }
@@ -132,14 +134,14 @@ public class NonoBoard extends PApplet implements Board {
         vertical = board[2].split(",");
         width = Integer.parseInt(dim[0]);
         height = Integer.parseInt(dim[1]);
-    
+        
         // fill board
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 this.board[x][y] = "" + board[x + 3].charAt(y);
             }
         }
-    
+        
         // get maxHHints
         for (String hHint : horizontal) {
             String[] tmp = hHint.split(" ");
@@ -147,7 +149,7 @@ public class NonoBoard extends PApplet implements Board {
                 maxHorizontal = tmp.length;
             }
         }
-    
+        
         // get maxVHints
         for (String vHint : vertical) {
             String[] tmp = vHint.split(" ");
@@ -170,14 +172,21 @@ public class NonoBoard extends PApplet implements Board {
             return "out of bounds";
         }
         
+        if (x == lastX && y == lastY) {
+            return "";
+        }
+        
         if (keyCode == LEFT) {
             board[x][y] = (board[x][y].equals("■")) ? " " : "■";
         }
-    
+        
         if (keyCode == RIGHT) {
             board[x][y] = (board[x][y].equals("x")) ? " " : "x";
         }
-    
+        
+        lastX = x;
+        lastY = y;
+        
         return "";
     }
     
@@ -199,49 +208,49 @@ public class NonoBoard extends PApplet implements Board {
             String[] hints = horizontal[i].split(" ");
             int j = 0;
             int y = 0;
-        
+            
             // goto first element
             while (y < height && !board[i][y].equals("■")) {
                 y++;
             }
-        
+            
             if (!(y < height) && !(hints[0].equals("0"))) {
                 return false;
             }
-        
+            
             int k = y + Integer.parseInt(hints[j]);
-        
+            
             while (y < k) {
                 if (!board[i][y].equals("■")) {
                     return false;
                 }
-            
+                
                 y++;
             }
         }
-    
+        
         for (int i = 0; i < height; i++) {
             String[] hints = vertical[i].split(" ");
             int j = 0;
             int x = 0;
-        
+            
             // goto first element
             while (x < width && !board[x][i].equals("■")) {
                 x++;
             }
-        
-        
+            
+            
             if (!(x < width) && !(hints[0].equals("0"))) {
                 return false;
             }
-        
+            
             int k = x + Integer.parseInt(hints[j]);
-        
+            
             while (x < k) {
                 if (!board[x][i].equals("■")) {
                     return false;
                 }
-            
+                
                 x++;
             }
         }
@@ -259,16 +268,16 @@ public class NonoBoard extends PApplet implements Board {
         xTranslation = x + (float) width / 2 - (float) cellSize * columns / 2;
         yTranslation = y + (float) height / 2 - (float) cellSize * rows / 2;
         pg.translate(xTranslation, yTranslation);
-    
+        
         this.cellSize = cellSize;
-    
+        
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
                 String cellText = board[column][row];
                 int posX = column * cellSize;
                 int posY = row * cellSize;
-            
-            
+                
+                
                 switch (cellText) {
                     case " ":
                         break;
@@ -280,14 +289,14 @@ public class NonoBoard extends PApplet implements Board {
                         
                         int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
                         int rectHeight = rectWidth / 5;
-    
+                        
                         pg.push();
                         pg.fill(200, 0, 0);
                         pg.noStroke();
                         pg.translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
                         pg.rotate(radians(45));
                         pg.rectMode(CENTER);
-    
+                        
                         pg.rect(0, 0, rectWidth, rectHeight);
                         pg.rotate(radians(90));
                         pg.rect(0, 0, rectWidth, rectHeight);
@@ -301,11 +310,11 @@ public class NonoBoard extends PApplet implements Board {
                         
                         int widthMargin = cellSize / 20;
                         int heightMargin = cellSize / 20;
-    
+                        
                         pg.push();
                         pg.fill(150);
                         pg.noStroke();
-    
+                        
                         pg.rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
                         pg.pop();
                         break;
@@ -373,7 +382,7 @@ public class NonoBoard extends PApplet implements Board {
             }
             
             amountOfHints = 0;
-    
+            
             if (h) {
                 horizontal[i] = sb.toString();
             }
