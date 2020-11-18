@@ -185,78 +185,77 @@ public class NonoBoard extends PApplet implements Board {
                 int posY = row * cellSize;
             
                 if (column > vert - 1 && row > hor - 1) {
-                    pg.push();
-                    pg.fill(50);
-                    pg.rect(posX, posY, cellSize, cellSize);
-                    pg.pop();
-                
-                    switch (board[column - vert][row - hor]) {
-                        case "x":
-                            int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
-                            int rectHeight = rectWidth / 5;
-                        
-                            pg.push();
-                            pg.fill(200, 0, 0);
-                            pg.noStroke();
-                            pg.translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
-                            pg.rotate(radians(45));
-                            pg.rectMode(CENTER);
-                        
-                            pg.rect(0, 0, rectWidth, rectHeight);
-                            pg.rotate(radians(90));
-                            pg.rect(0, 0, rectWidth, rectHeight);
-                            pg.pop();
-                            break;
-                        case "■":
-                            int widthMargin = cellSize / 20;
-                            int heightMargin = cellSize / 20;
-                        
-                            pg.push();
-                            pg.fill(150);
-                            pg.noStroke();
-                        
-                            pg.rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
-                            pg.pop();
-                            break;
-                    }
+                    drawClick(pg, column, row);
                 }
                 else if (column > vert - 1) {
-                    String[] a = horizontal[column - vert].split(" ");
-                    int ersterIndex = maxHorizontal - a.length;
-                
-                    if (ersterIndex <= row) {
-                        pg.push();
-                        pg.fill(50);
-                        pg.rect(posX, posY, cellSize, cellSize);
-                        pg.pop();
-                        pg.push();
-                        pg.fill(200);
-                        pg.textSize((float) cellSize / 1.5f);
-                        pg.textAlign(CENTER, TOP);
-                        pg.text(a[row - ersterIndex], posX + (float) cellSize / 2, posY + (float) cellSize / 8);
-                        pg.pop();
-                    }
+                    drawHint(pg, horizontal, maxHorizontal, column, vert, row, posX, posY);
                 }
                 else if (row > hor - 1) {
-                    String[] a = vertical[row - hor].split(" ");
-                    int ersterIndex = maxVertical - a.length;
-                    if (ersterIndex <= column) {
-                        pg.push();
-                        pg.fill(50);
-                        pg.rect(posX, posY, cellSize, cellSize);
-                        pg.pop();
-                    
-                        pg.push();
-                        pg.fill(200);
-                        pg.textSize((float) cellSize / 1.5f);
-                        pg.textAlign(CENTER, TOP);
-                        pg.text(a[column - ersterIndex], posX + (float) cellSize / 2, posY + (float) cellSize / 8);
-                        pg.pop();
-                    }
+                    drawHint(pg, vertical, maxVertical, row, hor, column, posX, posY);
                 }
             }
         }
         pg.pop();
+    }
+    
+    private void drawClick(PGraphics pg, int column, int row){
+        int vert = max(maxVertical, 1);
+        int hor = max(maxHorizontal, 1);
+        int posX = column * cellSize;
+        int posY = row * cellSize;
+        
+        pg.push();
+        pg.fill(50);
+        pg.rect(posX, posY, cellSize, cellSize);
+        pg.pop();
+    
+        switch (board[column - vert][row - hor]) {
+            case "x":
+                int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
+                int rectHeight = rectWidth / 5;
+            
+                pg.push();
+                pg.fill(200, 0, 0);
+                pg.noStroke();
+                pg.translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
+                pg.rotate(radians(45));
+                pg.rectMode(CENTER);
+            
+                pg.rect(0, 0, rectWidth, rectHeight);
+                pg.rotate(radians(90));
+                pg.rect(0, 0, rectWidth, rectHeight);
+                pg.pop();
+                break;
+            case "■":
+                int widthMargin = cellSize / 20;
+                int heightMargin = cellSize / 20;
+            
+                pg.push();
+                pg.fill(150);
+                pg.noStroke();
+            
+                pg.rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
+                pg.pop();
+                break;
+        }
+    }
+    
+    private void drawHint(PGraphics pg, String[] hint, int max, int x, int y, int z, int posX, int posY){
+        String[] a = hint[x - y].split(" ");
+        int first = max - a.length;
+        if (first <= z) {
+            pg.push();
+            pg.fill(50);
+            pg.rect(posX, posY, cellSize, cellSize);
+            pg.pop();
+        
+            pg.push();
+            pg.fill(200);
+            pg.textSize((float) cellSize / 1.5f);
+            pg.textAlign(CENTER, TOP);
+            pg.text(a[z - first], posX + (float) cellSize / 2, posY + (float) cellSize / 8);
+            pg.pop();
+        }
     }
     
     private String[] generateHints(boolean h, boolean c) {
