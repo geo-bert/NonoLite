@@ -11,6 +11,7 @@ public abstract class Layout extends PApplet {
     private int _y;
     private int _width;
     private int _height;
+    private int _depth = 0;
     private final List<Layout> _children = new ArrayList<>();
     
     public Layout(PGraphics pg) {
@@ -75,5 +76,13 @@ public abstract class Layout extends PApplet {
     
     public final int getHeight() {
         return _height;
+    }
+    
+    public final int getDepth() {
+        return _depth;
+    }
+    
+    public final void setDepth(int depth) {
+        _depth = depth;
     }
 }
