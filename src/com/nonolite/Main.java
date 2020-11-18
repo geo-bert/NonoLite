@@ -79,7 +79,7 @@ public class Main extends PApplet {
         
         for (int i = 0; i < _clickables.size(); i++) {
             if (layout.getDepth() == _clickables.get(i).getDepth()) {
-                layout.setDepth(layout.getDepth() - 1);
+                layout.setDepth(layout.getDepth() + 1);
                 i = 0;
             }
         }
