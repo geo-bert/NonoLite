@@ -6,6 +6,7 @@ public class SideBarLayout extends Layout {
     private final int _BUTTONHEIGHT = 75;
     private TimerLayout _timerLayout;
     private ButtonLayout _checkButton;
+    private ButtonLayout _generateButton;
     private ButtonLayout _resetButton;
     private ButtonLayout _saveButton;
     private InventoryLayout _inventoryLayout;
@@ -27,6 +28,17 @@ public class SideBarLayout extends Layout {
             }
         });
         this.addChild(_checkButton);
+    
+        _generateButton = new ButtonLayout(_pg);
+        _generateButton.setText("Generate Random");
+        _generateButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public String onClick(int keyCode, int x, int y) {
+                Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
+                return "";
+            }
+        });
+        this.addChild(_generateButton);
         
         _resetButton = new ButtonLayout(_pg);
         _resetButton.setText("Reset");
