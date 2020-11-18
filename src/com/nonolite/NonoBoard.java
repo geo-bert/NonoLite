@@ -25,54 +25,6 @@ public class NonoBoard extends PApplet implements Board {
     }
     
     @Override
-    public String[][] getBoard() {
-        String[][] abc = new String[width + maxVertical][height + maxHorizontal];
-        // space left corner
-        for (int i = 0; i < maxVertical; i++) {
-            for (int j = 0; j < maxHorizontal; j++) {
-                abc[i][j] = " ";
-            }
-        }
-        
-        // board
-        for (int x = maxVertical; x < abc.length; x++) {
-            if (abc[0].length - maxHorizontal >= 0) {
-                System.arraycopy(board[x - maxVertical], 0, abc[x], maxHorizontal, abc[0].length - maxHorizontal);
-            }
-        }
-        
-        // hint horiz
-        for (int x = maxVertical; x < abc.length; x++) {
-            String[] hints = horizontal[x - maxVertical].split(" ");
-            int k = maxHorizontal - hints.length;
-            
-            for (int i = 0; i < k; i++) {
-                abc[x][i] = " ";
-            }
-            
-            if (maxHorizontal - k >= 0) {
-                System.arraycopy(hints, 0, abc[x], k, maxHorizontal - k);
-            }
-        }
-        
-        // hint vert
-        for (int y = maxHorizontal; y < abc[0].length; y++) {
-            String[] hints = vertical[y - maxHorizontal].split(" ");
-            int k = maxVertical - hints.length;
-            
-            for (int i = 0; i < k; i++) {
-                abc[i][y] = " ";
-            }
-            
-            for (int x = 0; x < maxVertical - k; x++) {
-                abc[x + k][y] = hints[x];
-            }
-        }
-        
-        return abc;
-    }
-    
-    @Override
     public String[] getSaveBoard() {
         String[] saveData = new String[3 + height];
         saveData[0] = width + " " + height;
@@ -106,23 +58,22 @@ public class NonoBoard extends PApplet implements Board {
     @Override
     public void generateBoard(int height, int width) {
         board = new String[width][height];
-        horizontal = new String[width];
-        vertical = new String[height];
         this.height = height;
         this.width = width;
-        
+    
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (Math.random() < 0.6) {
-                    board[x][y] = "1";
+                    board[x][y] = "■";
                 }
                 else {
-                    board[x][y] = "0";
+                    board[x][y] = " ";
                 }
             }
         }
-        
-        generateHints();
+    
+        horizontal = generateHints(true, true);
+        vertical = generateHints(false, true);
         resetBoard();
     }
     
@@ -212,135 +163,111 @@ public class NonoBoard extends PApplet implements Board {
     
     @Override
     public boolean checkBoard() {
-        return check(true) && check(false);
-    }
-    
-    private boolean check(boolean h) {
-        StringBuilder sb = new StringBuilder();
-        int count = 0;
-        String[] hints = new String[h ? width : height];
-        
-        for (int out = 0; out < (h ? width : height); out++) {
-            for (int in = 0; in < (h ? height : width); in++) {
-                if (board[h ? out : in][h ? in : out].equals("■")) {
-                    count++;
-                }
-                else if (count > 0) {
-                    sb.append(count).append(" ");
-                    count = 0;
-                }
-            }
-            
-            if (count > 0) {
-                sb.append(count).append(" ");
-                count = 0;
-            }
-            
-            if (sb.length() > 0) {
-                sb.deleteCharAt(sb.length() - 1);
-            }
-            else {
-                sb.append("0");
-            }
-            
-            hints[out] = sb.toString();
-            sb.setLength(0);
-        }
-        
-        return Arrays.equals(hints, h ? horizontal : vertical);
+        return Arrays.equals(horizontal, generateHints(true, false)) &&
+               Arrays.equals(vertical, generateHints(false, false));
     }
     
     @Override
     public void drawBoard(PGraphics pg, int x, int y, int width, int height) {
-        String[][] board = getBoard();
-        int columns = board.length;
-        int rows = board[0].length;
-        int cellSize = min(width / columns, height / rows);
+        int vert = max(maxVertical, 1);
+        int hor = max(maxHorizontal, 1);
+        int columns = board.length + vert;
+        int rows = board[0].length + hor;
+        cellSize = min(width / columns, height / rows);
         pg.push();
         xTranslation = x + (float) width / 2 - (float) cellSize * columns / 2;
         yTranslation = y + (float) height / 2 - (float) cellSize * rows / 2;
         pg.translate(xTranslation, yTranslation);
-        
-        this.cellSize = cellSize;
-        
+    
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
-                String cellText = board[column][row];
                 int posX = column * cellSize;
                 int posY = row * cellSize;
+            
+                if (column > vert - 1 && row > hor - 1) {
+                    pg.push();
+                    pg.fill(50);
+                    pg.rect(posX, posY, cellSize, cellSize);
+                    pg.pop();
                 
+                    switch (board[column - vert][row - hor]) {
+                        case "x":
+                            int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
+                            int rectHeight = rectWidth / 5;
+                        
+                            pg.push();
+                            pg.fill(200, 0, 0);
+                            pg.noStroke();
+                            pg.translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
+                            pg.rotate(radians(45));
+                            pg.rectMode(CENTER);
+                        
+                            pg.rect(0, 0, rectWidth, rectHeight);
+                            pg.rotate(radians(90));
+                            pg.rect(0, 0, rectWidth, rectHeight);
+                            pg.pop();
+                            break;
+                        case "■":
+                            int widthMargin = cellSize / 20;
+                            int heightMargin = cellSize / 20;
+                        
+                            pg.push();
+                            pg.fill(150);
+                            pg.noStroke();
+                        
+                            pg.rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
+                            pg.pop();
+                            break;
+                    }
+                }
+                else if (column > vert - 1) {
+                    String[] a = horizontal[column - vert].split(" ");
+                    int ersterIndex = maxHorizontal - a.length;
                 
-                switch (cellText) {
-                    case " ":
-                        break;
-                    case "x":
-                        pg.push();
-                        pg.fill(50);
-                        pg.rect(posX, posY, cellSize, cellSize);
-                        pg.pop();
-                        
-                        int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
-                        int rectHeight = rectWidth / 5;
-                        
-                        pg.push();
-                        pg.fill(200, 0, 0);
-                        pg.noStroke();
-                        pg.translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
-                        pg.rotate(radians(45));
-                        pg.rectMode(CENTER);
-                        
-                        pg.rect(0, 0, rectWidth, rectHeight);
-                        pg.rotate(radians(90));
-                        pg.rect(0, 0, rectWidth, rectHeight);
-                        pg.pop();
-                        break;
-                    case "■":
-                        pg.push();
-                        pg.fill(50);
-                        pg.rect(posX, posY, cellSize, cellSize);
-                        pg.pop();
-                        
-                        int widthMargin = cellSize / 20;
-                        int heightMargin = cellSize / 20;
-                        
-                        pg.push();
-                        pg.fill(150);
-                        pg.noStroke();
-                        
-                        pg.rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
-                        pg.pop();
-                        break;
-                    default:
+                    if (ersterIndex <= row) {
                         pg.push();
                         pg.fill(50);
                         pg.rect(posX, posY, cellSize, cellSize);
                         pg.pop();
                         pg.push();
                         pg.fill(200);
-                        pg.textSize((float) min(width, height) / 12);
-                        pg.textAlign(CENTER, CENTER);
-                        pg.text(cellText, posX + (float) cellSize / 2, posY + (float) cellSize / 2);
+                        pg.textSize((float) cellSize / 1.5f);
+                        pg.textAlign(CENTER, TOP);
+                        pg.text(a[row - ersterIndex], posX + (float) cellSize / 2, posY + (float) cellSize / 8);
                         pg.pop();
-                        break;
+                    }
+                }
+                else if (row > hor - 1) {
+                    String[] a = vertical[row - hor].split(" ");
+                    int ersterIndex = maxVertical - a.length;
+                    if (ersterIndex <= column) {
+                        pg.push();
+                        pg.fill(50);
+                        pg.rect(posX, posY, cellSize, cellSize);
+                        pg.pop();
+                    
+                        pg.push();
+                        pg.fill(200);
+                        pg.textSize((float) cellSize / 1.5f);
+                        pg.textAlign(CENTER, TOP);
+                        pg.text(a[column - ersterIndex], posX + (float) cellSize / 2, posY + (float) cellSize / 8);
+                        pg.pop();
+                    }
                 }
             }
         }
         pg.pop();
     }
     
-    private void generateHints() {
-        generateHints(true);
-        generateHints(false);
-    }
-    
-    private void generateHints(boolean h) {
+    private String[] generateHints(boolean h, boolean c) {
         StringBuilder sb = new StringBuilder();
         int count = 0;
         int amountOfHints = 0;
+        String[] hints = new String[h ? width : height];
         
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (board[h ? i : j][h ? j : i].equals("1")) {
+                if (board[h ? i : j][h ? j : i].equals("■")) {
                     count++;
                 }
                 else if (count != 0) {
@@ -363,26 +290,18 @@ public class NonoBoard extends PApplet implements Board {
             else {
                 sb.append(0);
             }
-            
-            if (h) {
-                if (amountOfHints > maxHorizontal) {
-                    maxHorizontal = amountOfHints;
-                }
-                else if (amountOfHints > maxVertical) {
-                    maxVertical = amountOfHints;
-                }
+    
+            if (h && c && amountOfHints > maxHorizontal) {
+                maxHorizontal = amountOfHints;
+            }
+            if (!h && c && amountOfHints > maxVertical) {
+                maxVertical = amountOfHints;
             }
             
             amountOfHints = 0;
-            
-            if (h) {
-                horizontal[i] = sb.toString();
-            }
-            else {
-                vertical[i] = sb.toString();
-            }
-            
+            hints[i] = sb.toString();
             sb.setLength(0);
         }
+        return hints;
     }
 }
