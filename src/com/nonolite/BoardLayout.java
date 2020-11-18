@@ -13,6 +13,8 @@ public class BoardLayout extends Layout {
     public BoardLayout(PGraphics pg) {
         super(pg);
         
+        Main.getInstance().applyClickable(this);
+        
         Board nonoBoard = new NonoBoard();
         try (BufferedReader inputStream = new BufferedReader(new FileReader("out/save.txt"))) {
             

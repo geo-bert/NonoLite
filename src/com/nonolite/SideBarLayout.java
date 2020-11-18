@@ -17,6 +17,39 @@ public class SideBarLayout extends Layout {
         _timerLayout = new TimerLayout(_pg);
         this.addChild(_timerLayout);
         
+        _checkButton = new ButtonLayout(_pg);
+        _checkButton.setText("Check");
+        _checkButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public String onClick(int keyCode, int x, int y) {
+                System.out.println(Main.getInstance().getMainLayout().getBoardLayout().check());
+                return "";
+            }
+        });
+        this.addChild(_checkButton);
+        
+        _resetButton = new ButtonLayout(_pg);
+        _resetButton.setText("Reset");
+        _resetButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public String onClick(int keyCode, int x, int y) {
+                Main.getInstance().getMainLayout().getBoardLayout().reset();
+                return "";
+            }
+        });
+        this.addChild(_resetButton);
+        
+        _saveButton = new ButtonLayout(_pg);
+        _saveButton.setText("Save");
+        _saveButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public String onClick(int keyCode, int x, int y) {
+                Main.getInstance().getMainLayout().getBoardLayout().save();
+                return "";
+            }
+        });
+        this.addChild(_saveButton);
+        
         _inventoryLayout = new InventoryLayout(_pg);
         this.addChild(_inventoryLayout);
         
