@@ -5,6 +5,9 @@ import processing.core.PGraphics;
 public class SideBarLayout extends Layout {
     private final int _BUTTONHEIGHT = 75;
     private TimerLayout _timerLayout;
+    private ButtonLayout _checkButton;
+    private ButtonLayout _resetButton;
+    private ButtonLayout _saveButton;
     private InventoryLayout _inventoryLayout;
     private SettingsLayout _settingsLayout;
     
@@ -39,7 +42,6 @@ public class SideBarLayout extends Layout {
                 childHeight = getChildAt(i - 1).getHeight();
             }
             currentY += childHeight;
-            _pg.rect(childX, childY, childWidth, childHeight);
             
             getChildAt(i).drawLayout(childX, childY, childWidth, childHeight);
         }
