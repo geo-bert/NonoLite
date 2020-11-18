@@ -22,7 +22,6 @@ public class Main extends PApplet {
     public void setup() {
         main = this;
         surface.setResizable(true);
-        background(50);
         _mainLayout = new MainLayout(getGraphics());
     }
     
@@ -31,6 +30,8 @@ public class Main extends PApplet {
     }
     
     public void draw() {
+        clear();
+        background(50);
         _mainLayout.drawLayout(0, 0, width, height);
     }
     
