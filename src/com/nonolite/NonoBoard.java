@@ -44,11 +44,11 @@ public class NonoBoard extends PApplet implements Board {
         saveData[2] = v.toString();
         
         StringBuilder f = new StringBuilder();
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
                 f.append(board[x][y]);
             }
-            saveData[y + 3] = f.toString();
+            saveData[x + 3] = f.toString();
             f.setLength(0);
         }
         
@@ -56,7 +56,7 @@ public class NonoBoard extends PApplet implements Board {
     }
     
     @Override
-    public void generateBoard(int height, int width) {
+    public void generateBoard(int width, int height) {
         board = new String[width][height];
         this.height = height;
         this.width = width;
@@ -266,8 +266,8 @@ public class NonoBoard extends PApplet implements Board {
         int amountOfHints = 0;
         String[] hints = new String[h ? width : height];
         
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < (h?width:height); i++) {
+            for (int j = 0; j < (h?height:width); j++) {
                 if (board[h ? i : j][h ? j : i].equals("■")) {
                     count++;
                 }

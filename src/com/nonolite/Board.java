@@ -6,7 +6,7 @@ public interface Board {
     
     String[] getSaveBoard();
     
-    void generateBoard(int height, int width);
+    void generateBoard(int width, int height);
     
     void loadBoard(String[] board);
     

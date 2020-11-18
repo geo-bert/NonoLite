@@ -80,6 +80,6 @@ public class BoardLayout extends Layout {
     }
     
     public void newRandomBoard(){
-        _board.generateBoard(5,5);
+        _board.generateBoard(1,50);
     }
 }
