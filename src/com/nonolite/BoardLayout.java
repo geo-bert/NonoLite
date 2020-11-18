@@ -78,4 +78,8 @@ public class BoardLayout extends Layout {
             System.out.println("file not found");
         }
     }
+    
+    public void newRandomBoard(){
+        _board.generateBoard(5,5);
+    }
 }
