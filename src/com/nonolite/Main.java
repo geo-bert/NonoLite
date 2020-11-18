@@ -3,6 +3,7 @@ package com.nonolite;
 import processing.core.PApplet;
 
 public class Main extends PApplet {
+    private static Main main;
     private int _screenWidth = 1500;
     private int _screenHeight = 800;
     private MainLayout _mainLayout;
@@ -11,7 +12,12 @@ public class Main extends PApplet {
         PApplet.main("com.nonolite.Main");
     }
     
+    public static Main getInstance() {
+        return main;
+    }
+    
     public void setup() {
+        main = this;
         surface.setResizable(true);
         background(50);
         _mainLayout = new MainLayout(getGraphics());
