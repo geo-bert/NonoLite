@@ -23,6 +23,10 @@ public abstract class Layout extends PApplet {
         }
     }
     
+    public String mouseInput(int keyCode, int x, int y) {
+        return "no key input defined";
+    }
+    
     public final void drawLayout(int x, int y, int width, int height) {
         _x = x;
         _y = y;

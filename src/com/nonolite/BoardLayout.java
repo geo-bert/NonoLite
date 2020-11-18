@@ -51,8 +51,9 @@ public class BoardLayout extends Layout {
         _board.keyInput(keyCode);
     }
     
-    public void mouseInput(int keyCode, int mouseX, int mouseY) {
-        _board.mouseInput(keyCode, mouseX, mouseY);
+    @Override
+    public String mouseInput(int keyCode, int mouseX, int mouseY) {
+        return _board.mouseInput(keyCode, mouseX, mouseY);
     }
     
     public void mouseDragInput(int keyCode, int mouseX, int mouseY) {
