@@ -3,7 +3,6 @@ package com.nonolite;
 import processing.core.PGraphics;
 
 public interface Board {
-    String[][] getBoard();
     
     String[] getSaveBoard();
     
