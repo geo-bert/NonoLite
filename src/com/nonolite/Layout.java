@@ -6,6 +6,8 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public abstract class Layout extends PApplet {
+    protected int _width;
+    protected int _height;
     protected PGraphics _pg;
     private List<Layout> _children = new ArrayList<>();
     
@@ -13,11 +15,17 @@ public abstract class Layout extends PApplet {
         _pg = pg;
     }
     
-    public void drawLayout(int x, int y, int width, int height) {
-        _pg.push();
+    public void onLayout(int x, int y, int width, int height) {
         for (Layout child : _children) {
             child.drawLayout(x, y, width, height);
         }
+    }
+    
+    public final void drawLayout(int x, int y, int width, int height) {
+        _width = width;
+        _height = height;
+        _pg.push();
+        onLayout(x, y, width, height);
         _pg.pop();
     }
     
@@ -43,5 +51,13 @@ public abstract class Layout extends PApplet {
     
     public final Layout getChildAt(int i) {
         return _children.get(i);
+    }
+    
+    public final int getWidth() {
+        return _width;
+    }
+    
+    public final int getHeight() {
+        return _height;
     }
 }

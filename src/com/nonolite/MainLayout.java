@@ -8,7 +8,7 @@ public class MainLayout extends Layout {
     
     public MainLayout(PGraphics pg) {
         super(pg);
-    
+        
         _sideBarLayout = new SideBarLayout(_pg);
         this.addChild(_sideBarLayout);
         
@@ -17,8 +17,7 @@ public class MainLayout extends Layout {
     }
     
     @Override
-    public void drawLayout(int x, int y, int width, int height) {
-        _pg.push();
+    public void onLayout(int x, int y, int width, int height) {
         for (int i = 0; i < getChildCount(); i++) {
             int childX = x + i * width / 4;
             int childY = y;
@@ -27,10 +26,9 @@ public class MainLayout extends Layout {
             
             getChildAt(i).drawLayout(childX, childY, childWidth, childHeight);
         }
-        _pg.pop();
     }
     
-    public BoardLayout getBoardLayout(){
+    public BoardLayout getBoardLayout() {
         return _boardLayout;
     }
 }

@@ -51,7 +51,7 @@ public class BoardLayout extends Layout {
     }
     
     @Override
-    public void drawLayout(int x, int y, int width, int height) {
+    public void onLayout(int x, int y, int width, int height) {
         _board.drawBoard(_pg, x, y, width, height);
     }
     
@@ -67,7 +67,7 @@ public class BoardLayout extends Layout {
         _board.mouseDragInput(keyCode, mouseX, mouseY);
     }
     
-    public boolean check(){
+    public boolean check() {
         return _board.checkBoard();
     }
 }
