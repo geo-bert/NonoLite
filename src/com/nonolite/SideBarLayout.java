@@ -31,10 +31,12 @@ public class SideBarLayout extends Layout {
             int childX = x;
             int childY = currentY;
             int childWidth = width;
-            int childHeight = (getChildAt(i) == _inventoryLayout) ? (height - BUTTONHEIGHT * 2) : BUTTONHEIGHT;
+            int childHeight = (getChildAt(i) == _inventoryLayout) ?
+                              (height - _BUTTONHEIGHT * (getChildCount() - 1)) :
+                              _BUTTONHEIGHT;
             
             if (i + 1 == getChildCount()) {
-                childHeight = height - BUTTONHEIGHT;
+                childHeight = getChildAt(i - 1).getHeight();
             }
             currentY += childHeight;
             _pg.rect(childX, childY, childWidth, childHeight);
