@@ -60,6 +60,8 @@ public class NonoBoard extends PApplet implements Board {
         board = new String[width][height];
         this.height = height;
         this.width = width;
+        maxHorizontal = 0;
+        maxVertical = 0;
     
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
