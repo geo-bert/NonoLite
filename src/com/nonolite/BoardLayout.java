@@ -28,14 +28,6 @@ public class BoardLayout extends Layout {
             nonoBoard.generateBoard(2, 2);
         }
         _board = nonoBoard;
-        
-        
-        try (BufferedWriter outputStream = new BufferedWriter(new FileWriter("out/save.txt"))) {
-            outputStream.write(writeBoard(nonoBoard.getSaveBoard()));
-        }
-        catch (IOException exception) {
-            System.out.println("file not found");
-        }
     }
     
     private static String[] readBoard(String boardString) {
@@ -69,5 +61,18 @@ public class BoardLayout extends Layout {
     
     public boolean check() {
         return _board.checkBoard();
+    }
+    
+    public void reset() {
+        _board.resetBoard();
+    }
+    
+    public void save() {
+        try (BufferedWriter outputStream = new BufferedWriter(new FileWriter("out/save.txt"))) {
+            outputStream.write(writeBoard(_board.getSaveBoard()));
+        }
+        catch (IOException exception) {
+            System.out.println("file not found");
+        }
     }
 }
