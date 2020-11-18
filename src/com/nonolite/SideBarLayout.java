@@ -3,7 +3,7 @@ package com.nonolite;
 import processing.core.PGraphics;
 
 public class SideBarLayout extends Layout {
-    private final int BUTTONHEIGHT = 75;
+    private final int _BUTTONHEIGHT = 75;
     private TimerLayout _timerLayout;
     private InventoryLayout _inventoryLayout;
     private SettingsLayout _settingsLayout;
@@ -22,10 +22,9 @@ public class SideBarLayout extends Layout {
     }
     
     @Override
-    public void drawLayout(int x, int y, int width, int height) {
+    public void onLayout(int x, int y, int width, int height) {
         int currentY = y;
         
-        _pg.push();
         _pg.fill(60);
         _pg.rect(x, y, width, height);
         for (int i = 0; i < getChildCount(); i++) {
@@ -42,6 +41,5 @@ public class SideBarLayout extends Layout {
             
             getChildAt(i).drawLayout(childX, childY, childWidth, childHeight);
         }
-        _pg.pop();
     }
 }
