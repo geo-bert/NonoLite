@@ -3,6 +3,7 @@ package com.nonolite.layouts;
 import com.nonolite.layouts.board.BoardLayout;
 import com.nonolite.layouts.sidebar.SideBarLayout;
 import com.nonolite.layouts.utils.Layout;
+import com.nonolite.layouts.utils.Rect;
 import processing.core.PGraphics;
 
 public class MainLayout extends Layout {
@@ -22,12 +23,13 @@ public class MainLayout extends Layout {
     @Override
     public void onLayout(int x, int y, int width, int height) {
         for (int i = 0; i < getChildCount(); i++) {
-            int childX = x + i * width / 4;
-            int childY = y;
-            int childWidth = (1 + 2 * i) * width / 4;
-            int childHeight = height;
+            Rect childRect = new Rect();
+            childRect.x = x + i * width / 4;
+            childRect.y = y;
+            childRect.width = (1 + 2 * i) * width / 4;
+            childRect.height = height;
             
-            getChildAt(i).drawLayout(childX, childY, childWidth, childHeight);
+            getChildAt(i).drawLayout(childRect.x, childRect.y, childRect.width, childRect.height);
         }
     }
     

@@ -3,7 +3,7 @@ package com.nonolite.layouts.sidebar;
 import com.nonolite.Main;
 import com.nonolite.layouts.utils.ButtonLayout;
 import com.nonolite.layouts.utils.Layout;
-import com.nonolite.layouts.utils.OnClickListener;
+import com.nonolite.layouts.utils.Rect;
 import processing.core.PGraphics;
 
 public class SideBarLayout extends Layout {
@@ -24,45 +24,33 @@ public class SideBarLayout extends Layout {
         
         _checkButton = new ButtonLayout(_pg);
         _checkButton.setText("Check");
-        _checkButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public String onClick(int keyCode, int x, int y) {
-                System.out.println(Main.getInstance().getMainLayout().getBoardLayout().check());
-                return "";
-            }
+        _checkButton.setOnClickListener((keyCode, x, y) -> {
+            System.out.println(Main.getInstance().getMainLayout().getBoardLayout().check());
+            return "";
         });
         this.addChild(_checkButton);
-    
+        
         _generateButton = new ButtonLayout(_pg);
         _generateButton.setText("Generate Random");
-        _generateButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public String onClick(int keyCode, int x, int y) {
-                Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
-                return "";
-            }
+        _generateButton.setOnClickListener((keyCode, x, y) -> {
+            Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
+            return "";
         });
         this.addChild(_generateButton);
         
         _resetButton = new ButtonLayout(_pg);
         _resetButton.setText("Reset");
-        _resetButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public String onClick(int keyCode, int x, int y) {
-                Main.getInstance().getMainLayout().getBoardLayout().reset();
-                return "";
-            }
+        _resetButton.setOnClickListener((keyCode, x, y) -> {
+            Main.getInstance().getMainLayout().getBoardLayout().reset();
+            return "";
         });
         this.addChild(_resetButton);
         
         _saveButton = new ButtonLayout(_pg);
         _saveButton.setText("Save");
-        _saveButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public String onClick(int keyCode, int x, int y) {
-                Main.getInstance().getMainLayout().getBoardLayout().save();
-                return "";
-            }
+        _saveButton.setOnClickListener((keyCode, x, y) -> {
+            Main.getInstance().getMainLayout().getBoardLayout().save();
+            return "";
         });
         this.addChild(_saveButton);
         
@@ -80,19 +68,20 @@ public class SideBarLayout extends Layout {
         _pg.fill(60);
         _pg.rect(x, y, width, height);
         for (int i = 0; i < getChildCount(); i++) {
-            int childX = x;
-            int childY = currentY;
-            int childWidth = width;
-            int childHeight = (getChildAt(i) == _inventoryLayout) ?
-                              (height - _BUTTONHEIGHT * (getChildCount() - 1)) :
-                              _BUTTONHEIGHT;
+            Rect childRect = new Rect();
+            childRect.x = x;
+            childRect.y = currentY;
+            childRect.width = width;
+            childRect.height = (getChildAt(i) == _inventoryLayout) ?
+                               (height - _BUTTONHEIGHT * (getChildCount() - 1)) :
+                               _BUTTONHEIGHT;
             
             if (i + 1 == getChildCount()) {
-                childHeight = getChildAt(i - 1).getHeight();
+                childRect.height = getChildAt(i - 1).getHeight();
             }
-            currentY += childHeight;
+            currentY += childRect.height;
             
-            getChildAt(i).drawLayout(childX, childY, childWidth, childHeight);
+            getChildAt(i).drawLayout(childRect.x, childRect.y, childRect.width, childRect.height);
         }
     }
 }
