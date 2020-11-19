@@ -23,6 +23,7 @@ public class Main extends PApplet {
     
     public void setup() {
         main = this;
+        textAlign(LEFT, TOP);
         surface.setResizable(true);
         _mainLayout = new MainLayout(getGraphics());
     }
