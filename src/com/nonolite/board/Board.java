@@ -1,4 +1,4 @@
-package com.nonolite;
+package com.nonolite.board;
 
 import processing.core.PGraphics;
 

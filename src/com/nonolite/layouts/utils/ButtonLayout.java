@@ -1,5 +1,6 @@
-package com.nonolite;
+package com.nonolite.layouts.utils;
 
+import com.nonolite.Main;
 import processing.core.PGraphics;
 
 public class ButtonLayout extends Layout {

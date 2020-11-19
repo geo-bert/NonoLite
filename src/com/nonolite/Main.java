@@ -2,6 +2,8 @@ package com.nonolite;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.nonolite.layouts.MainLayout;
+import com.nonolite.layouts.utils.Layout;
 import processing.core.PApplet;
 
 public class Main extends PApplet {

@@ -1,5 +1,6 @@
-package com.nonolite;
+package com.nonolite.layouts.sidebar;
 
+import com.nonolite.layouts.utils.Layout;
 import processing.core.PGraphics;
 
 public class TimerLayout extends Layout {

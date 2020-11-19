@@ -1,5 +1,9 @@
-package com.nonolite;
+package com.nonolite.layouts.sidebar;
 
+import com.nonolite.Main;
+import com.nonolite.layouts.utils.ButtonLayout;
+import com.nonolite.layouts.utils.Layout;
+import com.nonolite.layouts.utils.OnClickListener;
 import processing.core.PGraphics;
 
 public class SideBarLayout extends Layout {

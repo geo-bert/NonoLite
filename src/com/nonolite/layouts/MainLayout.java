@@ -1,5 +1,8 @@
-package com.nonolite;
+package com.nonolite.layouts;
 
+import com.nonolite.layouts.board.BoardLayout;
+import com.nonolite.layouts.sidebar.SideBarLayout;
+import com.nonolite.layouts.utils.Layout;
 import processing.core.PGraphics;
 
 public class MainLayout extends Layout {

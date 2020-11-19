@@ -1,10 +1,14 @@
-package com.nonolite;
+package com.nonolite.layouts.board;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import com.nonolite.Main;
+import com.nonolite.board.Board;
+import com.nonolite.board.NonoBoard;
+import com.nonolite.layouts.utils.Layout;
 import processing.core.PGraphics;
 
 public class BoardLayout extends Layout {
@@ -80,6 +84,6 @@ public class BoardLayout extends Layout {
     }
     
     public void newRandomBoard(){
-        _board.generateBoard(1,50);
+        _board.generateBoard(10,10);
     }
 }
