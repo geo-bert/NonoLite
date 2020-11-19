@@ -21,6 +21,9 @@ public class ButtonLayout extends Layout {
         _pg.rect(x, y, width, _BUTTONHEIGHT);
         
         String[] words = _text.split(" ");
+        if (width / height > _text.length() / words.length) {
+            words = new String[]{_text};
+        }
         int availableWidth = (int) (width / 1.5f);
         int availableHeight = (int) (_BUTTONHEIGHT / 1.5f);
         int maxLength = 0;
