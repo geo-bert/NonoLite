@@ -8,7 +8,6 @@ public class ButtonLayout extends Layout {
     private int _horizontalAlignment = CENTER;
     private int _verticalAlignment = CENTER;
     private String _text = "Button";
-    private OnClickListener _listener;
     
     public ButtonLayout(PGraphics pg) {
         super(pg);
@@ -28,7 +27,7 @@ public class ButtonLayout extends Layout {
     
     @Override
     public String mouseInput(int keyCode, int x, int y) {
-        _listener.onClick(keyCode, x, y);
+        click(keyCode, x, y);
         return "";
     }
     
@@ -51,10 +50,6 @@ public class ButtonLayout extends Layout {
     
     public void verticalAlignText(int verticalAlignment) {
         _verticalAlignment = verticalAlignment;
-    }
-    
-    public void setOnClickListener(OnClickListener listener) {
-        _listener = listener;
     }
 }
 

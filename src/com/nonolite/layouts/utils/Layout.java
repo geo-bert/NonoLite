@@ -12,6 +12,7 @@ public abstract class Layout extends PApplet {
     private int _width;
     private int _height;
     private int _depth = 0;
+    private OnClickListener _listener;
     private final List<Layout> _children = new ArrayList<>();
     
     public Layout(PGraphics pg) {
@@ -36,6 +37,14 @@ public abstract class Layout extends PApplet {
         _pg.push();
         onLayout(x, y, width, height);
         _pg.pop();
+    }
+    
+    public final void setOnClickListener(OnClickListener listener) {
+        _listener = listener;
+    }
+    
+    public final void click(int keyCode, int x, int y) {
+        _listener.onClick(keyCode, x, y);
     }
     
     public final void addChild(Layout child) {
