@@ -12,14 +12,14 @@ public class PGTextWriter extends PApplet {
         _pg = pg;
     }
     
-    public void writeText(char symbol, int x, int y, int width, int height) {
+    public void writeText(char symbol, float x, float y, float width, float height) {
         writeText(new String[]{"" + symbol}, x, y, width, height);
     }
     
-    public void writeText(String word, int x, int y, int width, int height) {
+    public void writeText(String word, float x, float y, float width, float height) {
         if (_newLineOnSpace) {
             String[] words = word.split(" ");
-            if (width / height > word.length() / words.length) {
+            if (width / height > (float) word.length() / words.length) {
                 words = new String[]{word};
             }
             writeText(words, x, y, width, height);
@@ -29,9 +29,9 @@ public class PGTextWriter extends PApplet {
         }
     }
     
-    public void writeText(String[] words, int x, int y, int width, int height) {
-        int availableWidth = (int) (width / 1.5f);
-        int availableHeight = (int) (height / 1.5f);
+    public void writeText(String[] words, float x, float y, float width, float height) {
+        float availableWidth = width / 1.5f;
+        float availableHeight = height / 1.5f;
         
         int maxLength = 0;
         for (String word : words) {
@@ -42,10 +42,10 @@ public class PGTextWriter extends PApplet {
         
         _pg.push();
         _pg.fill(200);
-        _pg.textSize(min((float) availableWidth / maxLength / _CHARRATIO, (float) availableHeight / words.length));
+        _pg.textSize(min(availableWidth / maxLength / _CHARRATIO, availableHeight / words.length));
         for (int i = 0; i < words.length; i++) {
-            int posX = x;
-            int posY = y;
+            float posX = x;
+            float posY = y;
             
             switch (_pg.textAlign) {
                 case LEFT:
