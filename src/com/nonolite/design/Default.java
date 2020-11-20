@@ -24,11 +24,15 @@ public class Default implements Design {
     }
     
     @Override
-    public void rect(int x, int y, int xSize, int ySize) {
+    public void baseRect(int x, int y, int xSize, int ySize) {
         pg.push();
         pg.fill(50);
         pg.rect(x, y, xSize, ySize);
         pg.pop();
+    }
+    
+    public void baseRect2(int x, int y, int xSize, int ySize) {
+        baseRect(x, y, xSize, ySize);
     }
     
     @Override
