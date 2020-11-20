@@ -26,6 +26,7 @@ public class NonoBoard extends PApplet implements Board {
     
     public NonoBoard() {
         d = Main.getInstance().getDesign();
+        randomSeed(0);
     }
     
     @Override
@@ -66,7 +67,6 @@ public class NonoBoard extends PApplet implements Board {
         this.width = width;
         maxHorizontal = 0;
         maxVertical = 0;
-        randomSeed(0);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (random(1) < 0.6) {
