@@ -1,7 +1,7 @@
 package com.nonolite.board;
 
 import java.util.Arrays;
-import com.nonolite.design.Default;
+import com.nonolite.Main;
 import com.nonolite.design.Design;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -20,12 +20,12 @@ public class NonoBoard extends PApplet implements Board {
     private int cellSize;
     private int lastX = -1;
     private int lastY = -1;
-    float xTranslation;
-    float yTranslation;
-    
-    Design d = new Default();
+    private float xTranslation;
+    private float yTranslation;
+    private Design d;
     
     public NonoBoard() {
+        d = Main.getInstance().getDesign();
     }
     
     @Override
@@ -184,53 +184,53 @@ public class NonoBoard extends PApplet implements Board {
         xTranslation = x + (float) width / 2 - (float) cellSize * columns / 2;
         yTranslation = y + (float) height / 2 - (float) cellSize * rows / 2;
         pg.translate(xTranslation, yTranslation);
-        
-        d.base(pg,vert * cellSize,0,board.length * cellSize, rows * cellSize);
-        d.base(pg,0,hor * cellSize,columns * cellSize, board[0].length * cellSize);
-        
+    
+        d.base(vert * cellSize, 0, board.length * cellSize, rows * cellSize);
+        d.base(0, hor * cellSize, columns * cellSize, board[0].length * cellSize);
+    
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
                 int posX = column * cellSize;
                 int posY = row * cellSize;
             
                 if (column > vert - 1 && row > hor - 1) {
-                    drawClick(pg, column, row);
+                    drawClick(column, row);
                 }
                 else if (column > vert - 1) {
-                    drawHint(pg, horizontal, maxHorizontal, column, vert, row, posX, posY);
+                    drawHint(horizontal, maxHorizontal, column, vert, row, posX, posY);
                 }
                 else if (row > hor - 1) {
-                    drawHint(pg, vertical, maxVertical, row, hor, column, posX, posY);
+                    drawHint(vertical, maxVertical, row, hor, column, posX, posY);
                 }
             }
         }
         pg.pop();
     }
     
-    private void drawClick(PGraphics pg, int column, int row){
+    private void drawClick(int column, int row) {
         int vert = max(maxVertical, 1);
         int hor = max(maxHorizontal, 1);
         int posX = column * cellSize;
         int posY = row * cellSize;
         
-        d.rect1(pg,posX,posY,cellSize,cellSize);
-    
+        d.rect1(posX, posY, cellSize, cellSize);
+        
         switch (board[column - vert][row - hor]) {
             case "x":
-                d.rightClick(pg, posX, posY, cellSize, cellSize);
+                d.symbol2(posX, posY, cellSize, cellSize);
                 break;
             case "■":
-                d.leftClick(pg,posX,posY ,cellSize,cellSize);
+                d.symbol1(posX, posY, cellSize, cellSize);
                 break;
         }
     }
     
-    private void drawHint(PGraphics pg, String[] hint, int max, int x, int y, int z, int posX, int posY){
+    private void drawHint(String[] hint, int max, int x, int y, int z, int posX, int posY) {
         String[] a = hint[x - y].split(" ");
         int first = max - a.length;
         if (first <= z) {
-            d.rect2(pg,posX, posY, cellSize, cellSize);
-            d.text(pg, a[z - first], posX + (float) cellSize / 2, posY + (float) cellSize / 8, (float) cellSize / 1.5f, CENTER, TOP);
+            d.rect2(posX, posY, cellSize, cellSize);
+            d.text(a[z - first], posX + (float) cellSize / 2, posY + (float) cellSize / 8, (float) cellSize / 1.5f, CENTER, TOP);
         }
     }
     
