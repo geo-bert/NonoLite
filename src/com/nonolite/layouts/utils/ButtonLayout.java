@@ -34,17 +34,5 @@ public class ButtonLayout extends Layout {
     public void setText(String text) {
         _text = text;
     }
-    
-    public void alignText(int horizontalAlignment, int verticalAlignment) {
-        _writer.alignText(horizontalAlignment, verticalAlignment);
-    }
-    
-    public void horizontalAlignText(int horizontalAlignment) {
-        _writer.horizontalAlignText(horizontalAlignment);
-    }
-    
-    public void verticalAlignText(int verticalAlignment) {
-        _writer.verticalAlignText(verticalAlignment);
-    }
 }
 

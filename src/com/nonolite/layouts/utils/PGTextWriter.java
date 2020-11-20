@@ -6,8 +6,6 @@ import processing.core.PGraphics;
 public class PGTextWriter extends PApplet {
     private final PGraphics _pg;
     private final float _CHARRATIO = 0.55f;
-    private int _horizontalAlignment = CENTER;
-    private int _verticalAlignment = CENTER;
     private boolean _newLineOnSpace = true;
     
     public PGTextWriter(PGraphics pg) {
@@ -49,7 +47,7 @@ public class PGTextWriter extends PApplet {
             int posX = x;
             int posY = y;
             
-            switch (_horizontalAlignment) {
+            switch (_pg.textAlign) {
                 case LEFT:
                     break;
                 case RIGHT:
@@ -60,7 +58,7 @@ public class PGTextWriter extends PApplet {
                     posX += width / 2 - words[i].length() * (_pg.textSize * _CHARRATIO) / 2;
                     break;
             }
-            switch (_verticalAlignment) {
+            switch (_pg.textAlignY) {
                 case TOP:
                     posY += i * words.length * _pg.textSize / 2;
                     break;
@@ -97,22 +95,5 @@ public class PGTextWriter extends PApplet {
             _pg.pop();
         }
         _pg.pop();
-    }
-    
-    public void alignText(int horizontalAlignment, int verticalAlignment) {
-        _horizontalAlignment = horizontalAlignment;
-        _verticalAlignment = verticalAlignment;
-    }
-    
-    public void horizontalAlignText(int horizontalAlignment) {
-        _horizontalAlignment = horizontalAlignment;
-    }
-    
-    public void verticalAlignText(int verticalAlignment) {
-        _verticalAlignment = verticalAlignment;
-    }
-    
-    public void setNewLineOnSpace(boolean newLineOnSpace) {
-        _newLineOnSpace = newLineOnSpace;
     }
 }
