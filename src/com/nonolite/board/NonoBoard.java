@@ -185,8 +185,7 @@ public class NonoBoard extends PApplet implements Board {
         yTranslation = y + (float) height / 2 - (float) cellSize * rows / 2;
         pg.translate(xTranslation, yTranslation);
     
-        d.base(vert * cellSize, 0, board.length * cellSize, rows * cellSize);
-        d.base(0, hor * cellSize, columns * cellSize, board[0].length * cellSize);
+        drawBase(columns, rows, vert, hor);
     
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
@@ -205,6 +204,26 @@ public class NonoBoard extends PApplet implements Board {
             }
         }
         pg.pop();
+    }
+    
+    private void drawBase(int columns, int rows, int vert, int hor) {
+        for (int column = vert; column < columns; column++) {
+            d.base(
+                column * cellSize,
+                (hor - horizontal[column - vert].split(" ").length) * cellSize,
+                cellSize,
+                (horizontal[column - vert].split(" ").length + board[0].length) * cellSize
+            );
+        }
+        
+        for (int row = hor; row < rows; row++) {
+            d.base(
+                (vert - vertical[row - hor].split(" ").length) * cellSize,
+                row * cellSize,
+                (vertical[row - hor].split(" ").length + board[0].length) * cellSize - cellSize / 2,
+                cellSize
+            );
+        }
     }
     
     private void drawClick(int column, int row) {
