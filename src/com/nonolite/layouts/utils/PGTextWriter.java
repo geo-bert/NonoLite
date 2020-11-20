@@ -41,7 +41,6 @@ public class PGTextWriter extends PApplet {
         }
         
         _pg.push();
-        _pg.fill(200);
         _pg.textSize(min(availableWidth / maxLength / _CHARRATIO, availableHeight / words.length));
         for (int i = 0; i < words.length; i++) {
             float posX = x;
