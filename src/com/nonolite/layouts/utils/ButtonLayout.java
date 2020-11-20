@@ -16,8 +16,7 @@ public class ButtonLayout extends Layout {
     
     @Override
     public void onLayout(int x, int y, int width, int height) {
-        _pg.fill(60);
-        _pg.rect(x, y, width, height);
+        d.baseRect(x, y, width, height);
     
         d.text(_text, x, y, width, height);
     }

@@ -1,6 +1,7 @@
 package com.nonolite.layouts.sidebar;
 
 import com.nonolite.Main;
+import com.nonolite.design.Design;
 import com.nonolite.layouts.utils.ButtonLayout;
 import com.nonolite.layouts.utils.Layout;
 import com.nonolite.layouts.utils.Rect;
@@ -15,9 +16,11 @@ public class SideBarLayout extends Layout {
     private ButtonLayout _saveButton;
     private InventoryLayout _inventoryLayout;
     private SettingsLayout _settingsLayout;
+    private Design d;
     
     public SideBarLayout(PGraphics pg) {
         super(pg);
+        d = Main.getInstance().getDesign();
         
         _timerLayout = new TimerLayout(_pg);
         this.addChild(_timerLayout);
@@ -64,9 +67,8 @@ public class SideBarLayout extends Layout {
     @Override
     public void onLayout(int x, int y, int width, int height) {
         int currentY = y;
-        
-        _pg.fill(60);
-        _pg.rect(x, y, width, height);
+    
+        d.baseRect2(x, y, width, height);
         for (int i = 0; i < getChildCount(); i++) {
             Rect childRect = new Rect();
             childRect.x = x;

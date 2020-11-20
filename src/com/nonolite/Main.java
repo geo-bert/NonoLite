@@ -2,8 +2,8 @@ package com.nonolite;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.nonolite.design.Default;
 import com.nonolite.design.Design;
+import com.nonolite.design.RoundDarkMode;
 import com.nonolite.layouts.MainLayout;
 import com.nonolite.layouts.utils.Layout;
 import processing.core.PApplet;
@@ -26,7 +26,8 @@ public class Main extends PApplet {
     
     public void setup() {
         main = this;
-        d = new Default(getGraphics());
+        d = new RoundDarkMode(getGraphics());
+        // d = new DarkMode(getGraphics());
         textAlign(LEFT, TOP);
         surface.setResizable(true);
         _mainLayout = new MainLayout(getGraphics());
@@ -38,7 +39,7 @@ public class Main extends PApplet {
     
     public void draw() {
         clear();
-        background(50);
+        d.background();
         _mainLayout.drawLayout(0, 0, width, height);
     }
     
