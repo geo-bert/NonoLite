@@ -1,6 +1,8 @@
 package com.nonolite.board;
 
 import java.util.Arrays;
+import com.nonolite.design.Default;
+import com.nonolite.design.Design;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -20,6 +22,8 @@ public class NonoBoard extends PApplet implements Board {
     private int lastY = -1;
     float xTranslation;
     float yTranslation;
+    
+    Design d = new Default();
     
     public NonoBoard() {
     }
@@ -62,10 +66,10 @@ public class NonoBoard extends PApplet implements Board {
         this.width = width;
         maxHorizontal = 0;
         maxVertical = 0;
-    
+        randomSeed(0);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (Math.random() < 0.6) {
+                if (random(1) < 0.6) {
                     board[x][y] = "■";
                 }
                 else {
@@ -180,7 +184,10 @@ public class NonoBoard extends PApplet implements Board {
         xTranslation = x + (float) width / 2 - (float) cellSize * columns / 2;
         yTranslation = y + (float) height / 2 - (float) cellSize * rows / 2;
         pg.translate(xTranslation, yTranslation);
-    
+        
+        d.base(pg,vert * cellSize,0,board.length * cellSize, rows * cellSize);
+        d.base(pg,0,hor * cellSize,columns * cellSize, board[0].length * cellSize);
+        
         for (int column = 0; column < columns; column++) {
             for (int row = 0; row < rows; row++) {
                 int posX = column * cellSize;
@@ -206,38 +213,14 @@ public class NonoBoard extends PApplet implements Board {
         int posX = column * cellSize;
         int posY = row * cellSize;
         
-        pg.push();
-        pg.fill(50);
-        pg.rect(posX, posY, cellSize, cellSize);
-        pg.pop();
+        d.rect1(pg,posX,posY,cellSize,cellSize);
     
         switch (board[column - vert][row - hor]) {
             case "x":
-                int rectWidth = (int) Math.hypot(cellSize, cellSize) / 2;
-                int rectHeight = rectWidth / 5;
-            
-                pg.push();
-                pg.fill(200, 0, 0);
-                pg.noStroke();
-                pg.translate(posX + (float) cellSize / 2, posY + (float) cellSize / 2);
-                pg.rotate(radians(45));
-                pg.rectMode(CENTER);
-            
-                pg.rect(0, 0, rectWidth, rectHeight);
-                pg.rotate(radians(90));
-                pg.rect(0, 0, rectWidth, rectHeight);
-                pg.pop();
+                d.rightClick(pg, posX, posY, cellSize, cellSize);
                 break;
             case "■":
-                int widthMargin = cellSize / 20;
-                int heightMargin = cellSize / 20;
-            
-                pg.push();
-                pg.fill(150);
-                pg.noStroke();
-            
-                pg.rect(posX + widthMargin, posY + heightMargin, cellSize - 2 * widthMargin, cellSize - 2 * heightMargin);
-                pg.pop();
+                d.leftClick(pg,posX,posY ,cellSize,cellSize);
                 break;
         }
     }
@@ -246,17 +229,8 @@ public class NonoBoard extends PApplet implements Board {
         String[] a = hint[x - y].split(" ");
         int first = max - a.length;
         if (first <= z) {
-            pg.push();
-            pg.fill(50);
-            pg.rect(posX, posY, cellSize, cellSize);
-            pg.pop();
-        
-            pg.push();
-            pg.fill(200);
-            pg.textSize((float) cellSize / 1.5f);
-            pg.textAlign(CENTER, TOP);
-            pg.text(a[z - first], posX + (float) cellSize / 2, posY + (float) cellSize / 8);
-            pg.pop();
+            d.rect2(pg,posX, posY, cellSize, cellSize);
+            d.text(pg, a[z - first], posX + (float) cellSize / 2, posY + (float) cellSize / 8, (float) cellSize / 1.5f, CENTER, TOP);
         }
     }
     
