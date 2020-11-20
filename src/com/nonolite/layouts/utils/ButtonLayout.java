@@ -1,24 +1,25 @@
 package com.nonolite.layouts.utils;
 
 import com.nonolite.Main;
+import com.nonolite.design.Design;
 import processing.core.PGraphics;
 
 public class ButtonLayout extends Layout {
     private String _text = "Button";
-    private PGTextWriter _writer;
+    private Design d;
     
     public ButtonLayout(PGraphics pg) {
         super(pg);
         Main.getInstance().applyClickable(this);
-        _writer = new PGTextWriter(_pg);
+        d = Main.getInstance().getDesign();
     }
     
     @Override
     public void onLayout(int x, int y, int width, int height) {
         _pg.fill(60);
         _pg.rect(x, y, width, height);
-        
-        _writer.writeText(_text, x, y, width, height);
+    
+        d.text(_text, x, y, width, height);
     }
     
     @Override
