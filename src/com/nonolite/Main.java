@@ -2,6 +2,8 @@ package com.nonolite;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.nonolite.design.Default;
+import com.nonolite.design.Design;
 import com.nonolite.layouts.MainLayout;
 import com.nonolite.layouts.utils.Layout;
 import processing.core.PApplet;
@@ -12,6 +14,7 @@ public class Main extends PApplet {
     private int _screenHeight = 800;
     private final List<Layout> _clickables = new ArrayList<>();
     private MainLayout _mainLayout;
+    private Design d;
     
     public static void main(String[] args) {
         PApplet.main("com.nonolite.Main");
@@ -23,6 +26,7 @@ public class Main extends PApplet {
     
     public void setup() {
         main = this;
+        d = new Default(getGraphics());
         textAlign(LEFT, TOP);
         surface.setResizable(true);
         _mainLayout = new MainLayout(getGraphics());
@@ -99,5 +103,9 @@ public class Main extends PApplet {
     
     public MainLayout getMainLayout() {
         return _mainLayout;
+    }
+    
+    public Design getDesign() {
+        return d;
     }
 }
