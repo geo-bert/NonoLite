@@ -1,13 +1,13 @@
 package com.nonolite.design;
 
-import processing.core.PGraphics;
-
 public interface Design {
     void background();
     
     void base(int x, int y, int width, int height);
     
-    void rect(int x, int y, int width, int height);
+    void baseRect(int x, int y, int width, int height);
+    
+    void baseRect2(int x, int y, int width, int height);
     
     void rect1(int x, int y, int width, int height);
     
