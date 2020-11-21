@@ -5,7 +5,7 @@ import processing.core.PGraphics;
 
 public class PGTextWriter extends PApplet {
     private final PGraphics _pg;
-    private final float _CHARRATIO = 0.55f;
+    private final float _CHAR_RATIO = 0.55f;
     private boolean _newLineOnSpace = true;
     
     public PGTextWriter(PGraphics pg) {
@@ -41,7 +41,7 @@ public class PGTextWriter extends PApplet {
         }
         
         _pg.push();
-        _pg.textSize(min(availableWidth / maxLength / _CHARRATIO, availableHeight / words.length));
+        _pg.textSize(min(availableWidth / maxLength / _CHAR_RATIO, availableHeight / words.length));
         for (int i = 0; i < words.length; i++) {
             float posX = x;
             float posY = y;
@@ -50,11 +50,11 @@ public class PGTextWriter extends PApplet {
                 case LEFT:
                     break;
                 case RIGHT:
-                    posX += width - words[i].length() * (_pg.textSize * _CHARRATIO);
+                    posX += width - words[i].length() * (_pg.textSize * _CHAR_RATIO);
                     break;
                 default:
                 case CENTER:
-                    posX += width / 2 - words[i].length() * (_pg.textSize * _CHARRATIO) / 2;
+                    posX += width / 2 - words[i].length() * (_pg.textSize * _CHAR_RATIO) / 2;
                     break;
             }
             switch (_pg.textAlignY) {
@@ -83,11 +83,11 @@ public class PGTextWriter extends PApplet {
                         float ratio = 0.9f;
                         float size = _pg.textSize;
                         _pg.textSize(_pg.textSize * ratio);
-                        _pg.text(words[i].charAt(j), posX + (j + 0.5f) * size * _CHARRATIO, posY + (size - _pg.textSize) * _CHARRATIO / ratio);
+                        _pg.text(words[i].charAt(j), posX + (j + 0.5f) * size * _CHAR_RATIO, posY + (size - _pg.textSize) * _CHAR_RATIO / ratio);
                         _pg.pop();
                         continue;
                     default:
-                        _pg.text(words[i].charAt(j), posX + (j + 0.5f) * _pg.textSize * _CHARRATIO, posY);
+                        _pg.text(words[i].charAt(j), posX + (j + 0.5f) * _pg.textSize * _CHAR_RATIO, posY);
                         break;
                 }
             }
