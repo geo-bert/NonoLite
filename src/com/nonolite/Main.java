@@ -2,35 +2,48 @@ package com.nonolite;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.nonolite.design.DarkMode;
+import com.nonolite.design.DefaultMode;
 import com.nonolite.design.Design;
 import com.nonolite.design.RoundDarkMode;
 import com.nonolite.layouts.MainLayout;
 import com.nonolite.layouts.utils.Layout;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 public class Main extends PApplet {
-    private static Main main;
+    private static Main _main;
+    private PGraphics _pg;
     private int _screenWidth = 1500;
     private int _screenHeight = 800;
     private final List<Layout> _clickables = new ArrayList<>();
+    private Design _design;
+    private Design[] _designModes;
     private MainLayout _mainLayout;
-    private Design d;
+    
+    private enum DesignMode {
+        DefaultMode,
+        DarkMode,
+        RoundDarkMode
+    }
     
     public static void main(String[] args) {
         PApplet.main("com.nonolite.Main");
     }
     
     public static Main getInstance() {
-        return main;
+        return _main;
     }
     
     public void setup() {
-        main = this;
-        d = new RoundDarkMode(getGraphics());
-        // d = new DarkMode(getGraphics());
+        _main = this;
+        _pg = getGraphics();
+        _designModes = new Design[]{new DefaultMode(_pg), new DarkMode(_pg), new RoundDarkMode(_pg)};
         textAlign(LEFT, TOP);
         surface.setResizable(true);
-        _mainLayout = new MainLayout(getGraphics());
+        
+        setDesign(DesignMode.DefaultMode);
+        _mainLayout = new MainLayout(_pg);
     }
     
     public void settings() {
@@ -39,7 +52,7 @@ public class Main extends PApplet {
     
     public void draw() {
         clear();
-        d.background();
+        _design.background();
         _mainLayout.drawLayout(0, 0, width, height);
     }
     
@@ -107,6 +120,19 @@ public class Main extends PApplet {
     }
     
     public Design getDesign() {
-        return d;
+        return _design;
+    }
+    
+    public void setDesign(DesignMode designMode) {
+        _design = _designModes[designMode.ordinal()];
+    }
+    
+    public void setDesign(String designMode) {
+        try {
+            _design = _designModes[DesignMode.valueOf(designMode).ordinal()];
+        }
+        catch (IllegalArgumentException exception) {
+            _design = _designModes[DesignMode.DefaultMode.ordinal()];
+        }
     }
 }
