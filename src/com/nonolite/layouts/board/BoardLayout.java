@@ -16,7 +16,7 @@ public class BoardLayout extends Layout {
         super(pg);
         
         Main.getInstance().applyClickable(this);
-        
+        /*
         Board nonoBoard = new NonoBoard();
         String save = Main.getSaveFileController().loadState();
         if (!save.equals("")) {
@@ -27,6 +27,10 @@ public class BoardLayout extends Layout {
         }
         
         _board = nonoBoard;
+        
+         */
+        _board = new NonoBoard();
+        _board.generateBoard(currWidth,currHeight);
     }
     
     private static String[] readBoard(String boardString) {
@@ -82,7 +86,7 @@ public class BoardLayout extends Layout {
             currHeight++;
         }
         
-        if(level == 20) {
+        if(level == 15) {
             level = 0;
             currWidth = 2;
             currHeight = 2;
