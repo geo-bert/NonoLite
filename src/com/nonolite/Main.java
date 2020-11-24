@@ -128,6 +128,7 @@ public class Main extends PApplet {
         for (Layout clickable : _clickables) {
             if (layout == clickable) {
                 _clickables.remove(layout);
+                break;
             }
         }
     }
