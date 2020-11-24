@@ -55,7 +55,7 @@ public class Main extends PApplet {
     }
     
     private void loadSettings() {
-        setDesign(_saveFileController.loadSetting("design"));
+        setDesign(_saveFileController.loadSetting("design", DesignMode.DefaultMode.toString()));
     }
     
     public void settings() {
@@ -67,7 +67,7 @@ public class Main extends PApplet {
         _design.background();
         _mainLayout.drawLayout(0, 0, width, height);
         _toast.drawLayout(
-            0,0,width,height);
+            0, 0, width, height);
     }
     
     public void keyReleased() {

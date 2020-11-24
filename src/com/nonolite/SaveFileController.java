@@ -33,7 +33,8 @@ public class SaveFileController {
             }
         }
         catch (IOException exception) {
-            return "";
+            repairStateSave();
+            return loadState();
         }
         
         return input.toString();
@@ -46,7 +47,8 @@ public class SaveFileController {
             outputStream.write(state);
         }
         catch (IOException exception) {
-            exception.printStackTrace();
+            repairStateSave();
+            saveState(state);
         }
     }
     
@@ -62,11 +64,12 @@ public class SaveFileController {
             properties.load(inputStream);
         }
         catch (IOException exception) {
-            exception.printStackTrace();
-            return "";
+            return repairSettingsSave(key, defaultValue);
         }
         
-        return properties.getProperty(key, defaultValue);
+        return properties.getProperty(key, defaultValue).equals(defaultValue) ?
+               repairSettingsSave(key, defaultValue) :
+               properties.getProperty(key, defaultValue);
     }
     
     public void saveSetting(String key, String value) {
@@ -79,7 +82,65 @@ public class SaveFileController {
             properties.store(outputStream, "Setting properties");
         }
         catch (IOException exception) {
-            exception.printStackTrace();
+            repairSettingsSave();
+            saveSetting(key, value);
         }
+    }
+    
+    private void repairStateSave() {
+        String filePath = _directory + "state" + _fileType;
+        StringBuilder input = new StringBuilder();
+        
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = inputStream.readLine()) != null) {
+                input.append(line.concat("\r\n"));
+            }
+        }
+        catch (IOException exception) {
+            try (BufferedWriter outputStream = new BufferedWriter(new FileWriter(filePath))) {
+                outputStream.write("");
+            }
+            catch (IOException ignored) {
+            }
+        }
+    }
+    
+    private void repairSettingsSave() {
+        String filePath = _directory + "settings" + _fileType;
+        Properties properties = new Properties();
+        
+        try (InputStream inputStream = new FileInputStream(filePath)) {
+            properties.load(inputStream);
+        }
+        catch (IOException exception) {
+            try (OutputStream outputStream = new FileOutputStream(filePath)) {
+                properties.store(outputStream, "Setting properties");
+            }
+            catch (IOException ignored) {
+            }
+        }
+    }
+    
+    private String repairSettingsSave(String key, String defaultValue) {
+        String filePath = _directory + "settings" + _fileType;
+        Properties properties = new Properties();
+    
+    
+        try (InputStream inputStream = new FileInputStream(filePath)) {
+            properties.load(inputStream);
+        }
+        catch (IOException ignored) {
+        }
+        
+        try (OutputStream outputStream = new FileOutputStream(filePath)) {
+            
+            properties.setProperty(key, defaultValue);
+            properties.store(outputStream, "Setting properties");
+        }
+        catch (IOException ignored) {
+        }
+        
+        return defaultValue;
     }
 }
