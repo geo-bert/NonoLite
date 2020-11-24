@@ -67,10 +67,7 @@ public class Main extends PApplet {
         _design.background();
         _mainLayout.drawLayout(0, 0, width, height);
         _toast.drawLayout(
-            _mainLayout.getBoardLayout().getX() + 3 * _mainLayout.getBoardLayout().getWidth() / 8,
-            _mainLayout.getBoardLayout().getY() + 3 * _mainLayout.getBoardLayout().getHeight() / 8,
-            _mainLayout.getBoardLayout().getWidth() / 4,
-            _mainLayout.getBoardLayout().getWidth() / 8);
+            0,0,width,height);
     }
     
     public void keyReleased() {
@@ -151,5 +148,9 @@ public class Main extends PApplet {
         catch (IllegalArgumentException exception) {
             _design = _designModes[DesignMode.DefaultMode.ordinal()];
         }
+    }
+    
+    public Toast getToast() {
+        return _toast;
     }
 }
