@@ -8,6 +8,9 @@ import processing.core.PGraphics;
 
 public class BoardLayout extends Layout {
     private static Board _board;
+    private int currWidth = 2;
+    private int currHeight = 2;
+    private int level;
     
     public BoardLayout(PGraphics pg) {
         super(pg);
@@ -69,6 +72,20 @@ public class BoardLayout extends Layout {
     }
     
     public void newRandomBoard() {
-        _board.generateBoard(10, 10);
+        _board.generateBoard(currWidth, currHeight);
+        level++;
+        
+        if ((level % 2 == 0)) {
+            currWidth++;
+        }
+        else {
+            currHeight++;
+        }
+        
+        if(level == 20) {
+            level = 0;
+            currWidth = 2;
+            currHeight = 2;
+        }
     }
 }
