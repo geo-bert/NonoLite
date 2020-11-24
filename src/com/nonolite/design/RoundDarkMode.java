@@ -26,7 +26,7 @@ public class RoundDarkMode extends PApplet implements Design {
         int marginY = height / 150;
         int margin = max(marginX, marginY);
         _pg.noStroke();
-        _pg.rect(x - margin, y - margin, width + 2 * margin, height + 2 * margin, 10);
+        _pg.rect(x - margin, y - margin, width + 2 * margin, height + 2 * margin, (float) (min(width, height) * 0.20));
         _pg.pop();
     }
     
@@ -57,7 +57,7 @@ public class RoundDarkMode extends PApplet implements Design {
         _pg.noStroke();
         int marginX = width / 20;
         int marginY = height / 20;
-        _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY, 8);
+        _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY, (float) (min(width, height) * 0.18));
         _pg.pop();
     }
     
@@ -68,7 +68,7 @@ public class RoundDarkMode extends PApplet implements Design {
         _pg.noStroke();
         int marginX = width / 20;
         int marginY = height / 20;
-        _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY, 8);
+        _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY, (float) (min(width, height) * 0.18));
         _pg.pop();
     }
     
@@ -151,7 +151,7 @@ public class RoundDarkMode extends PApplet implements Design {
         _pg.noStroke();
         int marginX = width / 10;
         int marginY = height / 10;
-        _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY, 8);
+        _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY, (float) (min(width, height) * 0.18));
         _pg.pop();
     }
     
@@ -167,9 +167,9 @@ public class RoundDarkMode extends PApplet implements Design {
         _pg.rotate(radians(45));
         _pg.rectMode(CENTER);
         
-        _pg.rect(0, 0, rectWidth, rectHeight, 4);
+        _pg.rect(0, 0, rectWidth, rectHeight, (float) (min(width, height) * 0.18));
         _pg.rotate(radians(90));
-        _pg.rect(0, 0, rectWidth, rectHeight, 4);
+        _pg.rect(0, 0, rectWidth, rectHeight, (float) (min(width, height) * 0.18));
         _pg.pop();
     }
 }
