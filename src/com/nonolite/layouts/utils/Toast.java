@@ -9,7 +9,7 @@ public class Toast extends Layout {
     
     public Toast(PGraphics pg) {
         super(pg);
-        Main.getInstance().applyClickable(this);
+        hidden = true;
     }
     
     @Override
@@ -59,5 +59,9 @@ public class Toast extends Layout {
     public void unhide() {
         hidden = false;
         Main.getInstance().applyClickable(this);
+    }
+    
+    public boolean getStatus(){
+        return hidden;
     }
 }
