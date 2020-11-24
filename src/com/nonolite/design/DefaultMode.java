@@ -19,23 +19,23 @@ public class DefaultMode extends PApplet implements Design {
     }
     
     @Override
-    public void base(int x, int y, int xSize, int ySize) {
+    public void base(float x, float y, float xSize, float ySize) {
     }
     
     @Override
-    public void baseRect(int x, int y, int xSize, int ySize) {
+    public void baseRect(float x, float y, float xSize, float ySize) {
         _pg.push();
         _pg.fill(50);
         _pg.rect(x, y, xSize, ySize);
         _pg.pop();
     }
     
-    public void baseRect2(int x, int y, int xSize, int ySize) {
+    public void baseRect2(float x, float y, float xSize, float ySize) {
         baseRect(x, y, xSize, ySize);
     }
     
     @Override
-    public void rect1(int x, int y, int xSize, int ySize) {
+    public void rect1(float x, float y, float xSize, float ySize) {
         _pg.push();
         _pg.fill(50);
         _pg.rect(x, y, xSize, ySize);
@@ -43,7 +43,7 @@ public class DefaultMode extends PApplet implements Design {
     }
     
     @Override
-    public void rect2(int x, int y, int xSize, int ySize) {
+    public void rect2(float x, float y, float xSize, float ySize) {
         _pg.push();
         _pg.fill(50);
         _pg.rect(x, y, xSize, ySize);
@@ -123,9 +123,9 @@ public class DefaultMode extends PApplet implements Design {
     }
     
     @Override
-    public void symbol1(int x, int y, int xSize, int ySize) {
-        int widthMargin = xSize / 20;
-        int heightMargin = ySize / 20;
+    public void symbol1(float x, float y, float xSize, float ySize) {
+        float widthMargin = xSize / 20;
+        float heightMargin = ySize / 20;
         
         _pg.push();
         _pg.fill(150);
@@ -136,14 +136,14 @@ public class DefaultMode extends PApplet implements Design {
     }
     
     @Override
-    public void symbol2(int x, int y, int xSize, int ySize) {
-        int rectWidth = (int) Math.hypot(xSize, ySize) / 2;
-        int rectHeight = rectWidth / 5;
+    public void symbol2(float x, float y, float xSize, float ySize) {
+        float rectWidth = (float) Math.hypot(xSize, ySize) / 2;
+        float rectHeight = rectWidth / 5;
         
         _pg.push();
         _pg.fill(200, 0, 0);
         _pg.noStroke();
-        _pg.translate(x + (float) xSize / 2, y + (float) ySize / 2);
+        _pg.translate(x + xSize / 2, y + ySize / 2);
         _pg.rotate(radians(45));
         _pg.rectMode(CENTER);
         

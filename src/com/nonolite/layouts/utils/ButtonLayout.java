@@ -8,18 +8,19 @@ public class ButtonLayout extends Layout {
     
     public ButtonLayout(PGraphics pg) {
         super(pg);
+        
         Main.getInstance().applyClickable(this);
     }
     
     @Override
-    public void onLayout(int x, int y, int width, int height) {
+    public void onLayout(float x, float y, float width, float height) {
         Main.getDesign().baseRect(x, y, width, height);
         
         Main.getDesign().text(_text, x, y, width, height);
     }
     
     @Override
-    public String mouseInput(int keyCode, int x, int y) {
+    public String mouseInput(int keyCode, float x, float y) {
         click(keyCode, x, y);
         return "";
     }

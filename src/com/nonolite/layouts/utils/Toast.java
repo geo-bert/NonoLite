@@ -12,7 +12,7 @@ public class Toast extends Layout {
     }
     
     @Override
-    public void onLayout(int x, int y, int width, int height) {
+    public void onLayout(float x, float y, float width, float height) {
         if (!hidden) {
             Main.getDesign().baseRect(x, y, width, height);
             Main.getDesign().text("Well done!", x, y, width, height);
@@ -20,7 +20,7 @@ public class Toast extends Layout {
     }
     
     @Override
-    public String mouseInput(int keyCode, int x, int y) {
+    public String mouseInput(int keyCode, float x, float y) {
         hidden = !hidden;
         if (hidden) {
             Main.getInstance().resignClickable(this);

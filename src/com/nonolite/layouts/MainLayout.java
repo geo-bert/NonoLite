@@ -21,7 +21,7 @@ public class MainLayout extends Layout {
     }
     
     @Override
-    public void onLayout(int x, int y, int width, int height) {
+    public void onLayout(float x, float y, float width, float height) {
         for (int i = 0; i < getChildCount(); i++) {
             Rect childRect = new Rect();
             childRect.x = x + i * width / 4;

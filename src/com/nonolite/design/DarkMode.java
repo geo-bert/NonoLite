@@ -19,7 +19,7 @@ public class DarkMode extends PApplet implements Design {
     }
     
     @Override
-    public void base(int x, int y, int width, int height) {
+    public void base(float x, float y, float width, float height) {
         _pg.push();
         _pg.fill(50);
         
@@ -29,7 +29,7 @@ public class DarkMode extends PApplet implements Design {
     }
     
     @Override
-    public void baseRect(int x, int y, int width, int height) {
+    public void baseRect(float x, float y, float width, float height) {
         _pg.push();
         _pg.fill(60);
         _pg.stroke(50);
@@ -39,7 +39,7 @@ public class DarkMode extends PApplet implements Design {
     }
     
     @Override
-    public void baseRect2(int x, int y, int width, int height) {
+    public void baseRect2(float x, float y, float width, float height) {
         _pg.push();
         _pg.fill(40);
         _pg.stroke(35);
@@ -49,23 +49,23 @@ public class DarkMode extends PApplet implements Design {
     }
     
     @Override
-    public void rect1(int x, int y, int width, int height) {
+    public void rect1(float x, float y, float width, float height) {
         _pg.push();
         _pg.fill(70);
         _pg.noStroke();
-        int marginX = width / 20;
-        int marginY = height / 20;
+        float marginX = width / 20;
+        float marginY = height / 20;
         _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY);
         _pg.pop();
     }
     
     @Override
-    public void rect2(int x, int y, int width, int height) {
+    public void rect2(float x, float y, float width, float height) {
         _pg.push();
         _pg.fill(60);
         _pg.noStroke();
-        int marginX = width / 20;
-        int marginY = height / 20;
+        float marginX = width / 20;
+        float marginY = height / 20;
         _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY);
         _pg.pop();
     }
@@ -143,25 +143,25 @@ public class DarkMode extends PApplet implements Design {
     }
     
     @Override
-    public void symbol1(int x, int y, int width, int height) {
+    public void symbol1(float x, float y, float width, float height) {
         _pg.push();
         _pg.fill(132);
         _pg.noStroke();
-        int marginX = width / 10;
-        int marginY = height / 10;
+        float marginX = width / 10;
+        float marginY = height / 10;
         _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY);
         _pg.pop();
     }
     
     @Override
-    public void symbol2(int x, int y, int width, int height) {
-        int rectWidth = (int) Math.hypot(width, height) / 2;
-        int rectHeight = rectWidth / 5;
+    public void symbol2(float x, float y, float width, float height) {
+        float rectWidth = (float) (Math.hypot(width, height) / 2);
+        float rectHeight = rectWidth / 5;
         
         _pg.push();
         _pg.fill(179, 80, 75);
         _pg.noStroke();
-        _pg.translate(x + (float) width / 2, y + (float) height / 2);
+        _pg.translate(x + width / 2, y + height / 2);
         _pg.rotate(radians(45));
         _pg.rectMode(CENTER);
         

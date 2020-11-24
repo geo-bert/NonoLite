@@ -12,7 +12,7 @@ public interface Board {
     
     String keyInput(int keyCode);
     
-    String mouseInput(int keyCode, int x, int y);
+    String mouseInput(int keyCode, float x, float y);
     
     String mouseDragInput(int keyCode, int x, int y);
     
@@ -20,5 +20,5 @@ public interface Board {
     
     boolean checkBoard();
     
-    void drawBoard(PGraphics pg, int x, int y, int width, int height);
+    void drawBoard(PGraphics pg, float x, float y, float width, float height);
 }

@@ -62,8 +62,8 @@ public class SideBarLayout extends Layout {
     }
     
     @Override
-    public void onLayout(int x, int y, int width, int height) {
-        int currentY = y;
+    public void onLayout(float x, float y, float width, float height) {
+        float currentY = y;
         
         Main.getDesign().baseRect2(x, y, width, height);
         for (int i = 0; i < getChildCount(); i++) {

@@ -39,7 +39,7 @@ public class BoardLayout extends Layout {
     }
     
     @Override
-    public void onLayout(int x, int y, int width, int height) {
+    public void onLayout(float x, float y, float width, float height) {
         _board.drawBoard(_pg, x, y, width, height);
     }
     
@@ -48,7 +48,7 @@ public class BoardLayout extends Layout {
     }
     
     @Override
-    public String mouseInput(int keyCode, int mouseX, int mouseY) {
+    public String mouseInput(int keyCode, float mouseX, float mouseY) {
         return _board.mouseInput(keyCode, mouseX, mouseY);
     }
     

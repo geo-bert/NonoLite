@@ -18,7 +18,7 @@ public class TimerLayout extends Layout {
     }
     
     @Override
-    public void onLayout(int x, int y, int width, int height) {
+    public void onLayout(float x, float y, float width, float height) {
         Main.getDesign().baseRect2(x, y, width, height);
         Main.getDesign().text(formatTime(), x, y, width, height);
     }

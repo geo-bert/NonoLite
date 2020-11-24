@@ -7,10 +7,10 @@ import processing.core.PGraphics;
 
 public abstract class Layout extends PApplet {
     protected final PGraphics _pg;
-    private int _x;
-    private int _y;
-    private int _width;
-    private int _height;
+    private float _x;
+    private float _y;
+    private float _width;
+    private float _height;
     private int _depth = 0;
     private OnClickListener _listener;
     private final List<Layout> _children = new ArrayList<>();
@@ -19,17 +19,17 @@ public abstract class Layout extends PApplet {
         _pg = pg;
     }
     
-    public void onLayout(int x, int y, int width, int height) {
+    public void onLayout(float x, float y, float width, float height) {
         for (Layout child : _children) {
             child.drawLayout(x, y, width, height);
         }
     }
     
-    public String mouseInput(int keyCode, int x, int y) {
+    public String mouseInput(int keyCode, float x, float y) {
         return "no key input defined";
     }
     
-    public final void drawLayout(int x, int y, int width, int height) {
+    public final void drawLayout(float x, float y, float width, float height) {
         _x = x;
         _y = y;
         _width = width;
@@ -43,7 +43,7 @@ public abstract class Layout extends PApplet {
         _listener = listener;
     }
     
-    public final void click(int keyCode, int x, int y) {
+    public final void click(int keyCode, float x, float y) {
         _listener.onClick(keyCode, x, y);
     }
     
@@ -71,19 +71,19 @@ public abstract class Layout extends PApplet {
         return _children.get(i);
     }
     
-    public final int getX() {
+    public final float getX() {
         return _x;
     }
     
-    public final int getY() {
+    public final float getY() {
         return _y;
     }
     
-    public final int getWidth() {
+    public final float getWidth() {
         return _width;
     }
     
-    public final int getHeight() {
+    public final float getHeight() {
         return _height;
     }
     

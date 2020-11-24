@@ -1,8 +1,8 @@
 package com.nonolite.layouts.utils;
 
 public class Rect {
-    public int x = 0;
-    public int y = 0;
-    public int width = 0;
-    public int height = 0;
+    public float x = 0;
+    public float y = 0;
+    public float width = 0;
+    public float height = 0;
 }
