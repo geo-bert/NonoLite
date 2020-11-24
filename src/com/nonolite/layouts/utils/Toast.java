@@ -23,6 +23,11 @@ public class Toast extends Layout {
         
         if (!hidden) {
             PGraphics pg = Main.getInstance().getGraphics();
+            pg.push();
+            pg.fill(0, 150);
+            pg.rect(r.x,r.y,r.width,r.height);
+            pg.pop();
+            
             Main.getDesign().baseRect(
                 r.x + 3 * r.width / 8,
                 r.y + 3 * r.height / 8,
