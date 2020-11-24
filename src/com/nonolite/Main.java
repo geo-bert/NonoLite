@@ -102,7 +102,30 @@ public class Main extends PApplet {
     }
     
     public void mouseDragged() {
-        _mainLayout.getBoardLayout().mouseDragInput(mouseButton, mouseX, mouseY);
+        Layout clickedLayout = null;
+        for (Layout clickable : _clickables) {
+            if (!(mouseX >= clickable.getX() &&
+                  mouseX <= clickable.getX() + clickable.getWidth())) {
+                continue;
+            }
+            if (!(mouseY >= clickable.getY() &&
+                  mouseY <= clickable.getY() + clickable.getHeight())) {
+                continue;
+            }
+            
+            if (clickedLayout != null) {
+                if (clickedLayout.getDepth() < clickable.getDepth()) {
+                    clickedLayout = clickable;
+                }
+            }
+            else {
+                clickedLayout = clickable;
+            }
+        }
+        
+        if (clickedLayout != null) {
+            _mainLayout.getBoardLayout().mouseDragInput(mouseButton, mouseX, mouseY);
+        }
     }
     
     public void applyClickable(Layout layout) {
