@@ -25,7 +25,8 @@ public class SideBarLayout extends Layout {
         _checkButton = new ButtonLayout(_pg);
         _checkButton.setText("Check");
         _checkButton.setOnClickListener((keyCode, x, y) -> {
-            System.out.println(Main.getInstance().getMainLayout().getBoardLayout().check());
+            if(Main.getInstance().getMainLayout().getBoardLayout().check())
+                Main.getInstance().getToast().unhide();
             return "";
         });
         this.addChild(_checkButton);
