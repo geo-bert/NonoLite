@@ -217,7 +217,7 @@ public class NonoBoard extends PApplet implements Board {
             Main.getDesign().base(
                 (vert - vertical[row - hor].split(" ").length) * cellSize,
                 row * cellSize,
-                (vertical[row - hor].split(" ").length + board[0].length) * cellSize - cellSize / 2,
+                (vertical[row - hor].split(" ").length + board.length) * cellSize - cellSize / 2,
                 cellSize
             );
         }
