@@ -6,6 +6,7 @@ import processing.core.PGraphics;
 public class PGTextWriter extends PApplet {
     private final PGraphics _pg;
     private final float _CHAR_RATIO = 0.55f;
+    private final boolean _MONOSPACE_FONT = true;
     private boolean _newLineOnSpace = true;
     
     public PGTextWriter(PGraphics pg) {
@@ -80,13 +81,15 @@ public class PGTextWriter extends PApplet {
                     case 'w':
                     case 'm':
                     case 'M':
-                        _pg.push();
-                        float ratio = 0.9f;
-                        float size = _pg.textSize;
-                        _pg.textSize(_pg.textSize * ratio);
-                        _pg.text(words[i].charAt(j), posX + (j + 0.5f) * size * _CHAR_RATIO, posY + (size - _pg.textSize) * _CHAR_RATIO / ratio);
-                        _pg.pop();
-                        continue;
+                        if (!_MONOSPACE_FONT) {
+                            _pg.push();
+                            float ratio = 0.9f;
+                            float size = _pg.textSize;
+                            _pg.textSize(_pg.textSize * ratio);
+                            _pg.text(words[i].charAt(j), posX + (j + 0.5f) * size * _CHAR_RATIO, posY + (size - _pg.textSize) * _CHAR_RATIO / ratio);
+                            _pg.pop();
+                            continue;
+                        }
                     default:
                         _pg.text(words[i].charAt(j), posX + (j + 0.5f) * _pg.textSize * _CHAR_RATIO, posY);
                         break;
