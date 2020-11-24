@@ -52,7 +52,6 @@ public class Main extends PApplet {
     }
     
     private void loadSettings() {
-        _saveFileController.saveSetting("design", "RoundDarkMode");
         setDesign(_saveFileController.loadSetting("design"));
     }
     
