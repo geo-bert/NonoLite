@@ -71,6 +71,19 @@ public class Main extends PApplet {
     }
     
     public void keyReleased() {
+        switch (keyCode){
+            case 32:
+                if (Main.getInstance().getToast().getStatus() && Main.getInstance().getMainLayout().getBoardLayout().check()) {
+                    Main.getInstance().getToast().unhide();
+                    break;
+                }
+                
+                if(!Main.getInstance().getToast().getStatus())
+                    Main.getInstance().getToast().mouseInput(LEFT,width,height);
+                break;
+            
+        }
+        
         _mainLayout.getBoardLayout().keyInput(keyCode);
     }
     
