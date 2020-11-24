@@ -125,12 +125,7 @@ public class Main extends PApplet {
     }
     
     public void resignClickable(Layout layout) {
-        for (Layout clickable : _clickables) {
-            if (layout == clickable) {
-                _clickables.remove(layout);
-                break;
-            }
-        }
+        _clickables.remove(layout);
     }
     
     public static SaveFileController getSaveFileController() {
