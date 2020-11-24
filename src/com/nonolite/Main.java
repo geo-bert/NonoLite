@@ -9,6 +9,7 @@ import com.nonolite.design.RoundDarkMode;
 import com.nonolite.layouts.MainLayout;
 import com.nonolite.layouts.utils.Layout;
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PGraphics;
 
 public class Main extends PApplet {
@@ -43,13 +44,15 @@ public class Main extends PApplet {
         _saveFileController = new SaveFileController();
         _pg = getGraphics();
         _designModes = new Design[]{new DefaultMode(_pg), new DarkMode(_pg), new RoundDarkMode(_pg)};
-        
+        PFont font = createFont("Courier New Bold", 32);
+        textFont(font);
         loadSettings();
         
         _mainLayout = new MainLayout(_pg);
     }
     
     private void loadSettings() {
+        _saveFileController.saveSetting("design", "RoundDarkMode");
         setDesign(_saveFileController.loadSetting("design"));
     }
     
