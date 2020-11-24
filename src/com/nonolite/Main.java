@@ -8,6 +8,7 @@ import com.nonolite.design.Design;
 import com.nonolite.design.RoundDarkMode;
 import com.nonolite.layouts.MainLayout;
 import com.nonolite.layouts.utils.Layout;
+import com.nonolite.layouts.utils.Toast;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
@@ -22,6 +23,7 @@ public class Main extends PApplet {
     private static Design _design;
     private Design[] _designModes;
     private MainLayout _mainLayout;
+    private Toast _toast;
     
     private enum DesignMode {
         DefaultMode,
@@ -49,6 +51,7 @@ public class Main extends PApplet {
         loadSettings();
         
         _mainLayout = new MainLayout(_pg);
+        _toast = new Toast(_pg);
     }
     
     private void loadSettings() {
@@ -63,6 +66,11 @@ public class Main extends PApplet {
         clear();
         _design.background();
         _mainLayout.drawLayout(0, 0, width, height);
+        _toast.drawLayout(
+            _mainLayout.getBoardLayout().getX() + 3 * _mainLayout.getBoardLayout().getWidth() / 8,
+            _mainLayout.getBoardLayout().getY() + 3 * _mainLayout.getBoardLayout().getHeight() / 8,
+            _mainLayout.getBoardLayout().getWidth() / 4,
+            _mainLayout.getBoardLayout().getWidth() / 8);
     }
     
     public void keyReleased() {
