@@ -30,8 +30,9 @@ public class PGTextWriter extends PApplet {
     }
     
     public void writeText(String[] words, float x, float y, float width, float height) {
-        float availableWidth = width / 1.5f;
-        float availableHeight = height / 1.5f;
+        float factor = (words.length == 1 ? 0.55f : 0.75f);
+        float availableWidth = width * factor;
+        float availableHeight = height * factor;
         
         int maxLength = 0;
         for (String word : words) {
@@ -59,14 +60,14 @@ public class PGTextWriter extends PApplet {
             }
             switch (_pg.textAlignY) {
                 case TOP:
-                    posY += i * words.length * _pg.textSize / 2;
+                    posY += i * _pg.textSize;
                     break;
                 case BOTTOM:
                     posY += height + (i - words.length) * _pg.textSize;
                     break;
                 default:
                 case CENTER:
-                    posY += height / 2 + (i - 1) * words.length * _pg.textSize / 2;
+                    posY += height / 2 + (i - (float) words.length / 2) * _pg.textSize;
                     break;
             }
             
