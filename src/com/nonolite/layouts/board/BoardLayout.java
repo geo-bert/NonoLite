@@ -1,10 +1,5 @@
 package com.nonolite.layouts.board;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import com.nonolite.Main;
 import com.nonolite.board.Board;
 import com.nonolite.board.NonoBoard;
@@ -20,19 +15,14 @@ public class BoardLayout extends Layout {
         Main.getInstance().applyClickable(this);
         
         Board nonoBoard = new NonoBoard();
-        try (BufferedReader inputStream = new BufferedReader(new FileReader("out/save.txt"))) {
-            
-            StringBuilder boardString = new StringBuilder();
-            String line;
-            while ((line = inputStream.readLine()) != null) {
-                boardString.append(line.concat("\r\n"));
-            }
-            nonoBoard.loadBoard(readBoard(boardString.toString()));
+        String save = Main.getSaveFileController().loadState();
+        if (!save.equals("")) {
+            nonoBoard.loadBoard(readBoard(save));
         }
-        catch (IOException exception) {
-            System.out.println("file not found");
+        else {
             nonoBoard.generateBoard(2, 2);
         }
+        
         _board = nonoBoard;
     }
     
@@ -75,15 +65,10 @@ public class BoardLayout extends Layout {
     }
     
     public void save() {
-        try (BufferedWriter outputStream = new BufferedWriter(new FileWriter("out/save.txt"))) {
-            outputStream.write(writeBoard(_board.getSaveBoard()));
-        }
-        catch (IOException exception) {
-            System.out.println("file not found");
-        }
+        Main.getSaveFileController().saveState(writeBoard(_board.getSaveBoard()));
     }
     
-    public void newRandomBoard(){
-        _board.generateBoard(10,10);
+    public void newRandomBoard() {
+        _board.generateBoard(10, 10);
     }
 }
