@@ -7,7 +7,7 @@ import com.nonolite.layouts.utils.Rect;
 import processing.core.PGraphics;
 
 public class SideBarLayout extends Layout {
-    private final int _BUTTON_HEIGHT = 75;
+    private final float _INVENTORY_SPACE = (float) 1 / 2;
     private TimerLayout _timerLayout;
     private ButtonLayout _checkButton;
     private ButtonLayout _generateButton;
@@ -64,18 +64,18 @@ public class SideBarLayout extends Layout {
     @Override
     public void onLayout(int x, int y, int width, int height) {
         int currentY = y;
-    
+        
         Main.getDesign().baseRect2(x, y, width, height);
         for (int i = 0; i < getChildCount(); i++) {
             Rect childRect = new Rect();
             childRect.x = x;
             childRect.y = currentY;
             childRect.width = width;
-            childRect.height = (getChildAt(i) == _inventoryLayout) ?
-                               (height - _BUTTON_HEIGHT * (getChildCount() - 1)) :
-                               _BUTTON_HEIGHT;
+            childRect.height = (int) ((getChildAt(i) == _inventoryLayout) ?
+                                      height * _INVENTORY_SPACE :
+                                      height * (1 - _INVENTORY_SPACE) / (getChildCount() - 1));
             
-            if (i + 1 == getChildCount()) {
+            if (i == getChildCount() - 1) {
                 childRect.height = getChildAt(i - 1).getHeight();
             }
             currentY += childRect.height;
