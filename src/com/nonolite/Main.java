@@ -18,7 +18,7 @@ public class Main extends PApplet {
     private int _screenWidth = 1500;
     private int _screenHeight = 800;
     private final List<Layout> _clickables = new ArrayList<>();
-    private Design _design;
+    private static Design _design;
     private Design[] _designModes;
     private MainLayout _mainLayout;
     
@@ -130,7 +130,7 @@ public class Main extends PApplet {
         return _mainLayout;
     }
     
-    public Design getDesign() {
+    public static Design getDesign() {
         return _design;
     }
     
