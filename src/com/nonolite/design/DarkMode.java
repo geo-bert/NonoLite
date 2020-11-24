@@ -15,7 +15,7 @@ public class DarkMode extends PApplet implements Design {
     
     @Override
     public void background() {
-        _pg.background(40);
+        _pg.background(35);
     }
     
     @Override
