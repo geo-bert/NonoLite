@@ -14,7 +14,6 @@ public class SideBarLayout extends Layout {
     private ButtonLayout _checkButton;
     private ButtonLayout _generateButton;
     private ButtonLayout _resetButton;
-    private ButtonLayout _saveButton;
     private InventoryLayout _inventoryLayout;
     private SettingsLayout _settingsLayout;
     
@@ -52,14 +51,6 @@ public class SideBarLayout extends Layout {
         });
         this.addChild(_resetButton);
         
-        _saveButton = new ButtonLayout(_pg);
-        _saveButton.setText("Save");
-        _saveButton.setOnClickListener((keyCode, x, y) -> {
-            Main.getInstance().getMainLayout().getBoardLayout().save();
-            return "";
-        });
-        this.addChild(_saveButton);
-        
         _inventoryLayout = new InventoryLayout(_pg);
         this.addChild(_inventoryLayout);
         
@@ -85,8 +76,7 @@ public class SideBarLayout extends Layout {
                 childRect.height = height * _INVENTORY_SPACE * (1 - _settingsExpansion);
             }
             else if (getChildAt(i) == _settingsLayout) {
-                childRect.height = height * _INVENTORY_SPACE;
-                childRect.height += buttonHeight;
+                childRect.height = height * _INVENTORY_SPACE + buttonHeight;
             }
             else {
                 childRect.height = buttonHeight;

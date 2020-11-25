@@ -25,7 +25,7 @@ public class Main extends PApplet {
     private MainLayout _mainLayout;
     private Toast _toast;
     
-    private enum DesignMode {
+    public enum DesignMode {
         DefaultMode,
         DarkMode,
         RoundDarkMode
@@ -52,6 +52,7 @@ public class Main extends PApplet {
         
         _mainLayout = new MainLayout(_pg);
         _toast = new Toast(_pg);
+        _mainLayout.getBoardLayout().load();
     }
     
     private void loadSettings() {

@@ -30,7 +30,7 @@ public class BoardLayout extends Layout {
         
          */
         _board = new NonoBoard();
-        _board.generateBoard(currWidth,currHeight);
+        _board.generateBoard(currWidth, currHeight);
     }
     
     private static String[] readBoard(String boardString) {
@@ -71,6 +71,10 @@ public class BoardLayout extends Layout {
         _board.resetBoard();
     }
     
+    public void load() {
+        _board.loadBoard(readBoard(Main.getSaveFileController().loadState()));
+    }
+    
     public void save() {
         Main.getSaveFileController().saveState(writeBoard(_board.getSaveBoard()));
     }
@@ -86,7 +90,7 @@ public class BoardLayout extends Layout {
             currHeight++;
         }
         
-        if(level == 15) {
+        if (level == 15) {
             level = 0;
             currWidth = 2;
             currHeight = 2;
