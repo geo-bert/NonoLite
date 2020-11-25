@@ -1,5 +1,6 @@
 package com.nonolite.board;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import com.nonolite.Main;
 import processing.core.PApplet;
@@ -28,33 +29,33 @@ public class NonoBoard extends PApplet implements Board {
     
     @Override
     public String[] getSaveBoard() {
-        String[] saveData = new String[3 + height];
-        saveData[0] = width + " " + height;
+        ArrayList<String> saveData = new ArrayList<>();
+        saveData.add(width + " " + height);
         
         StringBuilder h = new StringBuilder();
         for (String s : horizontal) {
             h.append(s).append(",");
         }
         h.deleteCharAt(h.length() - 1);
-        saveData[1] = h.toString();
+        saveData.add(h.toString());
         
         StringBuilder v = new StringBuilder();
         for (String s : vertical) {
             v.append(s).append(",");
         }
         v.deleteCharAt(v.length() - 1);
-        saveData[2] = v.toString();
+        saveData.add(v.toString());
         
         StringBuilder f = new StringBuilder();
-        for (int x = 0; x < height; x++) {
-            for (int y = 0; y < width; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 f.append(board[x][y]);
             }
-            saveData[x + 3] = f.toString();
+            saveData.add(f.toString());
             f.setLength(0);
         }
         
-        return saveData;
+        return saveData.toArray(new String[0]);
     }
     
     @Override
