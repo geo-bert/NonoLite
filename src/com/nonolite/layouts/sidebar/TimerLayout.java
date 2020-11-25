@@ -9,12 +9,32 @@ import processing.core.PGraphics;
 public class TimerLayout extends Layout {
     private Timer _timer = new Timer();
     private int _remainingSecs;
+    private int _startingSecs;
+    private boolean _running = false;
     private boolean _countdown = false;
     
     public TimerLayout(PGraphics pg) {
         super(pg);
         
-        startTimer(0);
+        _timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (_running) {
+                    
+                    if (_countdown) {
+                        _remainingSecs--;
+                        if (_remainingSecs <= 0) {
+                            endTimer();
+                        }
+                    }
+                    else {
+                        _remainingSecs++;
+                    }
+                }
+            }
+        }, 0, 1000);
+        
+        startTimer();
     }
     
     @Override
@@ -23,36 +43,28 @@ public class TimerLayout extends Layout {
         Main.getDesign().text(formatTime(), x, y, width, height);
     }
     
-    private void startTimer() {
+    public void startTimer() {
         startTimer(_remainingSecs);
     }
     
-    private void startTimer(int secs) {
+    public void startTimer(int secs) {
         _remainingSecs = secs;
+        _startingSecs = secs;
         
-        _timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (_countdown) {
-                    _remainingSecs--;
-                    if (_remainingSecs <= 0) {
-                        endTimer();
-                    }
-                }
-                else {
-                    _remainingSecs++;
-                }
-            }
-        }, 0, 1000);
+        _running = true;
     }
     
-    private void stopTimer() {
-        _timer.cancel();
+    public void stopTimer() {
+        _running = false;
     }
     
     private void endTimer() {
         _remainingSecs = 0;
         stopTimer();
+    }
+    
+    public void resetTimer() {
+        _remainingSecs = _startingSecs;
     }
     
     private String formatTime() {

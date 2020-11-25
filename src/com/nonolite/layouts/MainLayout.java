@@ -33,6 +33,10 @@ public class MainLayout extends Layout {
         }
     }
     
+    public SideBarLayout getSideBarLayout() {
+        return _sideBarLayout;
+    }
+    
     public BoardLayout getBoardLayout() {
         return _boardLayout;
     }
