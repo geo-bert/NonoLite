@@ -8,6 +8,8 @@ import processing.core.PGraphics;
 
 public class SideBarLayout extends Layout {
     private final float _INVENTORY_SPACE = (float) 1 / 2;
+    private float _settingsExpansion = 0.0f;
+    private int _settingsExpansionDir = 0;
     private TimerLayout _timerLayout;
     private ButtonLayout _checkButton;
     private ButtonLayout _generateButton;
@@ -68,24 +70,36 @@ public class SideBarLayout extends Layout {
     @Override
     public void onLayout(float x, float y, float width, float height) {
         float currentY = y;
+        float buttonHeight = height * (1 - _INVENTORY_SPACE) / (getChildCount() - 1);
         
+        _settingsLayout.setButtonHeight(buttonHeight);
         Main.getDesign().baseRect2(x, y, width, height);
         for (int i = 0; i < getChildCount(); i++) {
             Rect childRect = new Rect();
             childRect.x = x;
             childRect.y = currentY;
             childRect.width = width;
-            childRect.height = (int) ((getChildAt(i) == _inventoryLayout) ?
-                                      height * _INVENTORY_SPACE :
-                                      height * (1 - _INVENTORY_SPACE) / (getChildCount() - 1));
             
-            if (i == getChildCount() - 1) {
-                childRect.height = getChildAt(i - 1).getHeight();
+            if (getChildAt(i) == _inventoryLayout) {
+                _settingsExpansion = max(0, min(1, _settingsExpansion + 0.1f * _settingsExpansionDir));
+                childRect.height = height * _INVENTORY_SPACE * (1 - _settingsExpansion);
             }
+            else if (getChildAt(i) == _settingsLayout) {
+                childRect.height = height * _INVENTORY_SPACE;
+                childRect.height += buttonHeight;
+            }
+            else {
+                childRect.height = buttonHeight;
+            }
+            
             currentY += childRect.height;
             
             getChildAt(i).drawLayout(childRect.x, childRect.y, childRect.width, childRect.height);
         }
+    }
+    
+    public void expandSettings(boolean direction) {
+        _settingsExpansionDir = direction ? 1 : -1;
     }
     
     public TimerLayout getTimerLayout() {
