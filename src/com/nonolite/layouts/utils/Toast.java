@@ -48,6 +48,7 @@ public class Toast extends Layout {
     @Override
     public String mouseInput(int keyCode, float x, float y) {
         Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
+        Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().resetTimer();
         Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().startTimer();
         
         hidden = !hidden;
