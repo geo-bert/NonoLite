@@ -47,8 +47,8 @@ public class NonoBoard extends PApplet implements Board {
         saveData.add(v.toString());
         
         StringBuilder f = new StringBuilder();
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 f.append(board[x][y]);
             }
             saveData.add(f.toString());
@@ -91,9 +91,9 @@ public class NonoBoard extends PApplet implements Board {
         height = Integer.parseInt(dim[1]);
         
         // fill board
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                this.board[x][y] = "" + board[x + 3].charAt(y);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                this.board[x][y] = "" + board[x + 3].charAt(x);
             }
         }
         
