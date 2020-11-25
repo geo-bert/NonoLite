@@ -38,6 +38,7 @@ public class SideBarLayout extends Layout {
         _generateButton.setText("Generate Random");
         _generateButton.setOnClickListener((keyCode, x, y) -> {
             Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
+            Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().resetTimer();
             return "";
         });
         this.addChild(_generateButton);
