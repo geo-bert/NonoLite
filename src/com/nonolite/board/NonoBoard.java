@@ -93,7 +93,7 @@ public class NonoBoard extends PApplet implements Board {
         // fill board
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                this.board[x][y] = "" + board[x + 3].charAt(x);
+                this.board[x][y] = "" + board[y + 3].charAt(x);
             }
         }
         
