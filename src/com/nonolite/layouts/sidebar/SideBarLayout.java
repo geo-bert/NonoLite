@@ -27,7 +27,7 @@ public class SideBarLayout extends Layout {
         _checkButton.setText("Check");
         _checkButton.setOnClickListener((keyCode, x, y) -> {
             if (Main.getInstance().getMainLayout().getBoardLayout().check()) {
-                Main.getInstance().getToast().unhide();
+                Main.getInstance().getToast().show("Well done!");
                 Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().stopTimer();
             }
             return "";

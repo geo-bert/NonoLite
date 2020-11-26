@@ -5,11 +5,12 @@ import com.nonolite.layouts.MainLayout;
 import processing.core.PGraphics;
 
 public class Toast extends Layout {
-    boolean hidden;
+    boolean _hidden;
+    String _text = "";
     
     public Toast(PGraphics pg) {
         super(pg);
-        hidden = true;
+        _hidden = true;
     }
     
     @Override
@@ -21,11 +22,11 @@ public class Toast extends Layout {
         r.width = mainLayout.getBoardLayout().getWidth();
         r.height = mainLayout.getBoardLayout().getHeight();
         
-        if (!hidden) {
+        if (!_hidden) {
             PGraphics pg = Main.getInstance().getGraphics();
             pg.push();
             pg.fill(0, 150);
-            pg.rect(r.x,r.y,r.width,r.height);
+            pg.rect(r.x, r.y, r.width, r.height);
             pg.pop();
             
             Main.getDesign().baseRect(
@@ -36,7 +37,7 @@ public class Toast extends Layout {
             );
             
             Main.getDesign().text(
-                "Well done!",
+                _text,
                 r.x + 3 * r.width / 8,
                 r.y + 3 * r.height / 8,
                 r.width / 4,
@@ -51,19 +52,20 @@ public class Toast extends Layout {
         Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().resetTimer();
         Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().startTimer();
         
-        hidden = !hidden;
-        if (hidden) {
+        _hidden = !_hidden;
+        if (_hidden) {
             Main.getInstance().resignClickable(this);
         }
         return "";
     }
     
-    public void unhide() {
-        hidden = false;
+    public void show(String message) {
+        _text = message;
+        _hidden = false;
         Main.getInstance().applyClickable(this);
     }
     
-    public boolean getStatus(){
-        return hidden;
+    public boolean getStatus() {
+        return _hidden;
     }
 }
