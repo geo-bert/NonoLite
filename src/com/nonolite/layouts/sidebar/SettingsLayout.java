@@ -11,7 +11,6 @@ public class SettingsLayout extends Layout {
     private ButtonLayout _saveButton;
     private DesignSelectionLayout _designSelector;
     private float _parentButtonHeight;
-    private boolean _expanded = false;
     
     public SettingsLayout(PGraphics pg) {
         super(pg);
@@ -19,8 +18,7 @@ public class SettingsLayout extends Layout {
         _settingsButton = new ButtonLayout(_pg);
         _settingsButton.setText("Settings");
         _settingsButton.setOnClickListener((keyCode, x, y) -> {
-            _expanded = !_expanded;
-            Main.getInstance().getMainLayout().getSideBarLayout().expandSettings(_expanded);
+            Main.getInstance().getMainLayout().getSideBarLayout().toggleSettings();
             return "";
         });
         

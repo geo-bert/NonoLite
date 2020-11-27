@@ -88,8 +88,12 @@ public class SideBarLayout extends Layout {
         }
     }
     
-    public void expandSettings(boolean direction) {
-        _settingsExpansionDir = direction ? 1 : -1;
+    public void toggleSettings() {
+        _settingsExpansionDir = _settingsExpansionDir != 0 ? -1 * _settingsExpansionDir : 1;
+    }
+    
+    public void toggleSettings(boolean bool) {
+        _settingsExpansionDir = bool ? 1 : -1;
     }
     
     public TimerLayout getTimerLayout() {
