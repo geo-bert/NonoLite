@@ -41,16 +41,21 @@ public class Toast extends Layout {
     @Override
     public String mouseInput(int keyCode, float x, float y) {
         Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
-        Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().startTimer();
         
-        _hidden = true;
-        Main.getInstance().resignClickable(this);
+        hide();
         return "";
+    }
+    
+    public void hide() {
+        _hidden = true;
+        Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().startTimer();
+        Main.getInstance().resignClickable(this);
     }
     
     public void show(String message) {
         _text = message;
         _hidden = false;
+        Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().stopTimer();
         Main.getInstance().applyClickable(this);
     }
     
