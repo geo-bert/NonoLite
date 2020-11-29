@@ -16,19 +16,6 @@ public class BoardLayout extends Layout {
         super(pg);
         
         Main.getInstance().applyClickable(this);
-        /*
-        Board nonoBoard = new NonoBoard();
-        String save = Main.getSaveFileController().loadState();
-        if (!save.equals("")) {
-            nonoBoard.loadBoard(readBoard(save));
-        }
-        else {
-            nonoBoard.generateBoard(2, 2);
-        }
-        
-        _board = nonoBoard;
-        
-         */
         _board = new NonoBoard();
         _board.generateBoard(currWidth, currHeight);
     }
@@ -63,8 +50,17 @@ public class BoardLayout extends Layout {
         _board.mouseDragInput(keyCode, mouseX, mouseY);
     }
     
-    public boolean check() {
-        return _board.checkBoard();
+    public void check() {
+        if (_board.checkBoard()) {
+            Main.getToast().show("Well done!");
+            Main.getToast().setOnClickListener((keyCode, x, y) -> {
+                Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
+                return "";
+            });
+        }
+        else {
+            Main.getToast().hide();
+        }
     }
     
     public void reset() {

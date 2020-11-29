@@ -12,18 +12,21 @@ import com.nonolite.layouts.utils.Toast;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_SPACE;
+import static java.awt.event.KeyEvent.VK_TAB;
 
 public class Main extends PApplet {
     private static Main _main;
     private static SaveFileController _saveFileController;
+    private static Design _design;
+    private static Toast _toast;
     private PGraphics _pg;
     private int _screenWidth = 1500;
     private int _screenHeight = 800;
     private final List<Layout> _clickables = new ArrayList<>();
-    private static Design _design;
     private Design[] _designModes;
     private MainLayout _mainLayout;
-    private Toast _toast;
     
     public enum DesignMode {
         DefaultMode,
@@ -73,15 +76,12 @@ public class Main extends PApplet {
     
     public void keyReleased() {
         switch (keyCode) {
-            case 32:
-                if (Main.getInstance().getToast().getStatus() && Main.getInstance().getMainLayout().getBoardLayout().check()) {
-                    Main.getInstance().getToast().show("Well done!");
-                    break;
-                }
-    
-                if (!Main.getInstance().getToast().getStatus()) {
-                    Main.getInstance().getToast().mouseInput(LEFT, width, height);
-                }
+            case VK_SPACE:
+            case VK_ENTER:
+                Main.getInstance().getMainLayout().getBoardLayout().check();
+                break;
+            case VK_TAB:
+                getMainLayout().getSideBarLayout().toggleSettings();
                 break;
         }
         
@@ -166,12 +166,16 @@ public class Main extends PApplet {
         return _saveFileController;
     }
     
-    public MainLayout getMainLayout() {
-        return _mainLayout;
-    }
-    
     public static Design getDesign() {
         return _design;
+    }
+    
+    public static Toast getToast() {
+        return _toast;
+    }
+    
+    public MainLayout getMainLayout() {
+        return _mainLayout;
     }
     
     public void setDesign(DesignMode designMode) {
@@ -185,9 +189,5 @@ public class Main extends PApplet {
         catch (IllegalArgumentException exception) {
             _design = _designModes[DesignMode.DefaultMode.ordinal()];
         }
-    }
-    
-    public Toast getToast() {
-        return _toast;
     }
 }

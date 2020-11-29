@@ -5,11 +5,13 @@ import com.nonolite.layouts.MainLayout;
 import processing.core.PGraphics;
 
 public class Toast extends Layout {
-    boolean _hidden = true;
-    String _text = "";
+    private boolean _hidden = true;
+    private String _text = "";
     
     public Toast(PGraphics pg) {
         super(pg);
+        
+        setOnClickListener((keyCode, x, y) -> "action undefined");
     }
     
     @Override
@@ -40,8 +42,7 @@ public class Toast extends Layout {
     
     @Override
     public String mouseInput(int keyCode, float x, float y) {
-        Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
-        
+        click(keyCode, x, y);
         hide();
         return "";
     }
@@ -50,6 +51,7 @@ public class Toast extends Layout {
         _hidden = true;
         Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().startTimer();
         Main.getInstance().resignClickable(this);
+        setOnClickListener((keyCode, x, y) -> "action undefined");
     }
     
     public void show(String message) {

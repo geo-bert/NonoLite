@@ -26,10 +26,7 @@ public class SideBarLayout extends Layout {
         _checkButton = new ButtonLayout(_pg);
         _checkButton.setText("Check");
         _checkButton.setOnClickListener((keyCode, x, y) -> {
-            if (Main.getInstance().getMainLayout().getBoardLayout().check()) {
-                Main.getInstance().getToast().show("Well done!");
-                Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().stopTimer();
-            }
+            Main.getInstance().getMainLayout().getBoardLayout().check();
             return "";
         });
         this.addChild(_checkButton);
@@ -89,11 +86,21 @@ public class SideBarLayout extends Layout {
     }
     
     public void toggleSettings() {
-        _settingsExpansionDir = _settingsExpansionDir != 0 ? -1 * _settingsExpansionDir : 1;
+        toggleSettings(_settingsExpansionDir <= 0);
     }
     
     public void toggleSettings(boolean bool) {
         _settingsExpansionDir = bool ? 1 : -1;
+        if (bool) {
+            Main.getToast().show("Paused");
+            Main.getToast().setOnClickListener((keyCode, x, y) -> {
+                Main.getInstance().getMainLayout().getSideBarLayout().toggleSettings(false);
+                return "";
+            });
+        }
+        else {
+            Main.getToast().hide();
+        }
     }
     
     public TimerLayout getTimerLayout() {
