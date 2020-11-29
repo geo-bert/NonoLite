@@ -55,6 +55,10 @@ public class Toast extends Layout {
     }
     
     public void show(String message) {
+        if (!_hidden) {
+            hide();
+        }
+        
         _text = message;
         _hidden = false;
         Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().stopTimer();
