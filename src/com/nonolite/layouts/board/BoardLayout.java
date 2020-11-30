@@ -51,15 +51,13 @@ public class BoardLayout extends Layout {
     }
     
     public void check() {
+        Main.getToast().hide();
         if (_board.checkBoard()) {
             Main.getToast().show("Well done!");
             Main.getToast().setOnClickListener((keyCode, x, y) -> {
                 Main.getInstance().getMainLayout().getBoardLayout().newRandomBoard();
                 return "";
             });
-        }
-        else {
-            Main.getToast().hide();
         }
     }
     
