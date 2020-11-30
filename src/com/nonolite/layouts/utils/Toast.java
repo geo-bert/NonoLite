@@ -68,6 +68,6 @@ public class Toast extends Layout {
     }
     
     public boolean getStatus() {
-        return _hidden;
+        return !_hidden;
     }
 }
