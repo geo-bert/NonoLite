@@ -93,6 +93,7 @@ public class SideBarLayout extends Layout {
         _settingsExpansionDir = bool ? 1 : -1;
         if (bool) {
             Main.getToast().show("Paused");
+            Main.getToast().setClickableArea(_settingsLayout.getX(), _inventoryLayout.getY(), _settingsLayout.getWidth(), _settingsLayout.getHeight());
             Main.getToast().setOnClickListener((keyCode, x, y) -> {
                 Main.getInstance().getMainLayout().getSideBarLayout().toggleSettings(false);
                 return "";
