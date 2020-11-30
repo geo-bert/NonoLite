@@ -8,7 +8,7 @@ import com.nonolite.design.Design;
 import com.nonolite.design.RoundDarkMode;
 import com.nonolite.layouts.MainLayout;
 import com.nonolite.layouts.utils.Layout;
-import com.nonolite.layouts.utils.Toast;
+import com.nonolite.layouts.utils.toast.Toast;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;

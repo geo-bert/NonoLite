@@ -1,7 +1,8 @@
-package com.nonolite.layouts.utils;
+package com.nonolite.layouts.utils.toast;
 
 import com.nonolite.Main;
-import com.nonolite.layouts.MainLayout;
+import com.nonolite.layouts.utils.Layout;
+import com.nonolite.layouts.utils.Rect;
 import processing.core.PGraphics;
 
 public class Toast extends Layout {
