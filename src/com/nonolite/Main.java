@@ -13,6 +13,7 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
 import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_ESCAPE;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_TAB;
 
@@ -70,8 +71,7 @@ public class Main extends PApplet {
         clear();
         _design.background();
         _mainLayout.drawLayout(0, 0, width, height);
-        _toast.drawLayout(
-            0, 0, width, height);
+        _toast.drawLayout(0, 0, width, height);
     }
     
     public void keyReleased() {
@@ -80,6 +80,7 @@ public class Main extends PApplet {
             case VK_ENTER:
                 Main.getInstance().getMainLayout().getBoardLayout().check();
                 break;
+            case VK_ESCAPE:
             case VK_TAB:
                 getMainLayout().getSideBarLayout().toggleSettings();
                 break;
@@ -91,22 +92,20 @@ public class Main extends PApplet {
     public void mousePressed() {
         Layout clickedLayout = null;
         for (Layout clickable : _clickables) {
-            if (!(mouseX >= clickable.getX() &&
-                  mouseX <= clickable.getX() + clickable.getWidth())) {
-                continue;
-            }
-            if (!(mouseY >= clickable.getY() &&
-                  mouseY <= clickable.getY() + clickable.getHeight())) {
+            if (mouseX <= clickable.getX() ||
+                mouseX >= clickable.getX() + clickable.getWidth() ||
+                mouseY <= clickable.getY() ||
+                mouseY >= clickable.getY() + clickable.getHeight()) {
                 continue;
             }
             
-            if (clickedLayout != null) {
+            if (clickedLayout == null) {
+                clickedLayout = clickable;
+            }
+            else {
                 if (clickedLayout.getDepth() < clickable.getDepth()) {
                     clickedLayout = clickable;
                 }
-            }
-            else {
-                clickedLayout = clickable;
             }
         }
         
