@@ -5,6 +5,8 @@ public interface Design {
     
     void base(float x, float y, float width, float height);
     
+    void base2(float x, float y, float width, float height);
+    
     void baseRect(float x, float y, float width, float height);
     
     void baseRect2(float x, float y, float width, float height);
@@ -12,6 +14,8 @@ public interface Design {
     void rect1(float x, float y, float width, float height);
     
     void rect2(float x, float y, float width, float height);
+    
+    void buttonRect(float x, float y, float width, float height);
     
     void text(char text, float x, float y, float width, float height);
     

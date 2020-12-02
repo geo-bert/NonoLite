@@ -31,6 +31,15 @@ public class RoundDarkMode extends PApplet implements Design {
     }
     
     @Override
+    public void base2(float x, float y, float width, float height) {
+        _pg.push();
+        _pg.fill(45);
+        _pg.noStroke();
+        _pg.rect(x, y, width, height);
+        _pg.pop();
+    }
+    
+    @Override
     public void baseRect(float x, float y, float width, float height) {
         _pg.push();
         _pg.fill(60);
@@ -69,6 +78,17 @@ public class RoundDarkMode extends PApplet implements Design {
         float marginX = width / 20;
         float marginY = height / 20;
         _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY, (float) (min(width, height) * 0.18));
+        _pg.pop();
+    }
+    
+    @Override
+    public void buttonRect(float x, float y, float width, float height) {
+        _pg.push();
+        _pg.fill(60);
+        _pg.noStroke();
+        float marginX = width - 3;
+        float marginY = height - 3;
+        _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY, (min(width, height) * 0.1f));
         _pg.pop();
     }
     

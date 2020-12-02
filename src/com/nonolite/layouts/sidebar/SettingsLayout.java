@@ -24,7 +24,6 @@ public class SettingsLayout extends Layout {
             Main.getInstance().getMainLayout().getSideBarLayout().toggleSettings();
             return "";
         });
-        
         this.addChild(_settingsButton);
         
         _saveButton = new ButtonLayout(_pg);
@@ -83,7 +82,7 @@ public class SettingsLayout extends Layout {
     
     @Override
     public void onLayout(float x, float y, float width, float height) {
-        Main.getDesign().base(x, y, width, height);
+        Main.getDesign().base2(x, y, width, height);
         _settingsButton.drawLayout(x, y, width, _parentButtonHeight);
         y += _parentButtonHeight;
         height -= _parentButtonHeight;

@@ -14,8 +14,7 @@ public class ButtonLayout extends Layout {
     
     @Override
     public void onLayout(float x, float y, float width, float height) {
-        Main.getDesign().baseRect(x, y, width, height);
-        
+        Main.getDesign().buttonRect(x, y, width, height);
         Main.getDesign().text(_text, x, y, width, height);
     }
     
