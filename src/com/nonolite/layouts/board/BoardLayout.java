@@ -66,7 +66,10 @@ public class BoardLayout extends Layout {
     }
     
     public void load() {
-        _board.loadBoard(readBoard(Main.getSaveFileController().loadState()));
+        String state = Main.getSaveFileController().loadState();
+        if (!state.equals("")) {
+            _board.loadBoard(readBoard(state));
+        }
     }
     
     public void save() {
