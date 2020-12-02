@@ -75,9 +75,14 @@ public class SaveFileController {
     public void saveSetting(String key, String value) {
         String filePath = _directory + "settings" + _fileType;
         Properties properties = new Properties();
+        try (InputStream inputStream = new FileInputStream(filePath)) {
+            properties.load(inputStream);
+        }
+        catch (IOException exception) {
+            repairSettingsSave();
+        }
         
         properties.setProperty(key, value);
-        
         try (OutputStream outputStream = new FileOutputStream(filePath)) {
             properties.store(outputStream, "Setting properties");
         }
@@ -125,8 +130,8 @@ public class SaveFileController {
     private String repairSettingsSave(String key, String defaultValue) {
         String filePath = _directory + "settings" + _fileType;
         Properties properties = new Properties();
-    
-    
+        
+        
         try (InputStream inputStream = new FileInputStream(filePath)) {
             properties.load(inputStream);
         }
@@ -134,7 +139,6 @@ public class SaveFileController {
         }
         
         try (OutputStream outputStream = new FileOutputStream(filePath)) {
-            
             properties.setProperty(key, defaultValue);
             properties.store(outputStream, "Setting properties");
         }
