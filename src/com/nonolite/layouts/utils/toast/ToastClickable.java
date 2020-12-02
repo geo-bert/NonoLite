@@ -16,8 +16,8 @@ public class ToastClickable extends Layout {
     
     @Override
     public void onLayout(float x, float y, float width, float height) {
-        _pg.fill(0, 100);
         _pg.noStroke();
+        _pg.fill(0, 125);
         _pg.rect(x, y, width, height);
     }
     

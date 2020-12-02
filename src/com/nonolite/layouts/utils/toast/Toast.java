@@ -23,16 +23,31 @@ public class Toast extends Layout {
     public void onLayout(float x, float y, float width, float height) {
         if (!_hidden) {
             getChildAt(0).drawLayout(x, y, width, _clickableArea.y - y);
-            getChildAt(1).drawLayout(x, _clickableArea.y, _clickableArea.x - x, _clickableArea.height);
-            getChildAt(2).drawLayout(_clickableArea.x + _clickableArea.width, _clickableArea.y, width - _clickableArea.width - getChildAt(1).getWidth(), _clickableArea.height);
-            getChildAt(3).drawLayout(x, _clickableArea.y + _clickableArea.height, width, height - _clickableArea.height - getChildAt(0).getHeight());
+            getChildAt(1).drawLayout(x, _clickableArea.y + _clickableArea.height, width, height - _clickableArea.height - getChildAt(0).getHeight());
+            getChildAt(2).drawLayout(x, _clickableArea.y, _clickableArea.x - x, _clickableArea.height);
+            getChildAt(3).drawLayout(_clickableArea.x + _clickableArea.width, _clickableArea.y, width - _clickableArea.width - getChildAt(2).getWidth(), _clickableArea.height);
+            
+            Rect[] areas = new Rect[]{
+                new Rect(x, y, width, _clickableArea.y - y),
+                new Rect(x, _clickableArea.y + _clickableArea.height, width, height - _clickableArea.height - getChildAt(0).getHeight()),
+                new Rect(x, y, _clickableArea.x - x, height),
+                new Rect(_clickableArea.x + _clickableArea.width, y, width - _clickableArea.width - getChildAt(2).getWidth(), height)
+            };
+            
+            for (int i = 1; i < areas.length; i++) {
+                if (areas[i].width * areas[i].height > areas[0].width * areas[0].height) {
+                    areas[0] = areas[i];
+                }
+            }
+            
+            Main.getDesign().text(_text, areas[0].x, areas[0].y, areas[0].width, areas[0].height);
         }
     }
     
     public void hide() {
         if (!_hidden) {
             _hidden = true;
-            click(LEFT, getX(), getX());
+            click(LEFT, getX(), getY());
             Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().startTimer();
             for (int i = 0; i < getChildCount(); i++) {
                 ((ToastClickable) getChildAt(i)).hide();
