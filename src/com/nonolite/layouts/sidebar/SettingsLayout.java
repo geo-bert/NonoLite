@@ -46,7 +46,7 @@ public class SettingsLayout extends Layout {
         for (int i = 1; i < getChildCount(); i++) {
             Rect childRect = new Rect();
             childRect.width = width;
-            childRect.height = height / (getChildCount() - 1);
+            childRect.height = min(_parentButtonHeight, height / (getChildCount() - 1));
             childRect.x = x;
             childRect.y = y + (i - 1) * childRect.height;
             
