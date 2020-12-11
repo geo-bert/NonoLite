@@ -68,12 +68,15 @@ public class BoardLayout extends Layout {
     public void load() {
         String state = Main.getSaveFileController().loadState();
         if (!state.equals("")) {
+            Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().setTimeSecs(Integer.parseInt(state.substring(0, state.indexOf("\r\n"))));
+            state = state.substring(state.indexOf("\r\n") + 2);
             _board.loadBoard(readBoard(state));
         }
     }
     
     public void save() {
-        Main.getSaveFileController().saveState(writeBoard(_board.getSaveBoard()));
+        String state = Main.getInstance().getMainLayout().getSideBarLayout().getTimerLayout().getTimeSecs() + "\r\n" + writeBoard(_board.getSaveBoard());
+        Main.getSaveFileController().saveState(state);
     }
     
     public void newRandomBoard() {
