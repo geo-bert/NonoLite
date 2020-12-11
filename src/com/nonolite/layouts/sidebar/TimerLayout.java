@@ -49,8 +49,6 @@ public class TimerLayout extends Layout {
     
     public void startTimer(int secs) {
         _remainingSecs = secs;
-        _startingSecs = secs;
-        
         _running = true;
     }
     
