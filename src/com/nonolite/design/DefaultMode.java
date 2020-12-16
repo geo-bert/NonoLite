@@ -23,6 +23,14 @@ public class DefaultMode extends PApplet implements Design {
     }
     
     @Override
+    public void base2(float x, float y, float xSize, float ySize) {
+        _pg.push();
+        _pg.fill(45);
+        _pg.rect(x, y, xSize, ySize);
+        _pg.pop();
+    }
+    
+    @Override
     public void baseRect(float x, float y, float xSize, float ySize) {
         _pg.push();
         _pg.fill(50);
@@ -44,6 +52,14 @@ public class DefaultMode extends PApplet implements Design {
     
     @Override
     public void rect2(float x, float y, float xSize, float ySize) {
+        _pg.push();
+        _pg.fill(50);
+        _pg.rect(x, y, xSize, ySize);
+        _pg.pop();
+    }
+    
+    @Override
+    public void buttonRect(float x, float y, float xSize, float ySize) {
         _pg.push();
         _pg.fill(50);
         _pg.rect(x, y, xSize, ySize);

@@ -9,7 +9,6 @@ import processing.core.PGraphics;
 public class TimerLayout extends Layout {
     private Timer _timer = new Timer();
     private int _remainingSecs;
-    private int _startingSecs;
     private boolean _running = false;
     private boolean _countdown = false;
     
@@ -49,8 +48,6 @@ public class TimerLayout extends Layout {
     
     public void startTimer(int secs) {
         _remainingSecs = secs;
-        _startingSecs = secs;
-        
         _running = true;
     }
     
@@ -64,7 +61,15 @@ public class TimerLayout extends Layout {
     }
     
     public void resetTimer() {
-        _remainingSecs = _startingSecs;
+        _remainingSecs = 0;
+    }
+    
+    public int getTimeSecs() {
+        return _remainingSecs;
+    }
+    
+    public void setTimeSecs(int secs) {
+        _remainingSecs = secs;
     }
     
     private String formatTime() {

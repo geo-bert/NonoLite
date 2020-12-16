@@ -25,6 +25,7 @@ public class Main extends PApplet {
     private PGraphics _pg;
     private int _screenWidth = 1500;
     private int _screenHeight = 800;
+    private String _windowMode;
     private final List<Layout> _clickables = new ArrayList<>();
     private Design[] _designModes;
     private MainLayout _mainLayout;
@@ -43,28 +44,33 @@ public class Main extends PApplet {
         return _main;
     }
     
+    public void settings() {
+        _saveFileController = new SaveFileController();
+        _windowMode = getSaveFileController().loadSetting("windowMode", "windowed");
+        switch (_windowMode) {
+            default:
+            case "windowed":
+                size(_screenWidth, _screenHeight);
+                break;
+            case "fullscreen":
+                fullScreen();
+                break;
+        }
+    }
+    
     public void setup() {
         textAlign(LEFT, TOP);
         surface.setResizable(true);
         _main = this;
-        _saveFileController = new SaveFileController();
         _pg = getGraphics();
         _designModes = new Design[]{new DefaultMode(_pg), new DarkMode(_pg), new RoundDarkMode(_pg)};
         PFont font = createFont("Courier New Bold", 32);
         textFont(font);
-        loadSettings();
+        setDesign(_saveFileController.loadSetting("design", DesignMode.DefaultMode.toString()));
         
         _mainLayout = new MainLayout(_pg);
         _toast = new Toast(_pg);
         _mainLayout.getBoardLayout().load();
-    }
-    
-    private void loadSettings() {
-        setDesign(_saveFileController.loadSetting("design", DesignMode.DefaultMode.toString()));
-    }
-    
-    public void settings() {
-        size(_screenWidth, _screenHeight);
     }
     
     public void draw() {

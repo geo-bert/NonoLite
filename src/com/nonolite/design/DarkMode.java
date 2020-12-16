@@ -29,6 +29,15 @@ public class DarkMode extends PApplet implements Design {
     }
     
     @Override
+    public void base2(float x, float y, float width, float height) {
+        _pg.push();
+        _pg.fill(45);
+        _pg.noStroke();
+        _pg.rect(x, y, width, height);
+        _pg.pop();
+    }
+    
+    @Override
     public void baseRect(float x, float y, float width, float height) {
         _pg.push();
         _pg.fill(60);
@@ -67,6 +76,16 @@ public class DarkMode extends PApplet implements Design {
         float marginX = width / 20;
         float marginY = height / 20;
         _pg.rect(x + marginX, y + marginY, width - 2 * marginX, height - 2 * marginY);
+        _pg.pop();
+    }
+    
+    @Override
+    public void buttonRect(float x, float y, float width, float height) {
+        _pg.push();
+        _pg.fill(50);
+        _pg.stroke(20);
+        _pg.strokeWeight(0.75f);
+        _pg.rect(x, y, width, height);
         _pg.pop();
     }
     

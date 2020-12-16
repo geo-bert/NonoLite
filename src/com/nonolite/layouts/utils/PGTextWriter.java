@@ -31,9 +31,8 @@ public class PGTextWriter extends PApplet {
     }
     
     public void writeText(String[] words, float x, float y, float width, float height) {
-        float factor = words.length == 1 ? 0.55f : 0.75f;
-        float availableWidth = width * factor;
-        float availableHeight = height * factor;
+        float availableWidth = width * 0.75f;
+        float availableHeight = height * (words.length == 1 ? 0.55f : 0.75f);
         
         int maxLength = 0;
         for (String word : words) {
