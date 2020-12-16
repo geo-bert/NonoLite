@@ -62,13 +62,6 @@ public class SettingsLayout extends Layout {
             return "";
         });
         _windowModeSelector.addSelection(button);
-        button = new ButtonLayout(_pg);
-        button.setText("Borderless Window");
-        button.setOnClickListener((keyCode, x, y) -> {
-            Main.getSaveFileController().saveSetting("windowMode", "borderless");
-            return "";
-        });
-        _windowModeSelector.addSelection(button);
         this.addChild(_windowModeSelector);
         
         _quitButton = new ButtonLayout(_pg);

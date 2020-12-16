@@ -66,15 +66,11 @@ public class Main extends PApplet {
         _designModes = new Design[]{new DefaultMode(_pg), new DarkMode(_pg), new RoundDarkMode(_pg)};
         PFont font = createFont("Courier New Bold", 32);
         textFont(font);
-        loadSettings();
+        setDesign(_saveFileController.loadSetting("design", DesignMode.DefaultMode.toString()));
         
         _mainLayout = new MainLayout(_pg);
         _toast = new Toast(_pg);
         _mainLayout.getBoardLayout().load();
-    }
-    
-    private void loadSettings() {
-        setDesign(_saveFileController.loadSetting("design", DesignMode.DefaultMode.toString()));
     }
     
     public void draw() {
