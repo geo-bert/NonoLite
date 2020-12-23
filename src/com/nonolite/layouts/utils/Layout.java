@@ -44,7 +44,9 @@ public abstract class Layout extends PApplet {
     }
     
     public final void click(int keyCode, float x, float y) {
-        _listener.onClick(keyCode, x, y);
+        if (_listener != null) {
+            _listener.onClick(keyCode, x, y);
+        }
     }
     
     public final void addChild(Layout child) {
