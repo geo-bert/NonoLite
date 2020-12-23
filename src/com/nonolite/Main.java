@@ -7,6 +7,7 @@ import com.nonolite.design.DefaultMode;
 import com.nonolite.design.Design;
 import com.nonolite.design.RoundDarkMode;
 import com.nonolite.layouts.MainLayout;
+import com.nonolite.layouts.MainMenuLayout;
 import com.nonolite.layouts.utils.Layout;
 import com.nonolite.layouts.utils.toast.Toast;
 import processing.core.PApplet;
@@ -23,12 +24,14 @@ public class Main extends PApplet {
     private static Design _design;
     private static Toast _toast;
     private PGraphics _pg;
+    private boolean _menu = true;
     private int _screenWidth = 1500;
     private int _screenHeight = 800;
     private String _windowMode;
     private final List<Layout> _clickables = new ArrayList<>();
     private Design[] _designModes;
     private MainLayout _mainLayout;
+    private MainMenuLayout _mainMenuLayout;
     
     public enum DesignMode {
         DefaultMode,
@@ -68,6 +71,7 @@ public class Main extends PApplet {
         textFont(font);
         setDesign(_saveFileController.loadSetting("design", DesignMode.DefaultMode.toString()));
         
+        _mainMenuLayout = new MainMenuLayout(_pg);
         _mainLayout = new MainLayout(_pg);
         _toast = new Toast(_pg);
         _mainLayout.getBoardLayout().load();
@@ -76,7 +80,12 @@ public class Main extends PApplet {
     public void draw() {
         clear();
         _design.background();
-        _mainLayout.drawLayout(0, 0, width, height);
+        if (_menu) {
+            _mainMenuLayout.drawLayout(0, 0, width, height);
+        }
+        else {
+            _mainLayout.drawLayout(0, 0, width, height);
+        }
         _toast.drawLayout(0, 0, width, height);
     }
     
@@ -194,5 +203,13 @@ public class Main extends PApplet {
         catch (IllegalArgumentException exception) {
             _design = _designModes[DesignMode.DefaultMode.ordinal()];
         }
+    }
+    
+    public void switchToMenu() {
+        _menu = true;
+    }
+    
+    public void switchToGame() {
+        _menu = false;
     }
 }
