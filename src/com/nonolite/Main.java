@@ -24,7 +24,7 @@ public class Main extends PApplet {
     private static Design _design;
     private static Toast _toast;
     private PGraphics _pg;
-    private boolean _menu = true;
+    private boolean _showMenu = true;
     private int _screenWidth = 1500;
     private int _screenHeight = 800;
     private String _windowMode;
@@ -80,7 +80,7 @@ public class Main extends PApplet {
     public void draw() {
         clear();
         _design.background();
-        if (_menu) {
+        if (_showMenu) {
             _mainMenuLayout.drawLayout(0, 0, width, height);
         }
         else {
@@ -206,10 +206,10 @@ public class Main extends PApplet {
     }
     
     public void switchToMenu() {
-        _menu = true;
+        _showMenu = true;
     }
     
     public void switchToGame() {
-        _menu = false;
+        _showMenu = false;
     }
 }

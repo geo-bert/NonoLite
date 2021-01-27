@@ -1,6 +1,7 @@
 package com.nonolite.layouts;
 
 import com.nonolite.Main;
+import com.nonolite.layouts.board.BoardLayout;
 import com.nonolite.layouts.utils.ButtonLayout;
 import com.nonolite.layouts.utils.Layout;
 import com.nonolite.layouts.utils.Rect;
@@ -10,10 +11,14 @@ public class MainMenuLayout extends Layout {
     private ButtonLayout _nonoText;
     private ButtonLayout _startButton;
     private ButtonLayout _quitButton;
+    private BoardLayout _boardLayout;
     
     public MainMenuLayout(PGraphics pg) {
         super(pg);
-    
+        
+        _boardLayout = new BoardLayout(_pg);
+        this.addChild(_boardLayout);
+        
         _nonoText = new ButtonLayout(_pg);
         _nonoText.setText("NonoLite");
         _nonoText.setBox(false);
@@ -47,9 +52,9 @@ public class MainMenuLayout extends Layout {
         for (int i = 0; i < getChildCount(); i++) {
             Rect childRect = new Rect();
             childRect.width = width;
-            childRect.height = height / getChildCount();
+            childRect.height = height / (getChildCount());
             childRect.x = x;
-            childRect.y = y + i * height / getChildCount();
+            childRect.y = y + i * height / (getChildCount());
             
             getChildAt(i).drawLayout(childRect.x, childRect.y, childRect.width, childRect.height);
         }
