@@ -8,10 +8,10 @@ import com.nonolite.layouts.utils.Rect;
 import processing.core.PGraphics;
 
 public class MainMenuLayout extends Layout {
+    private BoardLayout _boardLayout;
     private ButtonLayout _nonoText;
     private ButtonLayout _startButton;
     private ButtonLayout _quitButton;
-    private BoardLayout _boardLayout;
     
     public MainMenuLayout(PGraphics pg) {
         super(pg);
