@@ -5,15 +5,19 @@ import java.util.List;
 import com.nonolite.design.DarkMode;
 import com.nonolite.design.DefaultMode;
 import com.nonolite.design.Design;
+// Is good design?
 import com.nonolite.design.RoundDarkMode;
 import com.nonolite.layouts.MainLayout;
 import com.nonolite.layouts.MainMenuLayout;
+// Must important layout this is?
 import com.nonolite.layouts.utils.Layout;
 import com.nonolite.layouts.utils.toast.Toast;
+// I like toast :)
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
 import static java.awt.event.KeyEvent.VK_ENTER;
+// Very cool event I guess...
 import static java.awt.event.KeyEvent.VK_ESCAPE;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_TAB;
