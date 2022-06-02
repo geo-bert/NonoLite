@@ -5,14 +5,19 @@ import java.util.List;
 import com.nonolite.design.DarkMode;
 import com.nonolite.design.DefaultMode;
 import com.nonolite.design.Design;
+// Is good design?
 import com.nonolite.design.RoundDarkMode;
 import com.nonolite.layouts.MainLayout;
+import com.nonolite.layouts.MainMenuLayout;
+// Must important layout this is?
 import com.nonolite.layouts.utils.Layout;
 import com.nonolite.layouts.utils.toast.Toast;
+// I like toast :)
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PGraphics;
 import static java.awt.event.KeyEvent.VK_ENTER;
+// Very cool event I guess...
 import static java.awt.event.KeyEvent.VK_ESCAPE;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_TAB;
@@ -23,12 +28,14 @@ public class Main extends PApplet {
     private static Design _design;
     private static Toast _toast;
     private PGraphics _pg;
+    private boolean _showMenu = true;
     private int _screenWidth = 1500;
     private int _screenHeight = 800;
     private String _windowMode;
     private final List<Layout> _clickables = new ArrayList<>();
     private Design[] _designModes;
     private MainLayout _mainLayout;
+    private MainMenuLayout _mainMenuLayout;
     
     public enum DesignMode {
         DefaultMode,
@@ -68,6 +75,7 @@ public class Main extends PApplet {
         textFont(font);
         setDesign(_saveFileController.loadSetting("design", DesignMode.DefaultMode.toString()));
         
+        _mainMenuLayout = new MainMenuLayout(_pg);
         _mainLayout = new MainLayout(_pg);
         _toast = new Toast(_pg);
         _mainLayout.getBoardLayout().load();
@@ -76,7 +84,12 @@ public class Main extends PApplet {
     public void draw() {
         clear();
         _design.background();
-        _mainLayout.drawLayout(0, 0, width, height);
+        if (_showMenu) {
+            _mainMenuLayout.drawLayout(0, 0, width, height);
+        }
+        else {
+            _mainLayout.drawLayout(0, 0, width, height);
+        }
         _toast.drawLayout(0, 0, width, height);
     }
     
@@ -194,5 +207,13 @@ public class Main extends PApplet {
         catch (IllegalArgumentException exception) {
             _design = _designModes[DesignMode.DefaultMode.ordinal()];
         }
+    }
+    
+    public void switchToMenu() {
+        _showMenu = true;
+    }
+    
+    public void switchToGame() {
+        _showMenu = false;
     }
 }

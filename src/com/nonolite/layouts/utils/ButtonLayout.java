@@ -5,6 +5,7 @@ import processing.core.PGraphics;
 
 public class ButtonLayout extends Layout {
     private String _text = "Button";
+    private boolean _box = true;
     
     public ButtonLayout(PGraphics pg) {
         super(pg);
@@ -14,7 +15,9 @@ public class ButtonLayout extends Layout {
     
     @Override
     public void onLayout(float x, float y, float width, float height) {
-        Main.getDesign().buttonRect(x, y, width, height);
+        if (_box) {
+            Main.getDesign().buttonRect(x, y, width, height);
+        }
         Main.getDesign().text(_text, x, y, width, height);
     }
     
@@ -30,6 +33,10 @@ public class ButtonLayout extends Layout {
     
     public void setText(String text) {
         _text = text;
+    }
+    
+    public void setBox(boolean box) {
+        _box = box;
     }
 }
 
